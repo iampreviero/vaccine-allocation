@@ -31,7 +31,7 @@ DAYS_PER_TIMESTEP = 1.0
 
 # Mortality rate estimation parameters
 RESCALE_BASELINE = True
-N_TIMESTEPS_PER_ESTIMATE = 10
+N_TIMESTEPS_PER_ESTIMATE = 5
 MIN_LAG = 2
 MAX_LAG = 20
 MAX_PCT_CHANGE = 0.2
@@ -46,7 +46,7 @@ MAX_ITERATIONS = 10
 N_EARLY_STOPPING_ITERATIONS = 1
 
 # Gurobi parameters
-TIME_LIMIT = 200
+TIME_LIMIT = 240
 FEASIBILITY_TOL = 1e-3
 MIP_GAP = 5e-2
 BARRIER_CONV_TOL = 1e-5
@@ -70,7 +70,7 @@ EXCLUDED_RISK_CLASSES = [0, 5]
 # Scenarios
 DATES_GRID = [
     # dict(start_date=dt.datetime(2020, 4, 20), end_date=dt.datetime(2020, 7, 15)),
-    dict(start_date=dt.datetime(2020, 7, 16), end_date=dt.datetime(2020, 10, 15))
+    dict(start_date=dt.datetime(2021, 1, 30), end_date=dt.datetime(2021, 4, 30))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
 DAILY_VACCINE_BUDGET_GRID = [1e6]
