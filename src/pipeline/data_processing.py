@@ -18,13 +18,13 @@ def get_population_by_state_and_risk_class(pop_df: pd.DataFrame) -> np.ndarray:
                 (pop_df["min_age"] >= risk_class["min_age"])
                 & (pop_df["max_age"] <= risk_class["max_age"])
                 & (pop_df["state"] == state)
-            ]["population"].sum()
+                ]["population"].sum()
     return population
 
 
 def calculate_n_timesteps(
-    start_date: dt.datetime,
-    end_date: dt.datetime
+        start_date: dt.datetime,
+        end_date: dt.datetime
 ) -> int:
     return int(np.round((end_date - start_date).days / DAYS_PER_TIMESTEP))
 
@@ -55,12 +55,11 @@ def get_baseline_mortality_rate_estimates(
         start_date: dt.datetime,
         end_date: dt.datetime,
 ) -> np.ndarray:
-
     # Compute rescaling factor
     predicted_cases, predicted_deaths = predictions_df[
         (predictions_df["date"] >= start_date)
         & (predictions_df["date"] <= end_date)
-    ][["total_detected_cases", "total_detected_deaths"]].max()
+        ][["total_detected_cases", "total_detected_deaths"]].max()
     cdc_mortality_rate = (cdc_df["deaths"].sum() / cdc_df["cases"].sum())
     delphi_mortality_rate = predicted_deaths / predicted_cases
     rescaling_factor = delphi_mortality_rate / cdc_mortality_rate if RESCALE_BASELINE else 1.0
@@ -71,7 +70,7 @@ def get_baseline_mortality_rate_estimates(
         cases, deaths = cdc_df[
             (cdc_df["min_age"] >= risk_class["min_age"])
             & (cdc_df["max_age"] <= risk_class["max_age"])
-        ][["cases", "deaths"]].sum()
+            ][["cases", "deaths"]].sum()
         baseline_mortality_rate[k] = deaths / cases * rescaling_factor
     return baseline_mortality_rate
 
@@ -90,7 +89,6 @@ def get_mortality_rate_estimates(
         start_date: dt.datetime,
         end_date: dt.datetime
 ) -> np.ndarray:
-
     # Get data
     population = get_population_by_state_and_risk_class(pop_df=pop_df)
     baseline_mortality_rate = get_baseline_mortality_rate_estimates(
@@ -111,13 +109,13 @@ def get_mortality_rate_estimates(
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date)
             & (predictions_df["date"] <= end_date)
-        ]["total_detected_cases"].diff().dropna().to_numpy()
+            ]["total_detected_cases"].diff().dropna().to_numpy()
 
         deaths = predictions_df[
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date + lag[j])
             & (predictions_df["date"] <= end_date + lag[j])
-        ]["total_detected_deaths"].diff().dropna().to_numpy()
+            ]["total_detected_deaths"].diff().dropna().to_numpy()
 
         deaths = np.where(deaths / cases <= MAX_MORTALITY_RATE, deaths, MAX_MORTALITY_RATE * cases)
         mortality_rate_estimator = MortalityRateEstimator(
@@ -162,7 +160,7 @@ def get_hospitalization_rate_by_risk_class(cdc_df: pd.DataFrame) -> np.ndarray:
         cases, hospitalizations = cdc_df[
             (cdc_df["min_age"] >= risk_class["min_age"])
             & (cdc_df["max_age"] <= risk_class["max_age"])
-        ][["cases", "hospitalizations"]].sum()
+            ][["cases", "hospitalizations"]].sum()
         hospitalization_rate[k] = hospitalizations / cases
     return hospitalization_rate
 
@@ -172,7 +170,6 @@ def get_initial_conditions(
         predictions_df: pd.DataFrame,
         start_date: dt.datetime
 ) -> Dict[str, np.ndarray]:
-
     # Get population by state and risk class
     population = get_population_by_state_and_risk_class(pop_df=pop_df)
 
@@ -183,7 +180,7 @@ def get_initial_conditions(
     initial_infectious = deepcopy(initial_default)
     initial_conditions_df = predictions_df[
         predictions_df["date"] == start_date
-    ].sort_values("state")[["susceptible", "exposed", "infectious"]]
+        ].sort_values("state")[["susceptible", "exposed", "infectious"]]
     for j, (_, state) in enumerate(initial_conditions_df.iterrows()):
         pop_proportions = population[j, :] / population[j, :].sum()
         initial_susceptible[j, :] = state["susceptible"] * pop_proportions
@@ -215,7 +212,6 @@ def get_delphi_params(
         end_date: dt.datetime,
         mortality_rate_path: Optional[str],
 ) -> Dict[str, Union[float, np.ndarray]]:
-
     # Get policy response by state and timestep
     policy_response = get_policy_response_by_state_and_timestep(
         params_df=params_df,
@@ -265,3 +261,55 @@ def get_delphi_params(
         days_per_timestep=DAYS_PER_TIMESTEP
     )
 
+
+def get_allocation_params(county_pop_df,
+                          counties_dists_df,
+                          selected_centers_df):
+
+    county_pop_mat = county_pop_df.iloc[:, 2:].to_numpy()
+    counties_dists_mat = counties_dists_df.to_numpy()
+
+    valid_pairs = np.argwhere(counties_dists_mat > -1)
+
+    county_to_cities = {idx: np.where(counties_dists_mat[:, idx] > -1)[0]
+                        for idx in counties_dists_mat.shape[1]}
+
+    county_city_to_distance = {(v[1], v[0]): counties_dists_mat[v[0], v[1]] for v in valid_pairs}
+
+    states = list(county_pop_df.state.unique())
+    state_lookup = {idx: state for idx, state in enumerate(states)}
+    county_lookup = {idx: fips for idx, fips in enumerate(county_pop_df['county_state'])}
+    city_lookup = {idx: name for idx, name in enumerate(selected_centers_df['city'])}
+
+    county_to_state = {states.index(county_pop_df.iloc[idx]['state'] for idx in range(county_pop_df.shape[0]))}
+
+    state_to_counties = {idx: list(county_pop_df[county_pop_df.state == state].index)
+                         for idx, state in enumerate(states)}
+
+    state_to_cities = {idx: selected_centers_df[selected_centers_df.state == state].index
+                       for idx, state in enumerate(states)}
+
+    city_to_state = {idx: states.index(selected_centers_df.iloc[idx]['state'])
+                     for idx in range(selected_centers_df.shape[0])}
+
+    distance_penalty = 1e-4
+    cities_budget = 100
+    n_cities = selected_centers_df.shape[0]
+
+    allocation_params = {
+        'population': county_pop_mat,
+        'state_lookup': state_lookup,
+        'county_lookup': county_lookup,
+        'city_lookup': city_lookup,
+        'county_to_cities': county_to_cities,
+        'county_city_to_distance': county_city_to_distance,
+        'county_to_state': county_to_state,
+        'state_to_counties': state_to_counties,
+        'state_to_cities': state_to_cities,
+        'city_to_state': city_to_state,
+        'distance_penalty': distance_penalty,
+        'cities_budget': cities_budget,
+        'n_cities': n_cities
+    }
+
+    return allocation_params

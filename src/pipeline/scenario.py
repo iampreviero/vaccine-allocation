@@ -5,7 +5,10 @@ import pandas as pd
 
 from pipeline.constants import *
 from pipeline.data_loading import load_and_clean_delphi_predictions, load_and_clean_delphi_params
-from pipeline.data_processing import calculate_n_timesteps, get_initial_conditions, get_delphi_params
+from pipeline.data_processing import (calculate_n_timesteps,
+                                      get_initial_conditions,
+                                      get_delphi_params,
+                                      get_allocation_params)
 from models.prescriptive_delphi_model import PrescriptiveDELPHIModel
 
 
@@ -64,6 +67,9 @@ class Scenario:
         predictions_df = load_and_clean_delphi_predictions(DELPHI_PREDICTIONS_PATH)
         cdc_df = pd.read_csv(CDC_DATA_PATH)
         pop_df = pd.read_csv(POPULATION_DATA_PATH)
+        county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
+        counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH)
+        selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
 
         # Get processed data for model
         initial_conditions = get_initial_conditions(
@@ -82,11 +88,16 @@ class Scenario:
         )
         vaccine_params = self.get_vaccine_params(total_pop=initial_conditions["population"].sum())
 
+        allocation_params = get_allocation_params(county_pop_df=county_pop_df,
+                                                  counties_dists_df=counties_dists_df,
+                                                  selected_centers_df=selected_centers_df)
+
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
             initial_conditions=initial_conditions,
             delphi_params=delphi_params,
-            vaccine_params=vaccine_params
+            vaccine_params=vaccine_params,
+            allocation_params=allocation_params
         )
 
     def run(
