@@ -98,7 +98,8 @@ class PrescriptiveDELPHIModel:
             self,
             initial_conditions: Dict[str, np.ndarray],
             delphi_params: Dict[str, Union[float, np.ndarray]],
-            vaccine_params: Dict[str, Union[float, bool, np.ndarray]]
+            vaccine_params: Dict[str, Union[float, bool, np.ndarray]],
+            allocation_params: Dict
     ):
         """
         Instantiate a prescriptive DELPHI model with initial conditions and parameter estimates.
@@ -119,6 +120,7 @@ class PrescriptiveDELPHIModel:
         self.initial_undetected_dying = initial_conditions["initial_undetected_dying"]
         self.initial_undetected_recovering = initial_conditions["initial_undetected_recovering"]
         self.initial_recovered = initial_conditions["initial_recovered"]
+        # population is _n_counties x _n_risk_classes
         self.population = initial_conditions["population"]
 
         # Set DELPHI model parameters
@@ -149,10 +151,20 @@ class PrescriptiveDELPHIModel:
         self.optimize_capacity = vaccine_params["optimize_capacity"]
 
         self.excluded_risk_classes = vaccine_params["excluded_risk_classes"]
+        
+        
+        
+        # Set allocation parameters
+        self.county_to_cities = allocation_params["county_to_cities"]
+        self.county_city_to_distance = allocation_params["county_city_to_distance"]
+        self.county_to_state = allocation_params["county_to_state"]
+        self.state_to_counties = allocation_params["state_to_counties"]
 
         # Initialize helper attributes
         self._n_regions = self.initial_susceptible.shape[0]
+        self._n_counties = self.population.shape[0]
         self._n_risk_classes = self.initial_susceptible.shape[1]
+        self._n_cities = allocation_params["n_cities"]
         self._n_included_risk_classes = self._n_risk_classes - self.excluded_risk_classes.shape[0]
         self._n_timesteps = self.vaccine_budget.shape[0]
         self._regions = np.arange(self._n_regions)
@@ -408,6 +420,7 @@ class PrescriptiveDELPHIModel:
         infectious_error = model.addVars(self._n_regions, self._n_timesteps, lb=0)
         surplus_vaccines = model.addVars(self._n_regions, self._n_risk_classes, lb=0)
         unallocated_vaccines = model.addVars(self._n_timesteps, lb=0)
+        model.addVars(self)
         if self.optimize_capacity:
             capacity = model.addVars(self._n_regions, lb=0)
 
