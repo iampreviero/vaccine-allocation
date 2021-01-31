@@ -24,7 +24,8 @@ class DELPHISolution:
             eligible: np.ndarray,
             vaccinated: np.ndarray,
             capacity: Optional[np.ndarray] = None,
-            days_per_timestep: float = 1.0
+            days_per_timestep: float = 1.0,
+            locations: np.ndarray
     ):
         """
         Instantiate a container object for a DELPHI solution.
@@ -80,6 +81,7 @@ class DELPHISolution:
         self.vaccinated = vaccinated
         self.capacity = capacity
         self.days_per_timestep = days_per_timestep
+        self.locations = locations
 
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
@@ -99,7 +101,8 @@ class PrescriptiveDELPHIModel:
             initial_conditions: Dict[str, np.ndarray],
             delphi_params: Dict[str, Union[float, np.ndarray]],
             vaccine_params: Dict[str, Union[float, bool, np.ndarray]],
-            allocation_params: Dict
+            allocation_params: Dict,
+            n_simulate_timesteps_per_optimize_step: int = 7
     ):
         """
         Instantiate a prescriptive DELPHI model with initial conditions and parameter estimates.
@@ -159,19 +162,31 @@ class PrescriptiveDELPHIModel:
         self.county_city_to_distance = allocation_params["county_city_to_distance"]
         self.county_to_state = allocation_params["county_to_state"]
         self.state_to_counties = allocation_params["state_to_counties"]
+        # TODO: tell alessandro
+        self.state_to_cities = allocation_params["state_to_cities"]
+        self.city_to_counties = allocation_params["city_to_counties"]
+        self.distance_penalty = allocation_params["distance_penalty"]
+        self._cities_budget = allocation_params["cities_budget"]
 
         # Initialize helper attributes
+        self._n_simulate_timesteps_per_optimize_step = n_simulate_timesteps_per_optimize_step
         self._n_regions = self.initial_susceptible.shape[0]
         self._n_counties = self.population.shape[0]
         self._n_risk_classes = self.initial_susceptible.shape[1]
         self._n_cities = allocation_params["n_cities"]
         self._n_included_risk_classes = self._n_risk_classes - self.excluded_risk_classes.shape[0]
+        # TODO: Daily Vaccine Budget - remind
         self._n_timesteps = self.vaccine_budget.shape[0]
         self._regions = np.arange(self._n_regions)
         self._risk_classes = np.arange(self._n_risk_classes)
         self._included_risk_classes = np.array([k for k in self._risk_classes if k not in self.excluded_risk_classes])
         self._timesteps = np.arange(self._n_timesteps)
-
+        self._optimize_timesteps = np.array([x for x in self._timesteps if x % self._n_simulate_timesteps_per_optimize_step == 0])
+        self._n_optimize_timesteps = len(self._optimize_timesteps)        
+        self.optimize_timestep_to_timestep = {}
+        self.timestep_to_optimize_timestep = {}
+        for opt_timestep in self._optimize_timesteps:
+            self.optimize_timestep_to_timestep[opt_timestep] = np.arange(start = opt_timestep, stop = min(opt_timestep + self._n_simulate_timesteps_per_optimize_step, self._n_timesteps))
         # Storage attributes
         self._trajectories = []
         self._solutions = []
@@ -180,7 +195,8 @@ class PrescriptiveDELPHIModel:
             self,
             vaccinated: Optional[np.ndarray] = None,
             randomize_allocation: bool = False,
-            prioritize_allocation: bool = False
+            prioritize_allocation: bool = False,
+            locations: np.ndarray
     ) -> DELPHISolution:
         """
         Solve DELPHI IVP using a forward difference scheme.
@@ -193,7 +209,7 @@ class PrescriptiveDELPHIModel:
         individuals within each region if no allocation policy is provided (default False)
         :return: a DELPHISolution object
         """
-
+        
         # Initialize functional states
         dims = (self._n_regions, self._n_risk_classes, self._n_timesteps + 1)
         susceptible = np.zeros(dims)
@@ -249,12 +265,12 @@ class PrescriptiveDELPHIModel:
                     for j in region_priority_rankings:
                         regional_budget = np.minimum(
                             additional_budget,
-                            self.max_allocation_pct * self.population[j, :].sum() - min_vaccinated[j, :].sum()
+                            self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j]) - min_vaccinated[j, :].sum()
                         )
                         additional_budget -= regional_budget
                         for k in risk_class_priority_rankings:
                             if k in self._included_risk_classes:
-                                vaccinated[j, k, t] = np.minimum(regional_budget, eligible[j, k, t]) \
+                                vaccinated[j, k, t] = np.minimum(regional_budget,  sum(eligible[l, k, t] for l in self.state_to_counties[j])) \
                                     + min_vaccinated[j, k]
                                 regional_budget -= vaccinated[j, k, t]
                                 if regional_budget <= 0:
@@ -286,12 +302,12 @@ class PrescriptiveDELPHIModel:
             # Apply Euler forward difference scheme with clipping of negative values
             for j in self._regions:
                 susceptible[j, :, t + 1] = susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t] - (
-                        self.infection_rate[j] * self.policy_response[j, t] / self.population[j, :].sum()
+                        self.infection_rate[j] * self.policy_response[j, t] / sum(self.population[l, :].sum() for l in self.state_to_counties[j])
                         * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
                         * infectious[j, :, t].sum()
                 ) * self.days_per_timestep
                 exposed[j, :, t + 1] = exposed[j, :, t] + (
-                        self.infection_rate[j] * self.policy_response[j, t] / self.population[j, :].sum()
+                        self.infection_rate[j] * self.policy_response[j, t] / sum(self.population[l, :].sum() for l in self.state_to_counties[j])
                         * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
                         infectious[j, :, t].sum()
                         - self.progression_rate * exposed[j, :, t]
@@ -364,6 +380,7 @@ class PrescriptiveDELPHIModel:
             deceased=deceased,
             eligible=eligible,
             vaccinated=vaccinated,
+            locations=locations,
             days_per_timestep=self.days_per_timestep,
         )
 
@@ -415,12 +432,17 @@ class PrescriptiveDELPHIModel:
         quarantined_dying = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
         undetected_dying = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
         deceased = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
+        
         vaccinated = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
-        eligible = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
+#        eligible = model.addVars(self._n_regions, self._n_risk_classes, self._n_timesteps + 1, lb=0)
         infectious_error = model.addVars(self._n_regions, self._n_timesteps, lb=0)
         surplus_vaccines = model.addVars(self._n_regions, self._n_risk_classes, lb=0)
         unallocated_vaccines = model.addVars(self._n_timesteps, lb=0)
-        model.addVars(self)
+        vaccinated_per_county_city = model.addVars(list(self.county_city_to_distance.keys()), self._n_risk_classes, self._optimize_timesteps, lb=0)
+        eligible = model.addVars(self._n_counties, self._n_risk_classes, self._n_optimize_timesteps, lb=0)
+        city_indicator = model.addVars(self._n_cities,vtype=GRB.BINARY)
+        vaccines_distributed = model.addVars(self._n_cities, self._optimize_timesteps)
+        
         if self.optimize_capacity:
             capacity = model.addVars(self._n_regions, lb=0)
 
@@ -459,18 +481,60 @@ class PrescriptiveDELPHIModel:
             vaccinated[j, k, self._n_timesteps] == 0
             for j in self._regions for k in self._risk_classes
         )
-
+        
+        
+        # Set facility location constraints
+        model.addConstr(
+            sum(city_indicator) <= self._cities_budget
+        )
+        model.addConstrs(
+            sum(city_indicator[i] for i in self.state_to_cities[j]) >= 1
+            for j in self._regions 
+        )
+        # Vaccine Budget
+        model.addConstrs(
+            vaccines_distributed.sum("*",t) <= sum(self.vaccine_budget[tau] for tau in self.optimize_timestep_to_timestep[t])
+            for t in self._optimize_timesteps
+        )
+        # Consistency with facility location
+        model.addConstrs(
+            vaccines_distributed[i,t] <= sum(self.vaccine_budget[tau] for tau in self.optimize_timestep_to_timestep[t]) * city_indicator[i]
+            for t in self._optimize_timesteps for i in self._n_cities
+        )
+        # Consistency with distribution of vaccines
+        model.addConstrs(
+            sum(vaccinated_per_county_city[l,i,k,t] for l in self.city_to_counties[i] for k in self._risk_classes) <= vaccines_distributed[i,t]
+            for t in self._optimize_timesteps for i in self._n_cities
+        )
+        # Cannot exceed eligible population
+        model.addConstrs(
+            sum(vaccinated_per_county_city[l,i,k,t] for i in self.county_to_cities[l]) <= eligible[l,k,t]
+            for l in self._n_counties for k in self._risk_classes for t in self._optimize_timesteps
+        )
+        # Definition of eligible population
+        model.addConstrs(
+            eligible[l,k,t] == susceptible[self.county_to_state[l],k,t]*self.population[l,k] /sum(self.population[l1,k] for l1 in self.state_to_counties[self.county_to_state[l]]) - 
+            (1 - self.vaccine_effectiveness)
+            * gp.quicksum(vaccinated_per_county_city[l,i, k, u] for i in self.county_to_cities[l] for u in self._optimize_timesteps if u < t)
+            for l in self._n_counties for k in self._risk_classes for t in self._optimize_timesteps
+        )        
+        # main connection between county * optimize_timestep level and state * timestep level
+        model.addConstrs(
+            vaccinated[j,k,t] == sum(vaccinated_per_county_city[l,i,k,int(t / self._n_simulate_timesteps_per_optimize_step)] for l in self.state_to_counties[j] for i in self.county_to_cities[l]) /
+            self._n_simulate_timesteps_per_optimize_step
+            for j in self._regions for k in self._risk_classes for t in self._timesteps
+        )
         # Set DELPHI dynamics constraints
         model.addConstrs(
             susceptible[j, k, t + 1] - susceptible[j, k, t] + self.vaccine_effectiveness * vaccinated[j, k, t] >=
-            - self.infection_rate[j] * self.policy_response[j, t] / self.population[j, :].sum()
+            - self.infection_rate[j] * self.policy_response[j, t] / sum(self.population[l, :].sum() for l in self.state_to_counties[j])
             * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
             * estimated_infectious[j, t] * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
         model.addConstrs(
             exposed[j, k, t + 1] - exposed[j, k, t] >= (
-                    self.infection_rate[j] * self.policy_response[j, t] / self.population[j, :].sum()
+                    self.infection_rate[j] * self.policy_response[j, t] / sum(self.population[l, :].sum() for l in self.state_to_counties[j])
                     * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
                     * estimated_infectious[j, t]
                     - self.progression_rate * exposed[j, k, t]
@@ -527,35 +591,36 @@ class PrescriptiveDELPHIModel:
         )
 
         # Set resource constraints
-        model.addConstrs(
-            eligible[j, k, t] == susceptible[j, k, t] - (1 - self.vaccine_effectiveness)
-            * gp.quicksum(vaccinated[j, k, u] for u in self._timesteps if u < t)
-            for j in self._regions for k in self._included_risk_classes for t in self._timesteps
-        )
-        model.addConstrs(
-            vaccinated.sum("*", "*", t) <= self.vaccine_budget[t]
-            for t in self._timesteps
-        )
-        model.addConstrs(
-            vaccinated[j, k, t] <= eligible[j, k, t]
-            for j in self._regions for k in self._included_risk_classes for t in self._timesteps
-        )
+        
+#        model.addConstrs(
+#            eligible[j, k, t] == susceptible[j, k, t] - (1 - self.vaccine_effectiveness)
+#            * gp.quicksum(vaccinated[j, k, u] for u in self._timesteps if u < t)
+#            for j in self._regions for k in self._included_risk_classes for t in self._timesteps
+#        )
+#        model.addConstrs(
+#            vaccinated.sum("*", "*", t) <= self.vaccine_budget[t]
+#            for t in self._timesteps
+#        )
+#        model.addConstrs(
+#            vaccinated[j, k, t] <= eligible[j, k, t]
+#            for j in self._regions for k in self._included_risk_classes for t in self._timesteps
+#        )
         model.addConstrs(
             vaccinated[j, k, t] == 0
             for j in self._regions for k in self.excluded_risk_classes for t in self._timesteps
         )
         model.addConstrs(
-            vaccinated.sum(j, "*", t) >= self.min_allocation_pct * eligible.sum(j, "*", t)
+            vaccinated.sum(j, "*", t) >= self.min_allocation_pct * sum(eligible.sum(l, "*", t) for l in self.state_to_counties[j])
             for j in self._regions for t in self._timesteps
         )
         model.addConstrs(
             vaccinated.sum(j, "*", t + 1) >= vaccinated.sum(j, "*", t)
-            - self.max_allocation_pct * self.population[j, :].sum() * self.max_increase_pct
+            - self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j]) * self.max_increase_pct
             for j in self._regions for t in self._timesteps[:-1]
         )
         model.addConstrs(
             vaccinated.sum(j, "*", t + 1) <= vaccinated.sum(j, "*", t)
-            + self.max_allocation_pct * self.population[j, :].sum() * self.max_decrease_pct
+            + self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j]) * self.max_decrease_pct
             for j in self._regions for t in self._timesteps[:-1]
         )
         if self.optimize_capacity:
@@ -564,7 +629,7 @@ class PrescriptiveDELPHIModel:
                 for j in self._regions
             )
             model.addConstrs(
-                capacity[j] <= self.max_allocation_pct * self.population[j, :].sum()
+                capacity[j] <= self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j])
                 for j in self._regions
             )
             model.addConstrs(
@@ -576,13 +641,13 @@ class PrescriptiveDELPHIModel:
             )
         else:
             model.addConstrs(
-                vaccinated.sum(j, "*", t) <= self.max_allocation_pct * self.population[j, :].sum()
+                vaccinated.sum(j, "*", t) <= self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j])
                 for j in self._regions for t in self._timesteps
             )
 
         # Set constraints for surplus and unallocated vaccines
         model.addConstrs(
-            surplus_vaccines[j, k] >= vaccinated.sum(j, k, "*") - self.population[j, k]
+            surplus_vaccines[j, k] >= vaccinated.sum(j, k, "*") - sum(self.population[l, k].sum() for l in self.state_to_counties[j])
             for j in self._regions for k in self._risk_classes
         )
         model.addConstrs(
@@ -594,7 +659,8 @@ class PrescriptiveDELPHIModel:
         model.setObjective(
             deceased.sum("*", "*", self._n_timesteps) + hospitalized_dying.sum("*", "*", self._n_timesteps)
             + quarantined_dying.sum("*", "*", self._n_timesteps) + undetected_dying.sum("*", "*", self._n_timesteps)
-            + unallocated_vaccines.sum() + surplus_vaccines.sum(),
+            + unallocated_vaccines.sum() + surplus_vaccines.sum() + self.distance_penalty * sum(vaccinated_per_county_city[l,i,k,t] * self.county_city_to_distance[(l,i)] 
+            for l,i in self.county_city_to_distance.keys() for k in self._risk_classes for t in self._optimize_timesteps),
             GRB.MINIMIZE
         )
 
@@ -632,7 +698,8 @@ class PrescriptiveDELPHIModel:
             capacity = np.array(model.getAttr("x", capacity))
         else:
             capacity = self.population.sum(axis=1) * self.max_allocation_pct
-        return vaccinated, capacity
+        locations = model.getAttr("x",city_indicator)
+        return vaccinated, capacity, locations
 
     def _smooth_vaccine_allocation(
             self,
@@ -809,7 +876,7 @@ class PrescriptiveDELPHIModel:
 
                 # Re-optimize vaccine allocation by solution linearized relaxation
                 try:
-                    vaccinated, capacity = self._optimize_relaxation(
+                    vaccinated, capacity, locations = self._optimize_relaxation(
                         exploration_tol=exploration_tol,
                         estimated_infectious=incumbent_solution.infectious.sum(axis=1),
                         vaccinated_warm_start=incumbent_solution.vaccinated,
@@ -826,7 +893,7 @@ class PrescriptiveDELPHIModel:
                     break
 
                 # Update incumbent and previous solution
-                previous_solution, incumbent_solution = incumbent_solution, self.simulate(vaccinated=vaccinated)
+                previous_solution, incumbent_solution = incumbent_solution, self.simulate(vaccinated=vaccinated,locations=locations)
                 previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_objective_value()
                 incumbent_solution.capacity = capacity
                 trajectory.append(incumbent_obj_val)
