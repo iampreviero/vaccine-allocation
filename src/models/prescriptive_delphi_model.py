@@ -162,12 +162,12 @@ class PrescriptiveDELPHIModel:
         self.county_city_to_distance = allocation_params["county_city_to_distance"]
         self.county_to_state = allocation_params["county_to_state"]
         self.state_to_counties = allocation_params["state_to_counties"]
-        # TODO: tell alessandro
         self.state_to_cities = allocation_params["state_to_cities"]
-        self.city_to_counties = allocation_params["city_to_counties"]
+        self.city_to_state = allocation_params["city_to_state"]
         self.distance_penalty = allocation_params["distance_penalty"]
         self._cities_budget = allocation_params["cities_budget"]
-
+        if "top_cities" in allocation_params:
+            self.top_cities = allocation_params["top_cities"]
         # Initialize helper attributes
         self._n_simulate_timesteps_per_optimize_step = n_simulate_timesteps_per_optimize_step
         self._n_regions = self.initial_susceptible.shape[0]
@@ -175,7 +175,6 @@ class PrescriptiveDELPHIModel:
         self._n_risk_classes = self.initial_susceptible.shape[1]
         self._n_cities = allocation_params["n_cities"]
         self._n_included_risk_classes = self._n_risk_classes - self.excluded_risk_classes.shape[0]
-        # TODO: Daily Vaccine Budget - remind
         self._n_timesteps = self.vaccine_budget.shape[0]
         self._regions = np.arange(self._n_regions)
         self._risk_classes = np.arange(self._n_risk_classes)
@@ -193,10 +192,11 @@ class PrescriptiveDELPHIModel:
 
     def simulate(
             self,
+            locations: np.ndarray,
             vaccinated: Optional[np.ndarray] = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
-            locations: np.ndarray
+            top_cities_allocation: bool = False
     ) -> DELPHISolution:
         """
         Solve DELPHI IVP using a forward difference scheme.
@@ -257,44 +257,56 @@ class PrescriptiveDELPHIModel:
 
             # Allocate vaccines if required
             if eligible.sum() and allocate_vaccines:
-
+                
+                
+                
+                
+                if top_cities_allocation:
+                    for city in np.where(self.top_cities > 0.5):
+                        j = self.city_to_state[city]
+                        # every top city gets equally vaccinated, pro-rata risk class 
+                        vaccinated[j, k, t] = vaccinated[j, k, t] +  self.vaccine_budget[t] / len(self.top_cities) * self.population[l, :].sum() \
+                        * sum(self.population[l, k].sum() for l in self.state_to_counties[j]) / sum(self.population[l, :].sum() for l in self.state_to_counties[j])
+                
+                    
+                else:    
                 # If random allocation specified, generate feasible allocation
-                if randomize_allocation:
-                    min_vaccinated = self.min_allocation_pct * eligible[:, :, t]
-                    additional_budget = self.vaccine_budget[t] - min_vaccinated.sum()
-                    for j in region_priority_rankings:
-                        regional_budget = np.minimum(
-                            additional_budget,
-                            self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j]) - min_vaccinated[j, :].sum()
-                        )
-                        additional_budget -= regional_budget
-                        for k in risk_class_priority_rankings:
-                            if k in self._included_risk_classes:
-                                vaccinated[j, k, t] = np.minimum(regional_budget,  sum(eligible[l, k, t] for l in self.state_to_counties[j])) \
-                                    + min_vaccinated[j, k]
-                                regional_budget -= vaccinated[j, k, t]
-                                if regional_budget <= 0:
-                                    break
-                        if additional_budget <= 0:
-                            break
-
-                # Else use baseline policy that orders region-wise allocation by risk class
-                else:
-                    if prioritize_allocation:
-                        regional_budget = np.minimum(
-                            eligible[:, :, t].sum(axis=1) / eligible[:, :, t].sum() * self.vaccine_budget[t],
-                            self.max_allocation_pct * self.population.sum(axis=1)
-                        )
-                        for k in risk_class_priority_rankings:
-                            if k in self._included_risk_classes:
-                                vaccinated[:, k, t] = np.minimum(regional_budget, eligible[:, k, t])
-                                regional_budget -= vaccinated[:, k, t]
-                                if regional_budget.sum() == 0:
-                                    break
+                    if randomize_allocation:
+                        min_vaccinated = self.min_allocation_pct * eligible[:, :, t]
+                        additional_budget = self.vaccine_budget[t] - min_vaccinated.sum()
+                        for j in region_priority_rankings:
+                            regional_budget = np.minimum(
+                                additional_budget,
+                                self.max_allocation_pct * sum(self.population[l, :].sum() for l in self.state_to_counties[j]) - min_vaccinated[j, :].sum()
+                            )
+                            additional_budget -= regional_budget
+                            for k in risk_class_priority_rankings:
+                                if k in self._included_risk_classes:
+                                    vaccinated[j, k, t] = np.minimum(regional_budget, eligible[j, k, t] ) \
+                                        + min_vaccinated[j, k]
+                                    regional_budget -= vaccinated[j, k, t]
+                                    if regional_budget <= 0:
+                                        break
+                            if additional_budget <= 0:
+                                break
+    
+                    # Else use baseline policy that orders region-wise allocation by risk class
                     else:
-                        for k in self._included_risk_classes:
-                            vaccinated[:, k, t] = self.vaccine_budget[t] * self.population[:, k] / \
-                                                  self.population[:, self._included_risk_classes].sum()
+                        if prioritize_allocation:
+                            regional_budget = np.minimum(
+                                eligible[:, :, t].sum(axis=1) / eligible[:, :, t].sum() * self.vaccine_budget[t],
+                                self.max_allocation_pct * self.population.sum(axis=1)
+                            )
+                            for k in risk_class_priority_rankings:
+                                if k in self._included_risk_classes:
+                                    vaccinated[:, k, t] = np.minimum(regional_budget, eligible[:, k, t])
+                                    regional_budget -= vaccinated[:, k, t]
+                                    if regional_budget.sum() == 0:
+                                        break
+                        else:
+                            for k in self._included_risk_classes:
+                                vaccinated[:, k, t] = self.vaccine_budget[t] * self.population[:, k] / \
+                                                      self.population[:, self._included_risk_classes].sum()
 
             # Else ensure that the allocated vaccines do not exceed the eligible population
             vaccinated[:, :, t] = np.minimum(vaccinated[:, :, t], eligible[:, :, t])
@@ -394,7 +406,8 @@ class PrescriptiveDELPHIModel:
             feasibility_tol: Optional[float],
             time_limit: Optional[float],
             disable_crossover: bool,
-            output_flag: bool
+            output_flag: bool,
+            fixed_cities: bool
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
@@ -491,6 +504,11 @@ class PrescriptiveDELPHIModel:
             sum(city_indicator[i] for i in self.state_to_cities[j]) >= 1
             for j in self._regions 
         )
+        if fixed_cities:
+            model.addConstrs(
+                city_indicator[i] == self.top_cities[i]
+                for j in self._regions for i in self.state_to_cities[j]
+            )
         # Vaccine Budget
         model.addConstrs(
             vaccines_distributed.sum("*",t) <= sum(self.vaccine_budget[tau] for tau in self.optimize_timestep_to_timestep[t])
@@ -503,7 +521,7 @@ class PrescriptiveDELPHIModel:
         )
         # Consistency with distribution of vaccines
         model.addConstrs(
-            sum(vaccinated_per_county_city[l,i,k,t] for l in self.city_to_counties[i] for k in self._risk_classes) <= vaccines_distributed[i,t]
+            sum(vaccinated_per_county_city[l,i,k,t] for l in self.state_to_counties[self.city_to_state[i]] for k in self._risk_classes) <= vaccines_distributed[i,t]
             for t in self._optimize_timesteps for i in self._n_cities
         )
         # Cannot exceed eligible population
@@ -815,7 +833,8 @@ class PrescriptiveDELPHIModel:
             smoothing_window: int = 1,
             rounding_tol: float = 1e-2,
             log: bool = False,
-            seed: int = 0
+            seed: int = 0,
+            fixed_cities: bool = False
     ) -> DELPHISolution:
         """
         Solve the prescriptive DELPHI model for vaccine allocation using a coordinate descent heuristic.
@@ -885,7 +904,8 @@ class PrescriptiveDELPHIModel:
                         feasibility_tol=feasibility_tol,
                         time_limit=time_limit,
                         disable_crossover=disable_crossover,
-                        output_flag=output_flag
+                        output_flag=output_flag,
+                        fixed_cities=fixed_cities
                     )
                 except GurobiError:
                     if log:
