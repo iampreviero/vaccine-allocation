@@ -4976,3 +4976,19 @@ Changed value of parameter Crossover to 0
 Gurobi 8.1.0 (win64, Python) logging started 01/31/21 20:21:07
 
 Academic license - for non-commercial use only
+Changed value of parameter BarConvTol to 1e-05
+   Prev: 1e-08  Min: 0.0  Max: 1.0  Default: 1e-08
+Changed value of parameter Method to 2
+   Prev: -1  Min: -1  Max: 5  Default: -1
+Changed value of parameter Crossover to 0
+   Prev: -1  Min: -1  Max: 5  Default: -1
+
+Gurobi 8.1.0 (win64, Python) logging started 01/31/21 20:27:29
+
+Academic license - for non-commercial use only
+Changed value of parameter BarConvTol to 1e-05
+   Prev: 1e-08  Min: 0.0  Max: 1.0  Default: 1e-08
+Changed value of parameter Method to 2
+   Prev: -1  Min: -1  Max: 5  Default: -1
+Changed value of parameter Crossover to 0
+   Prev: -1  Min: -1  Max: 5  Default: -1
