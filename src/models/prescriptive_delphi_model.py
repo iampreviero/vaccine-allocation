@@ -416,7 +416,7 @@ class PrescriptiveDELPHIModel:
             time_limit: Optional[float],
             output_flag: bool,
             fixed_cities: bool,
-            use_baseline_city: Optional[bool] = False
+            use_baseline_city: Optional[bool] = True
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
@@ -524,6 +524,7 @@ class PrescriptiveDELPHIModel:
             * estimated_infectious[j, t] * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             exposed[j, k, t + 1] - exposed[j, k, t] >= (
                     self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
@@ -533,6 +534,7 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             infectious[j, k, t + 1] - infectious[j, k, t] >= (
                     self.progression_rate * exposed[j, k, t]
@@ -540,6 +542,7 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             hospitalized_dying[j, k, t + 1] - hospitalized_dying[j, k, t] >= (
                     self.ihd_transition_rate[j, k, t] * infectious[j, k, t]
@@ -547,6 +550,7 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             quarantined_dying[j, k, t + 1] - quarantined_dying[j, k, t] >= (
                     self.iqd_transition_rate[j, k, t] * infectious[j, k, t]
@@ -571,18 +575,18 @@ class PrescriptiveDELPHIModel:
         )
 
         # Set bounding constraint on absolute error of estimated infectious
-        model.addConstrs(
-            infectious_error[j, t] <= exploration_tol
-            for j in self._regions for t in self._timesteps
-        )
-        model.addConstrs(
-            infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
-            for j in self._regions for t in self._timesteps
-        )
-        model.addConstrs(
-            infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
-            for j in self._regions for t in self._timesteps
-        )
+        # model.addConstrs(
+        #     infectious_error[j, t] <= exploration_tol
+        #     for j in self._regions for t in self._timesteps
+        # )
+        # model.addConstrs(
+        #     infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
+        #     for j in self._regions for t in self._timesteps
+        # )
+        # model.addConstrs(
+        #     infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
+        #     for j in self._regions for t in self._timesteps
+        # )
 
         # Set eligibility constraints
         model.addConstrs(
@@ -602,10 +606,10 @@ class PrescriptiveDELPHIModel:
             for j in self._regions for k in self.excluded_risk_classes for t in self._timesteps
         )
 
-        model.addConstrs(
-            vaccinated.sum(j, "*", t) >= self.min_allocation_pct * eligible.sum(j, "*", t)
-            for j in self._regions for t in self._timesteps
-        )
+        # model.addConstrs(
+        #     vaccinated.sum(j, "*", t) >= self.min_allocation_pct * eligible.sum(j, "*", t)
+        #     for j in self._regions for t in self._timesteps
+        # )
 
         model.addConstrs(
             vaccinated.sum(j, "*", t + 1) >= vaccinated.sum(j, "*", t)
@@ -619,10 +623,10 @@ class PrescriptiveDELPHIModel:
             for j in self._regions for t in self._timesteps[:-1]
         )
 
-        model.addConstrs(
-            vaccinated.sum(j, "*", t) <= self.max_allocation_pct * self.state_population[j, :].sum()
-            for j in self._regions for t in self._timesteps
-        )
+        # model.addConstrs(
+        #     vaccinated.sum(j, "*", t) <= self.max_allocation_pct * self.state_population[j, :].sum()
+        #     for j in self._regions for t in self._timesteps
+        # )
 
         # Set constraints for surplus and unallocated vaccines
         model.addConstrs(

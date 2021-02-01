@@ -44,7 +44,7 @@ MAX_MORTALITY_RATE = 0.3
 REGULARIZATION_PARAM = 0.1
 
 # Coordinate descent algorithm parameters
-EXPLORATION_TOL = 1e5
+EXPLORATION_TOL = 5e6
 TERMINATION_TOL = 5e2
 MAX_ITERATIONS = 10
 N_EARLY_STOPPING_ITERATIONS = 1
@@ -76,7 +76,7 @@ DATES_GRID = [
     # dict(start_date=dt.datetime(2020, 4, 20), end_date=dt.datetime(2020, 7, 15)),
     dict(start_date=dt.datetime(2021, 1, 30), end_date=dt.datetime(2021, 4, 30))
 ]
-VACCINE_EFFECTIVENESS_GRID = [1.0]
+VACCINE_EFFECTIVENESS_GRID = [0.9]
 DAILY_VACCINE_BUDGET_GRID = [1.2e6]
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
 
