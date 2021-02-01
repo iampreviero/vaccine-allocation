@@ -70,6 +70,7 @@ class Scenario:
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
         counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
+        baseline_centers_df = pd.read_csv(BASELINE_CENTERS_PATH)
 
         # Get processed data for model
         initial_conditions = get_initial_conditions(
@@ -90,7 +91,8 @@ class Scenario:
 
         allocation_params = get_allocation_params(county_pop_df=county_pop_df,
                                                   counties_dists_df=counties_dists_df,
-                                                  selected_centers_df=selected_centers_df)
+                                                  selected_centers_df=selected_centers_df,
+                                                  baseline_centers_df=baseline_centers_df)
 
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
@@ -127,7 +129,6 @@ class Scenario:
             termination_tol=TERMINATION_TOL,
             max_iterations=MAX_ITERATIONS,
             n_early_stopping_iterations=N_EARLY_STOPPING_ITERATIONS,
-            barrier_conv_tol=BARRIER_CONV_TOL,
             log=True
         )
         if optimized_solution_path:

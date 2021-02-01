@@ -264,7 +264,8 @@ def get_delphi_params(
 
 def get_allocation_params(county_pop_df,
                           counties_dists_df,
-                          selected_centers_df):
+                          selected_centers_df,
+                          baseline_centers_df):
 
     county_pop_mat = county_pop_df.iloc[:, 2:].to_numpy()
     counties_dists_mat = counties_dists_df.to_numpy()
@@ -296,6 +297,8 @@ def get_allocation_params(county_pop_df,
     cities_budget = 100
     n_cities = selected_centers_df.shape[0]
 
+    baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
+
     allocation_params = {
         'population': county_pop_mat,
         'state_lookup': state_lookup,
@@ -309,7 +312,8 @@ def get_allocation_params(county_pop_df,
         'city_to_state': city_to_state,
         'distance_penalty': distance_penalty,
         'cities_budget': cities_budget,
-        'n_cities': n_cities
+        'n_cities': n_cities,
+        'baseline_centers': baseline_centers
     }
 
     return allocation_params

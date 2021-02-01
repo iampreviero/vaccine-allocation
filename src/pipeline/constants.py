@@ -9,6 +9,7 @@ POPULATION_DATA_PATH = "../data/inputs/population.csv"
 COUNTY_POP_DATA_PATH = "../data/inputs/county_pop_clean.csv"
 COUNTY_DISTS_PATH = "../data/inputs/counties_distances.csv"
 SELECTED_CENTERS_PATH = "../data/inputs/selected_centers.csv"
+BASELINE_CENTERS_PATH = "../data/inputs/baseline_allocation_cities.csv"
 
 # Output paths
 MODEL_PATH_PATH = "../data/outputs/model-"
@@ -39,7 +40,7 @@ MIN_LAG = 2
 MAX_LAG = 20
 MAX_PCT_CHANGE = 0.2
 MIN_MORTALITY_RATE = 0
-MAX_MORTALITY_RATE = 0.2
+MAX_MORTALITY_RATE = 0.3
 REGULARIZATION_PARAM = 0.1
 
 # Coordinate descent algorithm parameters
@@ -76,6 +77,6 @@ DATES_GRID = [
     dict(start_date=dt.datetime(2021, 1, 30), end_date=dt.datetime(2021, 4, 30))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
-DAILY_VACCINE_BUDGET_GRID = [1e6]
+DAILY_VACCINE_BUDGET_GRID = [1.2e6]
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
 
