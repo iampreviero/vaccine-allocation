@@ -68,7 +68,7 @@ class Scenario:
         cdc_df = pd.read_csv(CDC_DATA_PATH)
         pop_df = pd.read_csv(POPULATION_DATA_PATH)
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
-        counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH)
+        counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
 
         # Get processed data for model
