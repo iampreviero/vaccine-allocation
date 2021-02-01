@@ -825,7 +825,7 @@ class PrescriptiveDELPHIModel:
                 randomize_allocation=n_restarts > 1,
                 prioritize_allocation=True
             )
-            incumbent_obj_val = incumbent_solution.get_objective_value()
+            incumbent_obj_val = incumbent_solution.get_total_deaths()
             trajectory = [incumbent_obj_val]
             best_solution_for_restart = None
             best_obj_val_for_restart = np.inf
@@ -858,7 +858,7 @@ class PrescriptiveDELPHIModel:
                 # Update incumbent and previous solution
                 previous_solution, incumbent_solution = incumbent_solution, self.simulate(vaccinated=vaccinated,
                                                                                           locations=locations)
-                previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_objective_value()
+                previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_total_deaths()
                 trajectory.append(incumbent_obj_val)
                 if log:
                     print(
@@ -913,5 +913,5 @@ class PrescriptiveDELPHIModel:
             rounding_tol=rounding_tol
         )
         if log:
-            print(f"Objective value after post-processing: {'{0:.2f}'.format(best_solution.get_objective_value())}")
+            print(f"Objective value after post-processing: {'{0:.2f}'.format(best_solution.get_total_deaths())}")
         return best_solution

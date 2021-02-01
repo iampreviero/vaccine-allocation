@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
         start_date = scenario_params["start_date"]
         end_date = scenario_params["start_date"]
-        mortality_rate_path = f"{MORTALITY_RATES_PATH}2021.npy"
+        mortality_rate_path = f"{MORTALITY_RATES_PATH}2021-base.npy"
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
 
         baseline_obj_val, optimized_obj_val = Scenario(**scenario_params).run(
