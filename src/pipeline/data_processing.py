@@ -281,12 +281,12 @@ def get_allocation_params(county_pop_df,
     county_lookup = {idx: fips for idx, fips in enumerate(county_pop_df['county_state'])}
     city_lookup = {idx: name for idx, name in enumerate(selected_centers_df['city'])}
 
-    county_to_state = {states.index(county_pop_df.iloc[idx]['state']) for idx in range(county_pop_df.shape[0])}
+    county_to_state = {idx: states.index(county_pop_df.iloc[idx]['state']) for idx in range(county_pop_df.shape[0])}
 
     state_to_counties = {idx: list(county_pop_df[county_pop_df.state == state].index)
                          for idx, state in enumerate(states)}
 
-    state_to_cities = {idx: selected_centers_df[selected_centers_df.state == state].index
+    state_to_cities = {idx: list(selected_centers_df[selected_centers_df.state == state].index)
                        for idx, state in enumerate(states)}
 
     city_to_state = {idx: states.index(selected_centers_df.iloc[idx]['state'])
