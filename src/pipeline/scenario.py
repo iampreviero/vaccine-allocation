@@ -26,7 +26,9 @@ class Scenario:
             max_decrease_pct: float = MAX_DECREASE_PCT,
             excluded_risk_classes: List[int] = EXCLUDED_RISK_CLASSES,
             max_total_capacity: Optional[float] = None,
-            optimize_capacity: bool = OPTIMIZE_CAPACITY
+            optimize_capacity: bool = OPTIMIZE_CAPACITY,
+            distance_penalty: float = DISTANCE_PENALTY,
+            cities_budget: int = CITIES_BUDGET
     ):
         self.start_date = start_date
         self.end_date = end_date
@@ -39,6 +41,8 @@ class Scenario:
         self.max_decrease_pct = max_decrease_pct
         self.excluded_risk_classes = excluded_risk_classes
         self.optimize_capacity = optimize_capacity
+        self.distance_penalty = distance_penalty
+        self.cities_budget = cities_budget
 
     def get_vaccine_params(
             self,
@@ -91,6 +95,8 @@ class Scenario:
         allocation_params = get_allocation_params(county_pop_df=county_pop_df,
                                                   counties_dists_df=counties_dists_df,
                                                   selected_centers_df=selected_centers_df)
+        allocation_params["distance_penalty"] = self.distance_penalty
+        allocation_params["cities_budget"] = self.cities_budget
 
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(

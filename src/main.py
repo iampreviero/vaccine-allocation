@@ -12,12 +12,16 @@ if __name__ == "__main__":
             **dates,
             vaccine_effectiveness=vaccine_effectiveness,
             daily_vaccine_budget=daily_vaccine_budget,
-            min_allocation_factor=min_allocation_factor
+            min_allocation_factor=min_allocation_factor,
+            distance_penalty=distance_penalty,
+            cities_budget=cities_budget
         )
         for dates in DATES_GRID
         for vaccine_effectiveness in VACCINE_EFFECTIVENESS_GRID
         for daily_vaccine_budget in DAILY_VACCINE_BUDGET_GRID
         for min_allocation_factor in MIN_ALLOCATION_FACTOR_GRID
+        for distance_penalty in DISTANCE_PENALTY_GRID
+        for cities_budget in CITIES_BUDGET_GRID
     ]
 
     for i, scenario_params in enumerate(scenario_params_grid):

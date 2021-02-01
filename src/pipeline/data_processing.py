@@ -292,8 +292,6 @@ def get_allocation_params(county_pop_df,
     city_to_state = {idx: states.index(selected_centers_df.iloc[idx]['state'])
                      for idx in range(selected_centers_df.shape[0])}
 
-    distance_penalty = 1e-4
-    cities_budget = 100
     n_cities = selected_centers_df.shape[0]
 
     allocation_params = {
@@ -307,8 +305,6 @@ def get_allocation_params(county_pop_df,
         'state_to_counties': state_to_counties,
         'state_to_cities': state_to_cities,
         'city_to_state': city_to_state,
-        'distance_penalty': distance_penalty,
-        'cities_budget': cities_budget,
         'n_cities': n_cities
     }
 
