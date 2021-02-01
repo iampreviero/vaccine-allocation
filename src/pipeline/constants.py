@@ -76,7 +76,7 @@ DATES_GRID = [
     # dict(start_date=dt.datetime(2020, 4, 20), end_date=dt.datetime(2020, 7, 15)),
     dict(start_date=dt.datetime(2021, 1, 30), end_date=dt.datetime(2021, 4, 30))
 ]
-VACCINE_EFFECTIVENESS_GRID = [0.9]
+VACCINE_EFFECTIVENESS_GRID = [1.0]
 DAILY_VACCINE_BUDGET_GRID = [1.2e6]
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
 

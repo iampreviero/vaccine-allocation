@@ -83,8 +83,11 @@ class DELPHISolution:
         return self.deceased[:, :, -1].sum()
 
     def get_objective_value(self) -> float:
-        return (self.deceased + self.hospitalized_dying + self.quarantined_dying + self.undetected_dying)[:, :,
-               -2].sum()
+        # (self.deceased + self.hospitalized_dying + self.quarantined_dying + self.undetected_dying)[:, :,
+        # -2].sum()
+
+        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -2].sum()
+        return total
 
     def get_total_cases(self) -> float:
         infectious = self.infectious.sum(axis=(0, 1))
@@ -377,13 +380,12 @@ class PrescriptiveDELPHIModel:
             undetected_recovering[:, :, t + 1] = np.maximum(undetected_recovering[:, :, t + 1], 0)
 
             deceased[:, :, t + 1] = deceased[:, :, t] + self.death_rate[:, None] * (
-                    hospitalized_dying[:, :, t] + quarantined_dying[:, :, t] + undetected_dying[:, :, t]
+                    hospitalized_dying[:, :, t] + quarantined_dying[:, :, t] # + undetected_dying[:, :, t]
             ) * self.days_per_timestep
 
             recovered[:, :, t + 1] = recovered[:, :, t] + (
                     self.hospitalized_recovery_rate * hospitalized_recovering[:, :, t]
-                    + self.unhospitalized_recovery_rate * (
-                                quarantined_recovering[:, :, t] + undetected_recovering[:, :, t])
+                    + self.unhospitalized_recovery_rate * (quarantined_recovering[:, :, t]) # + undetected_recovering[:, :, t])
             ) * self.days_per_timestep
 
         return DELPHISolution(
@@ -552,6 +554,7 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             undetected_dying[j, k, t + 1] - undetected_dying[j, k, t] >= (
                     self.iud_transition_rate[j, k, t] * infectious[j, k, t]
@@ -559,9 +562,10 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
+
         model.addConstrs(
             deceased[j, k, t + 1] - deceased[j, k, t] >= self.death_rate[j] * (
-                    hospitalized_dying[j, k, t] + quarantined_dying[j, k, t] + undetected_dying[j, k, t]
+                    hospitalized_dying[j, k, t] + quarantined_dying[j, k, t] # + undetected_dying[j, k, t]
             ) * self.days_per_timestep
             for j in self._regions for k in self._risk_classes for t in self._timesteps
         )
@@ -634,7 +638,7 @@ class PrescriptiveDELPHIModel:
         # Set objective
         model.setObjective(
             deceased.sum("*", "*", self._n_timesteps) + hospitalized_dying.sum("*", "*", self._n_timesteps)
-            + quarantined_dying.sum("*", "*", self._n_timesteps) + undetected_dying.sum("*", "*", self._n_timesteps)
+            + quarantined_dying.sum("*", "*", self._n_timesteps) # + undetected_dying.sum("*", "*", self._n_timesteps)
             + unallocated_vaccines.sum() + surplus_vaccines.sum(),
             GRB.MINIMIZE
         )
@@ -649,7 +653,7 @@ class PrescriptiveDELPHIModel:
         if time_limit:
             model.params.TimeLimit = time_limit
 
-        model.params.OutputFlag = output_flag
+        model.params.OutputFlag = True
 
         # Solve model
         model.optimize()
