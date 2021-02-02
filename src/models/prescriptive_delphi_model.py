@@ -195,7 +195,6 @@ class PrescriptiveDELPHIModel:
         for opt_timestep in self._optimize_timesteps:
             self.optimize_timestep_to_timestep[opt_timestep] = np.arange(start=opt_timestep, stop=min(
                 opt_timestep + self._n_simulate_timesteps_per_optimize_step, self._n_timesteps))
-            
 
         # Storage attributes
         self._trajectories = []
@@ -441,7 +440,6 @@ class PrescriptiveDELPHIModel:
         respectively represent the vaccine allocation policy and the regional allocation capacities
         allocations
         """
-
         # Initialize model
         model = gp.Model()
 
@@ -462,7 +460,6 @@ class PrescriptiveDELPHIModel:
         city_indicator = model.addVars(self._n_regions, vtype=GRB.INTEGER)
         max_center_density = model.addVar(lb=0)
         min_center_density = model.addVar(lb=0)
-
 
         if use_baseline_city:
             model.addConstrs(city_indicator[j] == self.baseline_centers[j] for j in self._regions)
@@ -502,32 +499,31 @@ class PrescriptiveDELPHIModel:
             vaccinated[j, k, self._n_timesteps] == 0
             for j in self._regions for k in self._risk_classes
         )
-
+#
         # Set facility location constraints
-        model.addConstr(
-            city_indicator.sum("*") == self._cities_budget
-        )
+        model.addConstr(city_indicator.sum("*") == self._cities_budget)
 
         model.addConstrs(
             city_indicator[j] >= 1 for j in self._regions
         )
-        
+
 #        model.addConstrs(
 #            city_indicator[j] <= 10 for j in self._regions
-#        )        
-#        
+#        )
+#
         # balanced location
         model.addConstrs(
             city_indicator[j] <= self.state_population[j,:].sum() / self.state_population.sum() * self._cities_budget + self._balanced_location for j in self._regions
         )
+
         # center density
         model.addConstrs(
-            city_indicator[j] / (self.state_population[j,:].sum() /  1e6) <= max_center_density for j in self._regions
+            city_indicator[j] / (self.state_population[j,:].sum() / 1e5) <= max_center_density for j in self._regions
         )
-        
+
         model.addConstrs(
-            city_indicator[j] / (self.state_population[j,:].sum() / 1e6) >= min_center_density for j in self._regions
-        )       
+            city_indicator[j] / (self.state_population[j,:].sum() / 1e5) >= min_center_density for j in self._regions
+        )
 
         model.addConstrs(
             city_indicator[j] <= len(self.state_to_cities[j]) for j in self._regions
@@ -890,7 +886,8 @@ class PrescriptiveDELPHIModel:
                         fixed_cities=fixed_cities
                     )
 
-                except GurobiError:
+                except GurobiError as error:
+                    print(error)
                     if log:
                         print("Infeasible relaxation - terminating search")
                     break
