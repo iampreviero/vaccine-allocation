@@ -10866,3 +10866,54 @@ Solution count 6: 1.61709e+09 1.61709e+09 1.6175e+09 ... 1.72772e+09
 Optimal solution found (tolerance 1.00e-04)
 Warning: max bound violation (2.0764e-06) exceeds tolerance
 Best objective 1.617091971513e+09, best bound 1.617091958897e+09, gap 0.0000%
+
+Gurobi 8.1.0 (win64, Python) logging started 02/01/21 22:45:40
+
+Academic license - for non-commercial use only
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+Optimize a model with 255397 rows, 255653 columns and 1731117 nonzeros
+Variable types: 255602 continuous, 51 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [2e-10, 6e+03]
+  Objective range  [1e+00, 1e+09]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 2e+07]
+Warning: Model contains large matrix coefficient range
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 186604 rows and 191788 columns (presolve time = 5s) ...
+Presolve removed 197530 rows and 202798 columns (presolve time = 10s) ...
+Presolve removed 209144 rows and 215287 columns
+Presolve time: 11.45s
+Presolved: 46253 rows, 40366 columns, 729878 nonzeros
+Variable types: 40325 continuous, 41 integer (0 binary)
+Warning: Markowitz tolerance tightened to 0.03125
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0   -2.4271415e+30   1.431584e+38   2.427136e+00     12s
+   24782    1.3085130e+09   1.720182e+07   0.000000e+00     15s
+   40486    1.3085308e+09   1.094673e+07   0.000000e+00     20s
+   57241    1.3085424e+09   3.381449e+05   0.000000e+00     25s
+   65259    1.6136552e+09   0.000000e+00   0.000000e+00     28s
+
+Root relaxation: objective 1.613655e+09, 65259 iterations, 16.20 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 1.6137e+09    0   11          - 1.6137e+09      -     -   28s
+H    0     0                    1.705778e+09 1.6137e+09  5.40%     -   30s
+H    0     0                    1.613657e+09 1.6137e+09  0.00%     -   32s
+
+Explored 1 nodes (65262 simplex iterations) in 32.19 seconds
+Thread count was 12 (of 12 available processors)
+
+Solution count 2: 1.61366e+09 1.70578e+09 
+
+Optimal solution found (tolerance 1.00e-04)
+Warning: max constraint violation (3.1739e-06) exceeds tolerance
+Warning: max bound violation (3.1739e-06) exceeds tolerance
+Best objective 1.613657446256e+09, best bound 1.613655200239e+09, gap 0.0001%

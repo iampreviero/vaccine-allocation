@@ -186,6 +186,7 @@ class PrescriptiveDELPHIModel:
         self._n_timesteps = self.vaccine_budget.shape[0]
         self._timesteps = np.arange(self._n_timesteps)
         self._political_factor = allocation_params["political_factor"] 
+        self._balanced_location = allocation_params["balanced_location"] 
         self._optimize_timesteps = np.array(
             [x for x in self._timesteps if x % self._n_simulate_timesteps_per_optimize_step == 0])
         self._n_optimize_timesteps = len(self._optimize_timesteps)
@@ -515,10 +516,14 @@ class PrescriptiveDELPHIModel:
 #            city_indicator[j] <= 10 for j in self._regions
 #        )        
 #        
+        # balanced location
+        model.addConstrs(
+            city_indicator[j] <= self.state_population[j,:].sum() / self.state_population.sum() * self._cities_budget + self._balanced_location for j in self._regions
+        )
+        # center density
         model.addConstrs(
             city_indicator[j] / (self.state_population[j,:].sum() /  1e6) <= max_center_density for j in self._regions
         )
-        
         
         model.addConstrs(
             city_indicator[j] / (self.state_population[j,:].sum() / 1e6) >= min_center_density for j in self._regions
