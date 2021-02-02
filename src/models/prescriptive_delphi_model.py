@@ -206,7 +206,7 @@ class PrescriptiveDELPHIModel:
             locations: Optional[np.ndarray] = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
-            top_cities_allocation: bool = False
+            top_cities_allocation: bool = True
     ) -> DELPHISolution:
         """
         Solve DELPHI IVP using a forward difference scheme.
@@ -262,24 +262,17 @@ class PrescriptiveDELPHIModel:
         # Propagate discrete DELPHI dynamics with vaccine allocation heuristic
         for t in self._timesteps:
 
-            # Get eligible population subsets for vaccination
-            eligible[:, self._included_risk_classes, t] = susceptible[:, self._included_risk_classes, t] \
-                                                          - (1 - self.vaccine_effectiveness) * vaccinated[:,
-                                                                                               self._included_risk_classes,
-                                                                                               :t].sum(axis=2)
-            eligible = np.maximum(eligible, 0)
-
             # Allocate vaccines if required
             if eligible.sum() and allocate_vaccines:
 
                 if top_cities_allocation:
-                    for city in np.where(self.top_cities > 0.5):
-                        j = self.city_to_state[city]
-                        # every top city gets equally vaccinated, pro-rata risk class 
-                        for k in self._included_risk_classes:
-                            vaccinated[j, k, t] = vaccinated[j, k, t] + self.vaccine_budget[t] / len(self.top_cities) \
-                                                  * self.state_population[j, k] / self.state_population[
-                                                      j, self._included_risk_classes].sum()
+                    regional_budget = self.vaccine_budget[t]/self._cities_budget * self.baseline_centers
+                    for k in risk_class_priority_rankings:
+                        if k in self._included_risk_classes:
+                            vaccinated[:, k, t] = np.minimum(regional_budget, eligible[:, k, t])
+                            regional_budget -= vaccinated[:, k, t]
+                            if regional_budget.sum() == 0:
+                                break
 
                 else:
                     # If random allocation specified, generate feasible allocation
@@ -330,6 +323,11 @@ class PrescriptiveDELPHIModel:
                         * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
                         * infectious[j, :, t].sum()
                 ) * self.days_per_timestep
+                eligible[j, :, t + 1] = eligible[j, :, t] - vaccinated[j, :, t] - (
+                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                        * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
+                        * infectious[j, :, t].sum()
+                ) * self.days_per_timestep
                 exposed[j, :, t + 1] = exposed[j, :, t] + (
                         self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
                         * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
@@ -338,6 +336,7 @@ class PrescriptiveDELPHIModel:
                 ) * self.days_per_timestep
             susceptible[:, :, t + 1] = np.maximum(susceptible[:, :, t + 1], 0)
             exposed[:, :, t + 1] = np.maximum(exposed[:, :, t + 1], 0)
+            eligible[:, :, t + 1] = np.maximum(eligible[:, :, t + 1], 0)
 
             infectious[:, :, t + 1] = infectious[:, :, t] + (
                     self.progression_rate * exposed[:, :, t]
@@ -609,8 +608,8 @@ class PrescriptiveDELPHIModel:
 
         # Set eligibility constraints
         model.addConstrs(
-            eligible[j, k, t] == susceptible[j, k, t] - (1 - self.vaccine_effectiveness)
-            * gp.quicksum(vaccinated[j, k, u] for u in self._timesteps if u < t)
+            eligible[j, k, t + 1] <= eligible[j, k, t] - (1 - self.vaccine_effectiveness)
+            * vaccinated[j, k, t] - (susceptible[j, k, t] - susceptible[j, k, t + 1])
             for j in self._regions for k in self._included_risk_classes for t in self._timesteps
         )
 
