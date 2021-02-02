@@ -386,7 +386,7 @@ class PrescriptiveDELPHIModel:
 
             recovered[:, :, t + 1] = recovered[:, :, t] + (
                     self.hospitalized_recovery_rate * hospitalized_recovering[:, :, t]
-                    + self.unhospitalized_recovery_rate * (quarantined_recovering[:, :, t] #  + undetected_recovering[:, :, t])
+                    + self.unhospitalized_recovery_rate * quarantined_recovering[:, :, t] #  + undetected_recovering[:, :, t]
             ) * self.days_per_timestep
 
         return DELPHISolution(
