@@ -10,7 +10,7 @@ from pipeline.data_processing import (calculate_n_timesteps,
                                       get_delphi_params,
                                       get_allocation_params)
 from models.prescriptive_delphi_model import PrescriptiveDELPHIModel
-
+import numpy as np
 
 class Scenario:
 
@@ -124,7 +124,7 @@ class Scenario:
                 np.save(fp, model.mortality_rate)
 
         print("Running baseline...")
-        baseline_solution = model.simulate(prioritize_allocation=False)
+        baseline_solution = model.simulate(prioritize_allocation=False, top_cities_allocation=True)
         if baseline_solution_path:
             with open(baseline_solution_path, "wb") as fp:
                 pickle.dump(baseline_solution, fp)
