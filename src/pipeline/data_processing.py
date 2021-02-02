@@ -194,12 +194,12 @@ def get_initial_conditions(
         initial_susceptible[j, :] = state["susceptible"] * pop_proportions
         initial_exposed[j, :] = state["exposed"] * pop_proportions
         initial_infectious[j, :] = state["infectious"] * pop_proportions
-        initial_hospitalized_dying =  state["hospitalized_dying"] * pop_proportions
-        initial_quarantined_dying =  state["quarantined_dying"] * pop_proportions
-        initial_undetected_dying =  state["undetected_dying"] * pop_proportions
-        initial_hospitalized_recovering =  state["hospitalized_recovering"] * pop_proportions
-        initial_quarantined_recovering =  state["quarantined_recovering"] * pop_proportions
-        initial_undetected_recovering =  state["undetected_recovering"] * pop_proportions
+        initial_hospitalized_dying[j, :] =  state["hospitalized_dying"] * pop_proportions
+        initial_quarantined_dying[j, :] =  state["quarantined_dying"] * pop_proportions
+        initial_undetected_dying[j, :] =  state["undetected_dying"] * pop_proportions
+        initial_hospitalized_recovering[j, :] =  state["hospitalized_recovering"] * pop_proportions
+        initial_quarantined_recovering[j, :] =  state["quarantined_recovering"] * pop_proportions
+        initial_undetected_recovering[j, :] =  state["undetected_recovering"] * pop_proportions
     # Return dictionary of all initial conditions
     return dict(
         initial_susceptible=initial_susceptible,
