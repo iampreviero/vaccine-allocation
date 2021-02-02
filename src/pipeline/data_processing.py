@@ -88,7 +88,6 @@ def get_mortality_rate_estimates(
         cdc_df: pd.DataFrame,
         params_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
-        county_pop_df: pd.DataFrame,
         start_date: dt.datetime,
         end_date: dt.datetime
 ) -> np.ndarray:
@@ -107,7 +106,7 @@ def get_mortality_rate_estimates(
     mortality_rate = np.ndarray((N_REGIONS, N_RISK_CLASSES, n_timesteps))
 
     # Perform estimation for each state
-    for j, state in enumerate(county_pop_df["state"].unique()):
+    for j, state in enumerate(pop_df["state"].unique()):
         cases = predictions_df[
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date)
@@ -171,7 +170,6 @@ def get_hospitalization_rate_by_risk_class(cdc_df: pd.DataFrame) -> np.ndarray:
 def get_initial_conditions(
         pop_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
-        county_pop_df: pd.DataFrame,
         start_date: dt.datetime
 ) -> Dict[str, np.ndarray]:
     # Get population by state and risk class
@@ -212,7 +210,6 @@ def get_delphi_params(
         cdc_df: pd.DataFrame,
         params_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
-        county_pop_df: pd.DataFrame,
         start_date: dt.datetime,
         end_date: dt.datetime,
         mortality_rate_path: Optional[str],
@@ -234,7 +231,6 @@ def get_delphi_params(
             cdc_df=cdc_df,
             params_df=params_df,
             predictions_df=predictions_df,
-            county_pop_df=county_pop_df,
             start_date=start_date,
             end_date=end_date
         )
@@ -305,7 +301,6 @@ def get_allocation_params(county_pop_df,
 
     baseline_centers_df.columns = [us.states.lookup(x).name for x in baseline_centers_df.columns]
     baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
-    print(baseline_centers)
 
     allocation_params = {
         'population': county_pop_mat,
