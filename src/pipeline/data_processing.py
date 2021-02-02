@@ -2,7 +2,6 @@ import datetime as dt
 from copy import deepcopy
 from typing import List, Dict, Union, Optional
 from gurobipy import GurobiError
-
 import pandas as pd
 import us
 
@@ -10,12 +9,12 @@ from pipeline.constants import *
 from models.mortality_rate_estimator import MortalityRateEstimator
 
 
-def get_population_by_state_and_risk_class(pop_df: pd.DataFrame,
-                                           county_pop_df: pd.DataFrame) -> np.ndarray:
-    states = list(county_pop_df.state.unique())
+def get_population_by_state_and_risk_class(pop_df: pd.DataFrame) -> np.ndarray:
+
+    states = list(pop_df.state.unique())
     population = np.zeros((len(states), len(RISK_CLASSES)))
+
     for j, state in enumerate(states):
-        state = us.states.lookup(state).name
         for k, risk_class in enumerate(RISK_CLASSES):
             population[j, k] = pop_df[
                 (pop_df["min_age"] >= risk_class["min_age"])
@@ -94,7 +93,7 @@ def get_mortality_rate_estimates(
         end_date: dt.datetime
 ) -> np.ndarray:
     # Get data
-    population = get_population_by_state_and_risk_class(pop_df=pop_df, county_pop_df=county_pop_df)
+    population = get_population_by_state_and_risk_class(pop_df=pop_df)
     baseline_mortality_rate = get_baseline_mortality_rate_estimates(
         cdc_df=cdc_df,
         predictions_df=predictions_df,
@@ -108,7 +107,7 @@ def get_mortality_rate_estimates(
     mortality_rate = np.ndarray((N_REGIONS, N_RISK_CLASSES, n_timesteps))
 
     # Perform estimation for each state
-    for j, state in enumerate(pop_df["state"].unique()):
+    for j, state in enumerate(county_pop_df["state"].unique()):
         cases = predictions_df[
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date)
@@ -176,7 +175,7 @@ def get_initial_conditions(
         start_date: dt.datetime
 ) -> Dict[str, np.ndarray]:
     # Get population by state and risk class
-    population = get_population_by_state_and_risk_class(pop_df=pop_df, county_pop_df=county_pop_df)
+    population = get_population_by_state_and_risk_class(pop_df=pop_df)
 
     # Get estimated susceptible, exposed and infectious for start date
     initial_default = np.zeros(population.shape)
@@ -304,7 +303,9 @@ def get_allocation_params(county_pop_df,
     cities_budget = 100
     n_cities = selected_centers_df.shape[0]
 
+    baseline_centers_df.columns = [us.states.lookup(x).name for x in baseline_centers_df.columns]
     baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
+    print(baseline_centers)
 
     allocation_params = {
         'population': county_pop_mat,

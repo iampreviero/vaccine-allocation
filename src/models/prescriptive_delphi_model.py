@@ -418,7 +418,7 @@ class PrescriptiveDELPHIModel:
             time_limit: Optional[float],
             output_flag: bool,
             fixed_cities: bool,
-            use_baseline_city: Optional[bool] = False
+            use_baseline_city: Optional[bool] = True
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
@@ -461,7 +461,6 @@ class PrescriptiveDELPHIModel:
         city_indicator = model.addVars(self._n_regions, vtype=GRB.INTEGER)
         max_center_density = model.addVar(lb=0)
         min_center_density = model.addVar(lb=0)
-
 
         if use_baseline_city:
             model.addConstrs(city_indicator[j] == self.baseline_centers[j] for j in self._regions)
@@ -693,8 +692,10 @@ class PrescriptiveDELPHIModel:
         ])
         locations = model.getAttr("x", city_indicator)
         locations = np.array([locations[j] for j in self._regions])
-        import pdb
-        pdb.set_trace()
+
+        # import pdb
+        # pdb.set_trace()
+
         minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
         maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
         print(f"Minimum density: {minimum_density_state}")

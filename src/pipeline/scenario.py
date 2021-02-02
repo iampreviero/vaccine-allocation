@@ -72,7 +72,7 @@ class Scenario:
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
         counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
-        baseline_centers_df = pd.read_csv(BASELINE_CENTERS_PATH)
+        baseline_centers_df = pd.read_csv(BASELINE_CENTERS_PATH, index_col=0)
 
         # Get processed data for model
         initial_conditions = get_initial_conditions(
