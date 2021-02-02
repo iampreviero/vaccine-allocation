@@ -416,7 +416,7 @@ class PrescriptiveDELPHIModel:
             time_limit: Optional[float],
             output_flag: bool,
             fixed_cities: bool,
-            use_baseline_city: Optional[bool] = True
+            use_baseline_city: Optional[bool] = False
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
