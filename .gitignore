@@ -3,3 +3,5 @@
 .DS_Store
 *.log
 *.pyc
+*.csv
+data/outputs/results.csv

@@ -767,7 +767,10 @@ class PrescriptiveDELPHIModel:
         """
         vaccinated = np.where(solution.vaccinated > rounding_tol, solution.vaccinated, 0)
         for t in self._timesteps:
-            vaccinated[:, :, t] = vaccinated[:, :, t] * self.vaccine_budget[t] / vaccinated[:, :, t].sum()
+            if vaccinated[:,:,t].sum() > 0:
+                vaccinated[:, :, t] = vaccinated[:, :, t] * self.vaccine_budget[t] / vaccinated[:, :, t].sum()
+            else:
+                vaccinated[:, :, t] = 0
         return self.simulate(vaccinated=vaccinated, locations=solution.locations)
 
     def _post_process_solution(
