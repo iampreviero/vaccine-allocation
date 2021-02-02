@@ -124,7 +124,7 @@ class Scenario:
                 np.save(fp, model.mortality_rate)
 
         print("Running baseline...")
-        baseline_solution = model.simulate(prioritize_allocation=False,vaccinated = np.zeros((model._n_regions, model._n_risk_classes, model._n_timesteps)))
+        baseline_solution = model.simulate(prioritize_allocation=False, top_cities_allocation=True)
         if baseline_solution_path:
             with open(baseline_solution_path, "wb") as fp:
                 pickle.dump(baseline_solution, fp)

@@ -206,7 +206,7 @@ class PrescriptiveDELPHIModel:
             locations: Optional[np.ndarray] = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
-            top_cities_allocation: bool = True
+            top_cities_allocation: bool = False
     ) -> DELPHISolution:
         """
         Solve DELPHI IVP using a forward difference scheme.
@@ -857,8 +857,9 @@ class PrescriptiveDELPHIModel:
 
             # Initialize restart
             incumbent_solution = self.simulate(
-                randomize_allocation=n_restarts > 1,
-                prioritize_allocation=True
+                randomize_allocation=False,
+                prioritize_allocation=False,
+                top_cities_allocation=True
             )
             incumbent_obj_val = incumbent_solution.get_total_deaths()
             trajectory = [incumbent_obj_val]
