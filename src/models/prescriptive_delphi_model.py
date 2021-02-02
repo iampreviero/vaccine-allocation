@@ -531,7 +531,7 @@ class PrescriptiveDELPHIModel:
         model.addConstrs(
             sum(vaccinated[j, k, t] for k in self._risk_classes) == self.vaccine_budget[t]/self._cities_budget *
             city_indicator[j]
-            for j in self._regions for t in range(self._n_timesteps - 1)
+            for j in self._regions for t in range(self._n_timesteps)
         )
 
         # Set DELPHI dynamics constraints
