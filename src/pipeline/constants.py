@@ -7,8 +7,8 @@ DELPHI_PREDICTIONS_PATH = "../data/inputs/delphi-predictions.csv"
 CDC_DATA_PATH = "../data/inputs/cdc-data.csv"
 POPULATION_DATA_PATH = "../data/inputs/population.csv"
 COUNTY_POP_DATA_PATH = "../data/inputs/county_pop_clean.csv"
-COUNTY_DISTS_PATH = "../data/inputs/counties_distances.csv"
-SELECTED_CENTERS_PATH = "../data/inputs/selected_centers.csv"
+COUNTY_DISTS_PATH = "../data/inputs/counties_distances_500.csv"
+SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500.csv"
 BASELINE_CENTERS_PATH = "../data/inputs/baseline_allocation_cities.csv"
 
 # Output paths
