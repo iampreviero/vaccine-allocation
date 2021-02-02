@@ -13,20 +13,22 @@ if __name__ == "__main__":
             vaccine_effectiveness=vaccine_effectiveness,
             daily_vaccine_budget=daily_vaccine_budget,
             min_allocation_factor=min_allocation_factor,
-            political_factor=political_factor
+            political_factor=political_factor,
+            balanced_location=balanced_location
         )
         for dates in DATES_GRID
         for vaccine_effectiveness in VACCINE_EFFECTIVENESS_GRID
         for daily_vaccine_budget in DAILY_VACCINE_BUDGET_GRID
         for min_allocation_factor in MIN_ALLOCATION_FACTOR_GRID
         for political_factor in POLITICAL_FACTOR_GRID
+        for balanced_location in BALANCED_LOCATIONS_GRID
     ]
 
     for i, scenario_params in enumerate(scenario_params_grid):
 
         start_date = scenario_params["start_date"]
         end_date = scenario_params["start_date"]
-        mortality_rate_path = f"{MORTALITY_RATES_PATH}2021.npy"
+        mortality_rate_path = f"{MORTALITY_RATES_PATH}2021-base.npy"
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
 
         baseline_obj_val, optimized_obj_val = Scenario(**scenario_params).run(

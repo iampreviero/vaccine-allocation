@@ -25,6 +25,7 @@ class Scenario:
             max_increase_pct: float = MAX_INCREASE_PCT,
             max_decrease_pct: float = MAX_DECREASE_PCT,
             political_factor: float = POLITICAL_FACTOR,
+            balanced_location: float = BALANCED_LOCATION,
             excluded_risk_classes: List[int] = EXCLUDED_RISK_CLASSES,
             max_total_capacity: Optional[float] = None,
             optimize_capacity: bool = OPTIMIZE_CAPACITY
@@ -41,6 +42,7 @@ class Scenario:
         self.excluded_risk_classes = excluded_risk_classes
         self.optimize_capacity = optimize_capacity
         self.political_factor = political_factor
+        self.balanced_location = balanced_location
 
     def get_vaccine_params(
             self,
@@ -98,6 +100,7 @@ class Scenario:
                                                   selected_centers_df=selected_centers_df,
                                                   baseline_centers_df=baseline_centers_df)
         allocation_params["political_factor"] = self.political_factor
+        allocation_params["balanced_location"] = self.balanced_location
 
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(

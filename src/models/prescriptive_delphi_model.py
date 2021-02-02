@@ -186,6 +186,7 @@ class PrescriptiveDELPHIModel:
         self._n_timesteps = self.vaccine_budget.shape[0]
         self._timesteps = np.arange(self._n_timesteps)
         self._political_factor = allocation_params["political_factor"] 
+        self._balanced_location = allocation_params["balanced_location"] 
         self._optimize_timesteps = np.array(
             [x for x in self._timesteps if x % self._n_simulate_timesteps_per_optimize_step == 0])
         self._n_optimize_timesteps = len(self._optimize_timesteps)
@@ -418,7 +419,7 @@ class PrescriptiveDELPHIModel:
             time_limit: Optional[float],
             output_flag: bool,
             fixed_cities: bool,
-            use_baseline_city: Optional[bool] = True
+            use_baseline_city: Optional[bool] = False
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
@@ -461,6 +462,7 @@ class PrescriptiveDELPHIModel:
         city_indicator = model.addVars(self._n_regions, vtype=GRB.INTEGER)
         max_center_density = model.addVar(lb=0)
         min_center_density = model.addVar(lb=0)
+
 
         if use_baseline_city:
             model.addConstrs(city_indicator[j] == self.baseline_centers[j] for j in self._regions)
@@ -514,10 +516,14 @@ class PrescriptiveDELPHIModel:
 #            city_indicator[j] <= 10 for j in self._regions
 #        )        
 #        
+        # balanced location
+        model.addConstrs(
+            city_indicator[j] <= self.state_population[j,:].sum() / self.state_population.sum() * self._cities_budget + self._balanced_location for j in self._regions
+        )
+        # center density
         model.addConstrs(
             city_indicator[j] / (self.state_population[j,:].sum() /  1e6) <= max_center_density for j in self._regions
         )
-        
         
         model.addConstrs(
             city_indicator[j] / (self.state_population[j,:].sum() / 1e6) >= min_center_density for j in self._regions
@@ -681,7 +687,7 @@ class PrescriptiveDELPHIModel:
         model.optimize()
         print(f"Maximum density: {max_center_density.x}")
         print(f"Minimum density: {min_center_density.x}")
-        print(f"Ratio: {max_center_density.x/min_center_density.x}")
+#        print(f"Ratio: {max_center_density.x/min_center_density.x}")
         
         print(f"Political Factor: {self._political_factor}")
         # Return vaccine allocation
@@ -692,10 +698,7 @@ class PrescriptiveDELPHIModel:
         ])
         locations = model.getAttr("x", city_indicator)
         locations = np.array([locations[j] for j in self._regions])
-
-        # import pdb
-        # pdb.set_trace()
-
+        
         minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
         maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
         print(f"Minimum density: {minimum_density_state}")
