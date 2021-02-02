@@ -4,15 +4,18 @@ from typing import List, Dict, Union, Optional
 from gurobipy import GurobiError
 
 import pandas as pd
+import us
 
 from pipeline.constants import *
 from models.mortality_rate_estimator import MortalityRateEstimator
 
 
-def get_population_by_state_and_risk_class(pop_df: pd.DataFrame) -> np.ndarray:
-    states = pop_df["state"].unique()
+def get_population_by_state_and_risk_class(pop_df: pd.DataFrame,
+                                           county_pop_df: pd.DataFrame) -> np.ndarray:
+    states = list(county_pop_df.state.unique())
     population = np.zeros((len(states), len(RISK_CLASSES)))
     for j, state in enumerate(states):
+        state = us.states.lookup(state).name
         for k, risk_class in enumerate(RISK_CLASSES):
             population[j, k] = pop_df[
                 (pop_df["min_age"] >= risk_class["min_age"])
@@ -86,11 +89,12 @@ def get_mortality_rate_estimates(
         cdc_df: pd.DataFrame,
         params_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
+        county_pop_df: pd.DataFrame,
         start_date: dt.datetime,
         end_date: dt.datetime
 ) -> np.ndarray:
     # Get data
-    population = get_population_by_state_and_risk_class(pop_df=pop_df)
+    population = get_population_by_state_and_risk_class(pop_df=pop_df, county_pop_df=county_pop_df)
     baseline_mortality_rate = get_baseline_mortality_rate_estimates(
         cdc_df=cdc_df,
         predictions_df=predictions_df,
@@ -168,10 +172,11 @@ def get_hospitalization_rate_by_risk_class(cdc_df: pd.DataFrame) -> np.ndarray:
 def get_initial_conditions(
         pop_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
+        county_pop_df: pd.DataFrame,
         start_date: dt.datetime
 ) -> Dict[str, np.ndarray]:
     # Get population by state and risk class
-    population = get_population_by_state_and_risk_class(pop_df=pop_df)
+    population = get_population_by_state_and_risk_class(pop_df=pop_df, county_pop_df=county_pop_df)
 
     # Get estimated susceptible, exposed and infectious for start date
     initial_default = np.zeros(population.shape)
@@ -208,6 +213,7 @@ def get_delphi_params(
         cdc_df: pd.DataFrame,
         params_df: pd.DataFrame,
         predictions_df: pd.DataFrame,
+        county_pop_df: pd.DataFrame,
         start_date: dt.datetime,
         end_date: dt.datetime,
         mortality_rate_path: Optional[str],
@@ -229,6 +235,7 @@ def get_delphi_params(
             cdc_df=cdc_df,
             params_df=params_df,
             predictions_df=predictions_df,
+            county_pop_df=county_pop_df,
             start_date=start_date,
             end_date=end_date
         )
@@ -317,4 +324,3 @@ def get_allocation_params(county_pop_df,
     }
 
     return allocation_params
-
