@@ -6,9 +6,9 @@ DELPHI_PARAMS_PATH = "../data/inputs/delphi-parameters.csv"
 DELPHI_PREDICTIONS_PATH = "../data/inputs/delphi-predictions.csv"
 CDC_DATA_PATH = "../data/inputs/cdc-data.csv"
 POPULATION_DATA_PATH = "../data/inputs/population.csv"
-COUNTY_POP_DATA_PATH = "../data/inputs/county_pop_clean.csv"
-COUNTY_DISTS_PATH = "../data/inputs/counties_distances_500.csv"
-SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500.csv"
+COUNTY_POP_DATA_PATH = "../data/inputs/county_pop_clean_fullname.csv"
+COUNTY_DISTS_PATH = "../data/inputs/counties_distances_500_fullname.csv"
+SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500_fullname.csv"
 BASELINE_CENTERS_PATH = "../data/inputs/baseline_allocation_cities.csv"
 
 # Output paths
@@ -71,16 +71,16 @@ MAX_INCREASE_PCT = 0.1
 MAX_TOTAL_CAPACITY_PCT = None
 OPTIMIZE_CAPACITY = False
 EXCLUDED_RISK_CLASSES = [0, 5]
-POLITICAL_FACTOR = 1e6
+POLITICAL_FACTOR = 0
 BALANCED_LOCATION = 10
 
 # Scenarios
 DATES_GRID = [
     # dict(start_date=dt.datetime(2020, 4, 20), end_date=dt.datetime(2020, 7, 15)),
-    dict(start_date=dt.datetime(2021, 1, 30), end_date=dt.datetime(2021, 4, 30))
+    dict(start_date=dt.datetime(2021, 2, 1), end_date=dt.datetime(2021, 5, 2))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
-DAILY_VACCINE_BUDGET_GRID = [6e5]
+DAILY_VACCINE_BUDGET_GRID = [1e6]
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
 POLITICAL_FACTOR_GRID = [0]
 BALANCED_LOCATIONS_GRID = [20]
