@@ -180,26 +180,37 @@ def get_initial_conditions(
     initial_susceptible = deepcopy(initial_default)
     initial_exposed = deepcopy(initial_default)
     initial_infectious = deepcopy(initial_default)
+    initial_hospitalized_dying = deepcopy(initial_default)
+    initial_hospitalized_recovering = deepcopy(initial_default)
+    initial_quarantined_dying = deepcopy(initial_default)
+    initial_quarantined_recovering = deepcopy(initial_default)
+    initial_undetected_dying = deepcopy(initial_default)
+    initial_undetected_recovering = deepcopy(initial_default)
     initial_conditions_df = predictions_df[
         predictions_df["date"] == start_date
-        ].sort_values("state")[["susceptible", "exposed", "infectious"]]
+        ].sort_values("state")
     for j, (_, state) in enumerate(initial_conditions_df.iterrows()):
         pop_proportions = population[j, :] / population[j, :].sum()
         initial_susceptible[j, :] = state["susceptible"] * pop_proportions
         initial_exposed[j, :] = state["exposed"] * pop_proportions
         initial_infectious[j, :] = state["infectious"] * pop_proportions
-
+        initial_hospitalized_dying[j, :] =  state["hospitalized_dying"] * pop_proportions
+        initial_quarantined_dying[j, :] =  state["quarantined_dying"] * pop_proportions
+        initial_undetected_dying[j, :] =  state["undetected_dying"] * pop_proportions
+        initial_hospitalized_recovering[j, :] =  state["hospitalized_recovering"] * pop_proportions
+        initial_quarantined_recovering[j, :] =  state["quarantined_recovering"] * pop_proportions
+        initial_undetected_recovering[j, :] =  state["undetected_recovering"] * pop_proportions
     # Return dictionary of all initial conditions
     return dict(
         initial_susceptible=initial_susceptible,
         initial_exposed=initial_exposed,
         initial_infectious=initial_infectious,
-        initial_hospitalized_dying=initial_default,
-        initial_hospitalized_recovering=initial_default,
-        initial_quarantined_dying=initial_default,
-        initial_quarantined_recovering=initial_default,
-        initial_undetected_dying=initial_default,
-        initial_undetected_recovering=initial_default,
+        initial_hospitalized_dying=initial_hospitalized_dying,
+        initial_hospitalized_recovering=initial_hospitalized_recovering,
+        initial_quarantined_dying=initial_quarantined_dying,
+        initial_quarantined_recovering=initial_quarantined_recovering,
+        initial_undetected_dying=initial_undetected_dying,
+        initial_undetected_recovering=initial_undetected_recovering,
         initial_recovered=initial_default,
         population=population
     )
@@ -256,7 +267,7 @@ def get_delphi_params(
         iqr_transition_rate=detection_rate * DETECTION_PROBABILITY * (1 - hospitalization_rate) * (1 - mortality_rate),
         iud_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * mortality_rate,
         iur_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * (1 - mortality_rate),
-        death_rate=np.log(2) / np.maximum(params_df["death_rate"].to_numpy(), MIN_LAG),
+        death_rate = params_df["death_rate"].to_numpy(),
         hospitalized_recovery_rate=hospitalized_recovery_rate,
         unhospitalized_recovery_rate=unhospitalized_recovery_rate,
         mortality_rate=mortality_rate,

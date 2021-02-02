@@ -11892,3 +11892,56 @@ Solution count 3: 107343 109449 109716
 
 Optimal solution found (tolerance 1.00e-04)
 Best objective 1.073432066886e+05, best bound 1.073347280785e+05, gap 0.0079%
+
+Gurobi 8.1.0 (win64, Python) logging started 02/02/21 16:45:49
+
+Academic license - for non-commercial use only
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+Optimize a model with 255397 rows, 255653 columns and 970467 nonzeros
+Variable types: 255602 continuous, 51 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-09, 6e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e-02, 2e+07]
+Warning: Model contains large matrix coefficient range
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 211280 rows and 205195 columns
+Presolve time: 1.87s
+
+Explored 0 nodes (0 simplex iterations) in 2.12 seconds
+Thread count was 1 (of 12 available processors)
+
+Solution count 0
+
+Solve interrupted
+Best objective -, best bound -, gap -
+
+Gurobi 8.1.0 (win64, Python) logging started 02/02/21 16:46:17
+
+Academic license - for non-commercial use only
+
+Gurobi 8.1.0 (win64, Python) logging started 02/02/21 16:46:22
+
+Academic license - for non-commercial use only
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+Optimize a model with 255397 rows, 255653 columns and 965928 nonzeros
+Variable types: 255602 continuous, 51 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [3e-09, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e-02, 2e+07]
+Presolve removed 239555 rows and 239354 columns
+Presolve time: 0.49s
+
+Explored 0 nodes (0 simplex iterations) in 0.74 seconds
+Thread count was 1 (of 12 available processors)
+
+Solution count 0
+
+Solve interrupted
+Best objective -, best bound -, gap -
