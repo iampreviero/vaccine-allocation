@@ -77,7 +77,7 @@ BALANCED_LOCATION = 10
 # Scenarios
 DATES_GRID = [
     # dict(start_date=dt.datetime(2020, 4, 20), end_date=dt.datetime(2020, 7, 15)),
-    dict(start_date=dt.datetime(2021, 2, 1), end_date=dt.datetime(2021, 5, 2))
+    dict(start_date=dt.datetime(2021, 2, 1), end_date=dt.datetime(2021, 4, 30))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
 DAILY_VACCINE_BUDGET_GRID = [0]
