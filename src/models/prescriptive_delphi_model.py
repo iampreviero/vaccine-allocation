@@ -718,7 +718,10 @@ class PrescriptiveDELPHIModel:
             start = max(t - smoothing_window, 0)
             end = min(t + smoothing_window, self._n_timesteps) + 1
             vaccinated[:, :, t] = solution.vaccinated[:, :, start:end].mean(axis=2)
-            vaccinated[:, :, t] = vaccinated[:, :, t] * self.vaccine_budget[t] / vaccinated[:, :, t].sum()
+            if vaccinated[:,:,t].sum() > 0:
+                vaccinated[:, :, t] = vaccinated[:, :, t] * self.vaccine_budget[t] / vaccinated[:, :, t].sum()
+            else:
+                vaccinated[:, :, t] = 0
         return self.simulate(vaccinated=vaccinated, locations=solution.locations)
 
     def _prioritize_vaccine_allocation(self, solution: DELPHISolution) -> DELPHISolution:
