@@ -687,7 +687,7 @@ class PrescriptiveDELPHIModel:
         model.optimize()
         print(f"Maximum density: {max_center_density.x}")
         print(f"Minimum density: {min_center_density.x}")
-        print(f"Ratio: {max_center_density.x/min_center_density.x}")
+#        print(f"Ratio: {max_center_density.x/min_center_density.x}")
         
         print(f"Political Factor: {self._political_factor}")
         # Return vaccine allocation
@@ -698,8 +698,7 @@ class PrescriptiveDELPHIModel:
         ])
         locations = model.getAttr("x", city_indicator)
         locations = np.array([locations[j] for j in self._regions])
-        import pdb
-        pdb.set_trace()
+        
         minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
         maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
         print(f"Minimum density: {minimum_density_state}")
