@@ -92,5 +92,4 @@ def load_and_clean_delphi_predictions(path: str) -> pd.DataFrame:
 
     # Cast date column as datetime object
     df["date"] = pd.to_datetime(df["date"])
-
     return df

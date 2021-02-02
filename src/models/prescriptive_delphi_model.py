@@ -593,18 +593,18 @@ class PrescriptiveDELPHIModel:
         )
 
         # Set bounding constraint on absolute error of estimated infectious
-        # model.addConstrs(
-        #     infectious_error[j, t] <= exploration_tol
-        #     for j in self._regions for t in self._timesteps
-        # )
-        # model.addConstrs(
-        #     infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
-        #     for j in self._regions for t in self._timesteps
-        # )
-        # model.addConstrs(
-        #     infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
-        #     for j in self._regions for t in self._timesteps
-        # )
+#        model.addConstrs(
+#             infectious_error[j, t] <= exploration_tol
+#             for j in self._regions for t in self._timesteps
+#        )
+#        model.addConstrs(
+#             infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
+#             for j in self._regions for t in self._timesteps
+#        )
+#        model.addConstrs(
+#             infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
+#             for j in self._regions for t in self._timesteps
+#        )
 
         # Set eligibility constraints
         model.addConstrs(

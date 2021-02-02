@@ -267,7 +267,7 @@ def get_delphi_params(
         iqr_transition_rate=detection_rate * DETECTION_PROBABILITY * (1 - hospitalization_rate) * (1 - mortality_rate),
         iud_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * mortality_rate,
         iur_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * (1 - mortality_rate),
-        death_rate=np.log(2) / np.maximum(params_df["death_rate"].to_numpy(), MIN_LAG),
+        death_rate = params_df["death_rate"].to_numpy(),
         hospitalized_recovery_rate=hospitalized_recovery_rate,
         unhospitalized_recovery_rate=unhospitalized_recovery_rate,
         mortality_rate=mortality_rate,

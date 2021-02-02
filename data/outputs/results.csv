@@ -1,2 +1,2 @@
 ,start_date,end_date,vaccine_effectiveness,daily_vaccine_budget,min_allocation_factor,political_factor,balanced_location,baseline_obj_val,optimized_obj_val,abs_improvement,pct_improvement
-0,2021-02-01,2021-04-30,0.9,0,0.1,100000.0,6,178828.5176252459,178828.5176252459,0.0,0.0
+0,2021-02-01,2021-04-30,0.9,600000.0,0.1,0,100,164661.6615564682,159713.8059803909,4947.8555760773015,3.0048619267579237
