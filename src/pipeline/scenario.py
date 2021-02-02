@@ -80,6 +80,7 @@ class Scenario:
         initial_conditions = get_initial_conditions(
             pop_df=pop_df,
             predictions_df=predictions_df,
+            county_pop_df=county_pop_df,
             start_date=self.start_date
         )
         delphi_params = get_delphi_params(
@@ -87,6 +88,7 @@ class Scenario:
             cdc_df=cdc_df,
             params_df=params_df,
             predictions_df=predictions_df,
+            county_pop_df=county_pop_df,
             start_date=self.start_date,
             end_date=self.end_date,
             mortality_rate_path=mortality_rate_path
