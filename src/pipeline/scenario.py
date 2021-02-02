@@ -10,7 +10,7 @@ from pipeline.data_processing import (calculate_n_timesteps,
                                       get_delphi_params,
                                       get_allocation_params)
 from models.prescriptive_delphi_model import PrescriptiveDELPHIModel
-
+import us
 
 class Scenario:
 
@@ -70,8 +70,14 @@ class Scenario:
         params_df = load_and_clean_delphi_params(DELPHI_PARAMS_PATH)
         predictions_df = load_and_clean_delphi_predictions(DELPHI_PREDICTIONS_PATH)
         cdc_df = pd.read_csv(CDC_DATA_PATH)
-        pop_df = pd.read_csv(POPULATION_DATA_PATH)
+        # dont use different state level population, aggregate from county_level
+#        pop_df = pd.read_csv(POPULATION_DATA_PATH)
+        
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
+        us_state_mapping = us.states.mapping('abbr', 'name')
+        pop_df = county_pop_df.copy()
+        pop_df["state"] = pop_df["state"].replace(us_state_mapping)
+        pop_df = pop_df.groupby(by = "state").agg({'pop09':'sum','pop1049':'sum','pop59':'sum','pop69':'sum','pop79':'sum','pop89':'sum'})
         counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
 

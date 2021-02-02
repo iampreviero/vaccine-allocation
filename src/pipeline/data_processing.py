@@ -4,21 +4,15 @@ from typing import List, Dict, Union, Optional
 from gurobipy import GurobiError
 
 import pandas as pd
+import us
 
 from pipeline.constants import *
 from models.mortality_rate_estimator import MortalityRateEstimator
 
 
 def get_population_by_state_and_risk_class(pop_df: pd.DataFrame) -> np.ndarray:
-    states = pop_df["state"].unique()
-    population = np.zeros((len(states), len(RISK_CLASSES)))
-    for j, state in enumerate(states):
-        for k, risk_class in enumerate(RISK_CLASSES):
-            population[j, k] = pop_df[
-                (pop_df["min_age"] >= risk_class["min_age"])
-                & (pop_df["max_age"] <= risk_class["max_age"])
-                & (pop_df["state"] == state)
-                ]["population"].sum()
+    # TODO: this is fragile processing
+    population = pop_df.to_numpy()
     return population
 
 
