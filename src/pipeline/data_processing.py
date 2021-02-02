@@ -281,6 +281,7 @@ def get_allocation_params(county_pop_df,
 
     states = list(county_pop_df.state.unique())
     state_lookup = {idx: state for idx, state in enumerate(states)}
+
     county_lookup = {idx: fips for idx, fips in enumerate(county_pop_df['county_state'])}
     city_lookup = {idx: name for idx, name in enumerate(selected_centers_df['city'])}
 
