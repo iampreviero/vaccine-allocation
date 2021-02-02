@@ -381,12 +381,12 @@ class PrescriptiveDELPHIModel:
             undetected_recovering[:, :, t + 1] = np.maximum(undetected_recovering[:, :, t + 1], 0)
 
             deceased[:, :, t + 1] = deceased[:, :, t] + self.death_rate[:, None] * (
-                    hospitalized_dying[:, :, t] + quarantined_dying[:, :, t]  + undetected_dying[:, :, t]
+                    hospitalized_dying[:, :, t] + quarantined_dying[:, :, t] #  + undetected_dying[:, :, t]
             ) * self.days_per_timestep
 
             recovered[:, :, t + 1] = recovered[:, :, t] + (
                     self.hospitalized_recovery_rate * hospitalized_recovering[:, :, t]
-                    + self.unhospitalized_recovery_rate * (quarantined_recovering[:, :, t]  + undetected_recovering[:, :, t])
+                    + self.unhospitalized_recovery_rate * (quarantined_recovering[:, :, t] #  + undetected_recovering[:, :, t])
             ) * self.days_per_timestep
 
         return DELPHISolution(

@@ -48,8 +48,8 @@ def load_and_clean_delphi_predictions(path: str) -> pd.DataFrame:
     ]
 
     # Aggregate intermediary state
-    df["recovering"] = df[["AR", "DHR", "DQR"]].sum(1)
-    df["dying"] = df[["AD", "DHD", "DQD"]].sum(1)
+#    df["recovering"] = df[["AR", "DHR", "DQR"]].sum(1)
+#    df["dying"] = df[["AD", "DHD", "DQD"]].sum(1)
 
     # Select relevant columns and rename
     df = df[
@@ -63,8 +63,12 @@ def load_and_clean_delphi_predictions(path: str) -> pd.DataFrame:
             "D",
             "DT",
             "DD",
-            "recovering",
-            "dying"
+            "AR", 
+            "DHR", 
+            "DQR",
+            "AD", 
+            "DHD", 
+            "DQD"
         ]
     ].rename(
         columns={
@@ -75,6 +79,12 @@ def load_and_clean_delphi_predictions(path: str) -> pd.DataFrame:
             "I": "infectious",
             "R": "recovered",
             "D": "deceased",
+            "AR": "undetected_recovering",
+            "DHR": "hospitalized_recovering",
+            "DQR": "quarantined_recovering",
+            "AD": "undetected_dying",
+            "DHD": "hospitalized_dying",
+            "DQD": "quarantined_dying",
             "DT": "total_detected_cases",
             "DD": "total_detected_deaths",
         }

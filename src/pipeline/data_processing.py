@@ -180,26 +180,37 @@ def get_initial_conditions(
     initial_susceptible = deepcopy(initial_default)
     initial_exposed = deepcopy(initial_default)
     initial_infectious = deepcopy(initial_default)
+    initial_hospitalized_dying = deepcopy(initial_default)
+    initial_hospitalized_recovering = deepcopy(initial_default)
+    initial_quarantined_dying = deepcopy(initial_default)
+    initial_quarantined_recovering = deepcopy(initial_default)
+    initial_undetected_dying = deepcopy(initial_default)
+    initial_undetected_recovering = deepcopy(initial_default)
     initial_conditions_df = predictions_df[
         predictions_df["date"] == start_date
-        ].sort_values("state")[["susceptible", "exposed", "infectious"]]
+        ].sort_values("state")
     for j, (_, state) in enumerate(initial_conditions_df.iterrows()):
         pop_proportions = population[j, :] / population[j, :].sum()
         initial_susceptible[j, :] = state["susceptible"] * pop_proportions
         initial_exposed[j, :] = state["exposed"] * pop_proportions
         initial_infectious[j, :] = state["infectious"] * pop_proportions
-
+        initial_hospitalized_dying =  state["hospitalized_dying"] * pop_proportions
+        initial_quarantined_dying =  state["quarantined_dying"] * pop_proportions
+        initial_undetected_dying =  state["undetected_dying"] * pop_proportions
+        initial_hospitalized_recovering =  state["hospitalized_recovering"] * pop_proportions
+        initial_quarantined_recovering =  state["quarantined_recovering"] * pop_proportions
+        initial_undetected_recovering =  state["undetected_recovering"] * pop_proportions
     # Return dictionary of all initial conditions
     return dict(
         initial_susceptible=initial_susceptible,
         initial_exposed=initial_exposed,
         initial_infectious=initial_infectious,
-        initial_hospitalized_dying=initial_default,
-        initial_hospitalized_recovering=initial_default,
-        initial_quarantined_dying=initial_default,
-        initial_quarantined_recovering=initial_default,
-        initial_undetected_dying=initial_default,
-        initial_undetected_recovering=initial_default,
+        initial_hospitalized_dying=initial_hospitalized_dying,
+        initial_hospitalized_recovering=initial_hospitalized_recovering,
+        initial_quarantined_dying=initial_quarantined_dying,
+        initial_quarantined_recovering=initial_quarantined_recovering,
+        initial_undetected_dying=initial_undetected_dying,
+        initial_undetected_recovering=initial_undetected_recovering,
         initial_recovered=initial_default,
         population=population
     )
