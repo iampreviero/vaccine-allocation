@@ -504,6 +504,9 @@ class PrescriptiveDELPHIModel:
         model.addConstrs(
             city_indicator[j] >= 1 for j in self._regions
         )
+        model.addConstrs(
+            vaccinated.sum("*", "*", t) <= self.vaccine_budget[t] for t in self._timesteps
+        )
 
 #        model.addConstrs(
 #            city_indicator[j] <= 10 for j in self._regions
