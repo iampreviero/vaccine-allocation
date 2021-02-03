@@ -534,6 +534,12 @@ class PrescriptiveDELPHIModel:
             locations_per_state[j] / (self.state_population[j,:].sum() / 1e5) >= min_center_density for j in self._regions
         )
 
+        # Vaccine budget
+        model.addConstrs(
+            vaccine_distribution.sum("*", t) <= self.vaccine_budget[t]
+            for t in range(self._n_timesteps)
+        )
+
         # Vaccine distribution: linking constraints (consistency)
         model.addConstrs(
             vaccine_distribution[i, t] <= self.vaccine_budget[t] * location_indicator[i]
@@ -566,6 +572,11 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution[i, t] <= self.vaccine_budget[t]/self._cities_budget * (1 + self.balanced_distr_locations_pct)
             for i in range(self._n_cities) for t in range(self._n_timesteps)
         )
+
+        # model.addConstrs(
+        #     vaccine_distribution[i, t] >= self.vaccine_budget[t]/self._cities_budget * (1 - self.balanced_distr_locations_pct)
+        #     for i in range(self._n_cities) for t in range(self._n_timesteps)
+        # )
 
         # Sanity check: plan b constraint
         # model.addConstrs(
@@ -703,6 +714,9 @@ class PrescriptiveDELPHIModel:
             model.params.TimeLimit = time_limit
 
         model.params.OutputFlag = True
+
+        model.params.method = 2 ######## Barrier for root
+        # model.params.nodeMethod = 2 ######## Barrier for subsequent nodes
 
         # Solve model
         model.optimize()
