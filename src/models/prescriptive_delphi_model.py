@@ -706,12 +706,12 @@ class PrescriptiveDELPHIModel:
 
         # Solve model
         model.optimize()
-        print(f"\nPARAMS:"")
+        print(f"\nPARAMS:")
         print(f"Maximum density: {max_center_density.x}")
         print(f"Minimum density: {min_center_density.x}")
 #        print(f"Ratio: {max_center_density.x/min_center_density.x}")
         print(f"Political Factor: {self._political_factor}")
-        print(f"Balanced location: {self.balanced_location}")
+        print(f"Balanced location: {self._balanced_location}")
         print(f"Max distr pct change: {self.max_distr_pct_change}")
         print(f"Population equity pct: {self.population_equity_pct}")
         print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
