@@ -24,6 +24,8 @@ class DELPHISolution:
             eligible: np.ndarray,
             vaccinated: np.ndarray,
             locations: np.ndarray,
+            location_indicator: np.ndarray,
+            vaccine_distribution: np.ndarray,
             days_per_timestep: float = 1.0,
     ):
         """
@@ -78,7 +80,9 @@ class DELPHISolution:
         self.vaccinated = vaccinated
         self.locations = locations
         self.days_per_timestep = days_per_timestep
-
+        self.location_indicator = location_indicator
+        self.vaccine_distribution = vaccine_distribution
+        
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
 
@@ -208,6 +212,8 @@ class PrescriptiveDELPHIModel:
             self,
             vaccinated: Optional[np.ndarray] = None,
             locations: Optional[np.ndarray] = None,
+            location_indicator: Optional[np.ndarray] = None,
+            vaccine_distribution: Optional[np.ndarray] = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
             top_cities_allocation: bool = False
@@ -270,6 +276,7 @@ class PrescriptiveDELPHIModel:
             if eligible.sum() and allocate_vaccines:
 
                 if top_cities_allocation:
+                    locations = self.baseline_centers
                     regional_budget = self.vaccine_budget[t]/self._cities_budget * self.baseline_centers
                     for k in risk_class_priority_rankings:
                         if k in self._included_risk_classes:
@@ -408,6 +415,8 @@ class PrescriptiveDELPHIModel:
             eligible=eligible,
             vaccinated=vaccinated,
             locations=locations,
+            location_indicator=location_indicator,
+            vaccine_distribution=vaccine_distribution,
             days_per_timestep=self.days_per_timestep,
         )
 
@@ -524,15 +533,19 @@ class PrescriptiveDELPHIModel:
         model.addConstrs(
             locations_per_state[j] <= self.state_population[j,:].sum() / self.state_population.sum() * self._cities_budget + self._balanced_location for j in self._regions
         )
+        
+        model.addConstrs(
+            locations_per_state[j] >= self.state_population[j,:].sum() / self.state_population.sum() * self._cities_budget - self._balanced_location for j in self._regions
+        )        
 
         # Fairness (michael): center density
-        model.addConstrs(
-            locations_per_state[j] / (self.state_population[j,:].sum() / 1e5) <= max_center_density for j in self._regions
-        )
-
-        model.addConstrs(
-            locations_per_state[j] / (self.state_population[j,:].sum() / 1e5) >= min_center_density for j in self._regions
-        )
+#        model.addConstrs(
+#            locations_per_state[j] / (self.state_population[j,:].sum() / 1e5) <= max_center_density for j in self._regions
+#        )
+#
+#        model.addConstrs(
+#            locations_per_state[j] / (self.state_population[j,:].sum() / 1e5) >= min_center_density for j in self._regions
+#        )
 
         # Vaccine budget
         model.addConstrs(
@@ -698,7 +711,7 @@ class PrescriptiveDELPHIModel:
             - self.vaccination_enforcement_weight * vaccinated.sum("*", "*","*")
             # + undetected_dying.sum("*", "*", self._n_timesteps)
 #             + unallocated_vaccines.sum()
-            + self._political_factor * (max_center_density - min_center_density)
+#            + self._political_factor * (max_center_density - min_center_density)
             ,
             GRB.MINIMIZE
         )
@@ -714,40 +727,53 @@ class PrescriptiveDELPHIModel:
             model.params.TimeLimit = time_limit
 
         model.params.OutputFlag = True
-
+        model.params.TimeLimit = 600
         model.params.method = 2 ######## Barrier for root
         # model.params.nodeMethod = 2 ######## Barrier for subsequent nodes
 
         # Solve model
         model.optimize()
-        print(f"\nPARAMS:")
-        print(f"Maximum density: {max_center_density.x}")
-        print(f"Minimum density: {min_center_density.x}")
-#        print(f"Ratio: {max_center_density.x/min_center_density.x}")
-        print(f"Political Factor: {self._political_factor}")
-        print(f"Balanced location: {self._balanced_location}")
-        print(f"Max distr pct change: {self.max_distr_pct_change}")
-        print(f"Population equity pct: {self.population_equity_pct}")
-        print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
-        print(f"Balanced location distribution pct: {self.balanced_distr_locations_pct}")
-
-        # Return vaccine allocation
-        vaccinated = model.getAttr("x", vaccinated)
-        vaccinated = np.array([
-            [[vaccinated[j, k, t] for t in range(self._n_timesteps + 1)] for k in self._risk_classes]
-            for j in self._regions
-        ])
-        locations = model.getAttr("x", locations_per_state)
-        locations = np.array([locations[j] for j in self._regions])
-
-        location_binaries = model.getAttr("x", location_indicator)
-        location_binaries = np.array([location_binaries[i] for i in range(self._n_cities)])
-
-        minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
-        maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
-        print(f"Minimum density: {minimum_density_state}")
-        print(f"Maximum density: {maximum_density_state}")
-        return vaccinated, locations
+        if model.status == 2:
+            print(f"\nPARAMS:")
+    #        print(f"Ratio: {max_center_density.x/min_center_density.x}")
+            print(f"Political Factor: {self._political_factor}")
+            print(f"Balanced location: {self._balanced_location}")
+            print(f"Max distr pct change: {self.max_distr_pct_change}")
+            print(f"Population equity pct: {self.population_equity_pct}")
+            print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
+            print(f"Balanced location distribution pct: {self.balanced_distr_locations_pct}")
+    
+            # Return vaccine allocation
+            vaccinated = model.getAttr("x", vaccinated)
+            vaccinated = np.array([
+                [[vaccinated[j, k, t] for t in range(self._n_timesteps + 1)] for k in self._risk_classes]
+                for j in self._regions
+            ])
+            locations = model.getAttr("x", locations_per_state)
+            locations = np.array([locations[j] for j in self._regions])
+            
+            location_indicator = model.getAttr("x", location_indicator)
+            location_indicator = np.array([location_indicator[i] for i in range(self._n_cities)])
+            
+            vaccine_distribution = model.getAttr("x", vaccine_distribution)
+            vaccine_distribution = np.array([[vaccine_distribution[i, t] for t in range(self._n_timesteps + 1)] for i in range(self._n_cities)])
+            
+            
+    
+            minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
+            maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
+            minimum_density = np.min(np.divide(locations,self.state_population.sum(axis=1))) * 1e6
+            maximum_density = np.max(np.divide(locations,self.state_population.sum(axis=1))) * 1e6
+            print(f"Minimum density: {minimum_density_state}")
+            print(f"Maximum density: {maximum_density_state}")
+            print(f"Maximum density: {maximum_density}")
+            print(f"Minimum density: {minimum_density}")
+        else:
+            vaccinated = None
+            locations = None
+            location_indicator = None
+            vaccine_distribution = None
+        return vaccinated, locations, location_indicator, vaccine_distribution
 
     def _smooth_vaccine_allocation(
             self,
@@ -929,7 +955,7 @@ class PrescriptiveDELPHIModel:
 
                 # Re-optimize vaccine allocation by solution linearized relaxation
                 try:
-                    vaccinated, locations = self._optimize_relaxation(
+                    vaccinated, locations, location_indicator, vaccine_distribution = self._optimize_relaxation(
                         exploration_tol=exploration_tol,
                         estimated_infectious=incumbent_solution.infectious.sum(axis=1),
                         vaccinated_warm_start=incumbent_solution.vaccinated,
@@ -945,10 +971,14 @@ class PrescriptiveDELPHIModel:
                     if log:
                         print("Infeasible relaxation - terminating search")
                     break
+                if vaccinated is None:
+                    break
 
                 # Update incumbent and previous solution
                 previous_solution, incumbent_solution = incumbent_solution, self.simulate(vaccinated=vaccinated,
-                                                                                          locations=locations)
+                                                                                          locations=locations,
+                                                                                          location_indicator=location_indicator,
+                                                                                          vaccine_distribution=vaccine_distribution)
                 previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_total_deaths()
                 trajectory.append(incumbent_obj_val)
                 if log:
@@ -991,7 +1021,10 @@ class PrescriptiveDELPHIModel:
             # Store trajectory and best solution for completed restart
             self._trajectories.append(trajectory)
             self._solutions.append(best_solution_for_restart)
-
+        
+        if best_solution is None:
+            best_solution = incumbent_solution
+        
         # Apply post-processing steps to solution
         if log:
             print("Post-processing solution")

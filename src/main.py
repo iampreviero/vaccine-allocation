@@ -43,13 +43,13 @@ if __name__ == "__main__":
             mortality_rate_path=mortality_rate_path,
             reload_mortality_rate=reload_mortality_rate
         )
-        scenario_params["baseline_obj_val"] = baseline_obj_val
-        scenario_params["optimized_obj_val"] = optimized_obj_val
+        scenario_params_grid[i]["baseline_obj_val"] = baseline_obj_val
+        scenario_params_grid[i]["optimized_obj_val"] = optimized_obj_val
 
-    results = pd.DataFrame(scenario_params_grid)
-    results["abs_improvement"] = results["baseline_obj_val"] - results["optimized_obj_val"]
-    results["pct_improvement"] = results["abs_improvement"] / results["baseline_obj_val"] * 1e2
-    results.to_csv(RESULTS_PATH)
+        results = pd.DataFrame(scenario_params_grid)
+        results["abs_improvement"] = results["baseline_obj_val"] - results["optimized_obj_val"]
+        results["pct_improvement"] = results["abs_improvement"] / results["baseline_obj_val"] * 1e2
+        results.to_csv(RESULTS_PATH)
 
     # FOR DEBUGGING PURPOSES
     population = pd.read_csv(POPULATION_DATA_PATH)
