@@ -290,7 +290,7 @@ def get_allocation_params(county_pop_df,
 
     county_city_to_distance = {(v[1], v[0]): counties_dists_mat[v[0], v[1]] for v in valid_pairs}
 
-    states = list(county_pop_df.state.unique())
+    states = sorted(list(county_pop_df.state.unique()))
     state_lookup = {idx: state for idx, state in enumerate(states)}
 
     county_lookup = {idx: fips for idx, fips in enumerate(county_pop_df['county_state'])}

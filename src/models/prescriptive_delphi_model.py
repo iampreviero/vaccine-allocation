@@ -154,7 +154,6 @@ class PrescriptiveDELPHIModel:
         self.max_decrease_pct = vaccine_params["max_decrease_pct"]
         self.max_increase_pct = vaccine_params["max_increase_pct"]
         self.excluded_risk_classes = vaccine_params["excluded_risk_classes"]
-
         # Set allocation parameters
         self.county_to_cities = allocation_params["county_to_cities"]
         self.county_city_to_distance = allocation_params["county_city_to_distance"]
