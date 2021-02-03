@@ -28,7 +28,11 @@ class Scenario:
             balanced_location: float = BALANCED_LOCATION,
             excluded_risk_classes: List[int] = EXCLUDED_RISK_CLASSES,
             max_total_capacity: Optional[float] = None,
-            optimize_capacity: bool = OPTIMIZE_CAPACITY
+            optimize_capacity: bool = OPTIMIZE_CAPACITY,
+            max_distr_pct_change: float = MAX_DISTR_PCT_CHANGE,
+            population_equity_pct: float = POPULATION_EQUITY_PCT,
+            balanced_distr_locations_pct: float = BALANCED_DISTR_LOCATIONS_PCT,
+            vaccination_enforcement_weight: float = VACCINATION_ENFORCEMENT_WEIGHT
     ):
         self.start_date = start_date
         self.end_date = end_date
@@ -43,6 +47,10 @@ class Scenario:
         self.optimize_capacity = optimize_capacity
         self.political_factor = political_factor
         self.balanced_location = balanced_location
+        self.max_distr_pct_change = max_distr_pct_change
+        self.population_equity_pct = population_equity_pct
+        self.vaccination_enforcement_weight = vaccination_enforcement_weight
+        self.balanced_distr_locations_pct = balanced_distr_locations_pct
 
     def get_vaccine_params(
             self,
@@ -59,6 +67,7 @@ class Scenario:
             max_increase_pct=self.max_decrease_pct,
             excluded_risk_classes=np.array(self.excluded_risk_classes) if self.excluded_risk_classes else np.array([]).astype(int),
             optimize_capacity=self.optimize_capacity,
+            max_distr_pct_change=self.max_distr_pct_change
         )
 
     def load_model(
@@ -99,6 +108,9 @@ class Scenario:
                                                   baseline_centers_df=baseline_centers_df)
         allocation_params["political_factor"] = self.political_factor
         allocation_params["balanced_location"] = self.balanced_location
+        allocation_params["population_equity_pct"] = self.population_equity_pct
+        allocation_params["vaccination_enforcement_weight"] = self.vaccination_enforcement_weight
+        allocation_params["balanced_distr_locations_pct"] = self. balanced_distr_locations_pct
 
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
@@ -145,4 +157,3 @@ class Scenario:
                 pickle.dump(model, fp)
 
         return baseline_solution.get_objective_value(), optimized_solution.get_objective_value()
-
