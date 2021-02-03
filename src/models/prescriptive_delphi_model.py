@@ -573,10 +573,10 @@ class PrescriptiveDELPHIModel:
             for i in range(self._n_cities) for t in range(self._n_timesteps)
         )
 
-        # model.addConstrs(
-        #     vaccine_distribution[i, t] >= self.vaccine_budget[t]/self._cities_budget * (1 - self.balanced_distr_locations_pct)
-        #     for i in range(self._n_cities) for t in range(self._n_timesteps)
-        # )
+        model.addConstrs(
+             vaccine_distribution[i, t] >= (self.vaccine_budget[t]/self._cities_budget * 1 / (1 + self.balanced_distr_locations_pct)) * location_indicator[i]
+             for i in range(self._n_cities) for t in range(self._n_timesteps)
+        )
 
         # Sanity check: plan b constraint
         # model.addConstrs(
