@@ -529,7 +529,8 @@ class PrescriptiveDELPHIModel:
         model.addConstrs(
             city_indicator[j] <= len(self.state_to_cities[j]) for j in self._regions
         )
-
+        
+        # TODO: POTENTIALLY RELAXED TO BE MORE OPTIMIZED
         model.addConstrs(
             sum(vaccinated[j, k, t] for k in self._risk_classes) == self.vaccine_budget[t]/self._cities_budget *
             city_indicator[j]
