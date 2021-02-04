@@ -44390,3 +44390,2455 @@ Solution count 1: -726071
 
 Optimal solution found (tolerance 1.00e-02)
 Best objective -7.260712178976e+05, best bound -7.264278783668e+05, gap 0.0491%
+
+Gurobi 8.1.0 (win64, Python) logging started 02/04/21 18:56:14
+
+Academic license - for non-commercial use only
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-04, 8e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-04, 8e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-06, 3e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-06, 3e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 5e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 5e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-06, 9e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-06, 9e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 9e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 9e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [9e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [9e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-06, 3e-04]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-06, 3e-04]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-06, 6e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-06, 6e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-04, 2e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-04, 2e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 5e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 5e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 2e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 2e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 1e+01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 1e+01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 4e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 4e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 3e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 3e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 1e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 1e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 7e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 9e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 9e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 9e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 9e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-05, 5e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 7e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-04, 7e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 8e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 8e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-06, 1e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [3e-06, 1e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 6e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [8e-06, 8e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [8e-06, 8e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-03, 9e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-03, 9e+00]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+02]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 7e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-05, 7e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [8e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [8e-05, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 2e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-04, 7e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 6e-01]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-06, 3e-04]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+05]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-06, 3e-04]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 1e+05]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-06, 3e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [6e-06, 3e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [5e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [5e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-06, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-06, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+04]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [2e-05, 2e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 8e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [5e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [5e-05, 1e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 4e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [4e-05, 2e-02]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 5e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 1044 rows, 540 columns and 2232 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-05, 4e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns
+Changed value of parameter MIPGap to 0.05
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Changed value of parameter FeasibilityTol to 0.001
+   Prev: 1e-06  Min: 1e-09  Max: 0.01  Default: 1e-06
+Changed value of parameter TimeLimit to 240.0
+   Prev: 1e+100  Min: 0.0  Max: 1e+100  Default: 1e+100
+Parameter OutputFlag unchanged
+   Value: 1  Min: 0  Max: 1  Default: 1
+No parameters matching 'NonConvex' found
+Optimize a model with 942 rows, 540 columns and 2028 nonzeros
+Model has 108 quadratic objective terms
+Model has 108 quadratic constraints
+Coefficient statistics:
+  Matrix range     [8e-01, 1e+00]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [7e-05, 4e-03]
+  QObjective range [6e+01, 2e+08]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e-05, 3e+03]
+Warning: Model contains large quadratic objective coefficients
+         Consider reformulating model or setting NumericFocus parameter
+         to avoid numerical issues.
+Presolve removed 18 rows and 0 columns

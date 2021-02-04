@@ -12,10 +12,11 @@ SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500_fullname.csv"
 BASELINE_ALLOCATION_CITIES_PATH = "../data/inputs/baseline_allocation_cities.csv"
 BASELINE_ALLOCATION_POPULATION_PATH = "../data/inputs/baseline_allocation_population.csv"
 BASELINE_ALLOCATION_CASES_PATH = "../data/inputs/baseline_allocation_cases.csv"
+MORTALITY_RATES_PATH = "../data/inputs/mortality-rates-"
+
 
 # Output paths
 MODEL_PATH_PATH = "../data/outputs/model-"
-MORTALITY_RATES_PATH = "../data/outputs/mortality-rates-"
 BASELINE_SOLUTION_PATH = "../data/outputs/baseline-solution-"
 OPTIMIZED_SOLUTION_PATH = "../data/outputs/optimized-solution-"
 RESULTS_PATH = "../data/outputs/results-"

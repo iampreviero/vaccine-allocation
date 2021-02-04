@@ -153,7 +153,7 @@ class Scenario:
             with open(mortality_rate_path, "wb") as fp:
                 np.save(fp, model.mortality_rate)
 
-        if self.baseline == "none":
+        if not RUN_BASELINES:
             print("Optimizing...")
             solution = model.optimize(
                 exploration_tol=EXPLORATION_TOL,
