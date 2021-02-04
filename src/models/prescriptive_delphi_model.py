@@ -468,9 +468,9 @@ class PrescriptiveDELPHIModel:
         location_indicator = model.addVars(self.n_cities, vtype=GRB.BINARY)
         # Vaccine distribution variables: C_{it}
         vaccine_distribution = model.addVars(self.n_cities, self.n_timesteps + 1, lb=0)
-
-        max_center_density = model.addVar(lb=0)
-        min_center_density = model.addVar(lb=0)
+#        county_city_indicator =  model.addVars(self.n_counties, self.n_cities, lb=0, ub=1)
+#        max_center_density = model.addVar(lb=0)
+#        min_center_density = model.addVar(lb=0)
 
         if locations_per_state_warm_start.size > 0:
             for j in self.regions:
@@ -705,6 +705,20 @@ class PrescriptiveDELPHIModel:
 #             unallocated_vaccines[t] >= self.vaccine_budget[t] - vaccinated.sum("*", "*", t)
 #             for t in self.timesteps
 #         )
+        
+        # Set conditions for counties being assigned to a city
+        
+        # we can only assign counties to cities that are being chosen
+#        model.addConstrs(
+#            county_city_indicator[l,i] <= location_indicator[i]
+#            for l in range(self.n_counties) for i in range(self.n_cities)
+#        )
+        
+        # all counties needs to be assigned to one county
+#        model.addConstrs(
+#            gp.quicksum(county_city_indicator[l,i] for i in range(self.n_cities)) == 1
+#            for l in range(self.n_counties)
+#        )
 
         # Objective
         model.setObjective(
@@ -715,6 +729,7 @@ class PrescriptiveDELPHIModel:
             # + undetected_dying.sum("*", "*", self.n_timesteps)
 #             + unallocated_vaccines.sum()
 #            + self.political_factor * (max_center_density - min_center_density)
+#            + self.distance_penalty * gp.quicksum(county_city_indicator[l,i] * self.population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
             ,
             GRB.MINIMIZE
         )

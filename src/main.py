@@ -5,9 +5,14 @@ from copy import deepcopy
 
 from pipeline.scenario import Scenario
 from pipeline.constants import *
+from datetime import datetime
 
 
 if __name__ == "__main__":
+
+    now = datetime.now()
+    
+    dt_string = now.strftime("%Y%m%d-%H%M%S")
 
     scenario_params_grid = [
         dict(
@@ -44,7 +49,10 @@ if __name__ == "__main__":
         for initial_solution in INITIAL_SOLUTION_GRID
     ]
 
-    results_dict = deepcopy(scenario_params_grid)
+    results_dict_baseline = list()
+    results_dict_optimized = list()
+    counter_baseline = 0
+    counter_optimized = 0
 
     for i, scenario_params in enumerate(scenario_params_grid):
 
@@ -52,30 +60,41 @@ if __name__ == "__main__":
         end_date = scenario_params["start_date"]
         mortality_rate_path = f"{MORTALITY_RATES_PATH}2021-heur.npy"
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
+        
+        if RUN_BASELINES:
 
-        for j, baseline in enumerate(baselines_grid):
-            params_dict = {**scenario_params, **baseline}
-            obj_val = Scenario(**params_dict).run(
-                model_path=f"{MODEL_PATH_PATH}{i}.pickle",
-                solution_path=f"{BASELINE_SOLUTION_PATH}{j}-{i}.pickle",
-                mortality_rate_path=mortality_rate_path,
-                reload_mortality_rate=reload_mortality_rate
-            )
-            results_dict[i][f"baseline_{j}_obj_val"] = obj_val
-            results = pd.DataFrame(results_dict)
-            results.to_csv(RESULTS_PATH)
+            for j, baseline in enumerate(baselines_grid):
+                params_dict = {**scenario_params, **baseline}
+                baseline_name = baseline["baseline"]
+                obj_val = Scenario(**params_dict).run(
+                    model_path=f"{MODEL_PATH_PATH}{baseline_name}-{dt_string}-{i}-{j}.pickle",
+                    solution_path=f"{BASELINE_SOLUTION_PATH}{baseline_name}-{dt_string}-{i}-{j}.pickle",
+                    mortality_rate_path=mortality_rate_path,
+                    reload_mortality_rate=reload_mortality_rate
+                )
+                results_dict_baseline.append(params_dict)
+                results_dict_baseline[counter_baseline]["scenario"] = i
+                results_dict_baseline[counter_baseline]["baseline"] = j
+                results_dict_baseline[counter_baseline]["baseline_obj_val"] = obj_val
+                counter_baseline = counter_baseline + 1
+                results = pd.DataFrame(results_dict_baseline)
+                results.to_csv(f"{RESULTS_PATH}{dt_string}-baselines.csv")
 
         for j, algorithm_params in enumerate(algorithm_params_grid):
             params_dict = {**scenario_params, **algorithm_params}
             obj_val = Scenario(**params_dict).run(
-                model_path=f"{MODEL_PATH_PATH}{i}.pickle",
-                solution_path=f"{OPTIMIZED_SOLUTION_PATH}{j}-{i}.pickle",
+                model_path=f"{MODEL_PATH_PATH}optimized-{dt_string}-{i}-{j}.pickle",
+                solution_path=f"{OPTIMIZED_SOLUTION_PATH}optimized-{dt_string}-{i}-{j}.pickle",
                 mortality_rate_path=mortality_rate_path,
                 reload_mortality_rate=reload_mortality_rate
             )
-            results_dict[i][f"optimized_{j}_obj_val"] = obj_val
-            results = pd.DataFrame(results_dict)
-            results.to_csv(RESULTS_PATH)
+            results_dict_optimized.append(params_dict)
+            results_dict_optimized[counter_optimized]["scenario"] = i
+            results_dict_optimized[counter_optimized]["optimized"] = j           
+            results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
+            counter_optimized = counter_optimized + 1
+            results = pd.DataFrame(results_dict_optimized)
+            results.to_csv(f"{RESULTS_PATH}{dt_string}-optimized.csv")
 
 
         # results["abs_improvement"] = results["baseline_obj_val"] - results["optimized_obj_val"]

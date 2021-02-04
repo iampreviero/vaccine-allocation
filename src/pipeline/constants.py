@@ -18,7 +18,7 @@ MODEL_PATH_PATH = "../data/outputs/model-"
 MORTALITY_RATES_PATH = "../data/outputs/mortality-rates-"
 BASELINE_SOLUTION_PATH = "../data/outputs/baseline-solution-"
 OPTIMIZED_SOLUTION_PATH = "../data/outputs/optimized-solution-"
-RESULTS_PATH = "../data/outputs/results.csv"
+RESULTS_PATH = "../data/outputs/results-"
 
 # Population partition
 RISK_CLASSES = [
@@ -89,7 +89,8 @@ VACCINE_EFFECTIVENESS_GRID = [0.9]
 DAILY_VACCINE_BUDGET_GRID = [1e6]
 
 # Baselines
-BASELINES = ["cities", "population", "cases"]
+BASELINES = ["cases","population"]
+RUN_BASELINES = False
 
 # Algorithm parameters
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
@@ -97,4 +98,4 @@ POLITICAL_FACTOR_GRID = [0]
 BALANCED_LOCATIONS_GRID = [5]
 POPULATION_EQUITY_PCT_GRID = [0.1]
 BALANCED_DISTR_LOCATIONS_PCT_GRID = [1]
-INITIAL_SOLUTION_GRID = ["cases","population","cities"]
+INITIAL_SOLUTION_GRID = ["cases"]
