@@ -9,13 +9,15 @@ POPULATION_DATA_PATH = "../data/inputs/population.csv"
 COUNTY_POP_DATA_PATH = "../data/inputs/county_pop_clean_fullname.csv"
 COUNTY_DISTS_PATH = "../data/inputs/counties_distances_500_fullname.csv"
 SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500_fullname.csv"
-BASELINE_CENTERS_PATH = "../data/inputs/baseline_allocation_cities.csv"
+BASELINE_ALLOCATION_CITIES_PATH = "../data/inputs/baseline_allocation_cities.csv"
+BASELINE_ALLOCATION_POPULATION_PATH = "../data/inputs/baseline_allocation_population.csv"
+BASELINE_ALLOCATION_CASES_PATH = "../data/inputs/baseline_allocation_cases.csv"
 
 # Output paths
 MODEL_PATH_PATH = "../data/outputs/model-"
 MORTALITY_RATES_PATH = "../data/outputs/mortality-rates-"
 BASELINE_SOLUTION_PATH = "../data/outputs/baseline-solution-"
-OPTIMIZED_SOLUTION_ATH = "../data/outputs/optimized-solution-"
+OPTIMIZED_SOLUTION_PATH = "../data/outputs/optimized-solution-"
 RESULTS_PATH = "../data/outputs/results.csv"
 
 # Population partition
@@ -48,6 +50,7 @@ EXPLORATION_TOL = 5e6
 TERMINATION_TOL = 5e2
 MAX_ITERATIONS = 10
 N_EARLY_STOPPING_ITERATIONS = 1
+INITIAL_SOLUTION = "cities" # currently supports: cities, population, cases
 
 # Gurobi parameters
 TIME_LIMIT = 240
@@ -84,8 +87,14 @@ DATES_GRID = [
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
 DAILY_VACCINE_BUDGET_GRID = [1e6]
+
+# Baselines
+BASELINES = ["cities", "population", "cases"]
+
+# Algorithm parameters
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
-POLITICAL_FACTOR_GRID = [0, 1e5, 5e5]
-BALANCED_LOCATIONS_GRID = [1]
-POPULATION_EQUITY_PCT_GRID = [10] #[0.9, 0.1]
-BALANCED_DISTR_LOCATIONS_PCT_GRID = [0]
+POLITICAL_FACTOR_GRID = [0]
+BALANCED_LOCATIONS_GRID = [5]
+POPULATION_EQUITY_PCT_GRID = [0.1]
+BALANCED_DISTR_LOCATIONS_PCT_GRID = [1]
+INITIAL_SOLUTION_GRID = ["cases","population","cities"]

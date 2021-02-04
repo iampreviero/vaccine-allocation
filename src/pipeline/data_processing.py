@@ -311,8 +311,13 @@ def get_allocation_params(county_pop_df,
     cities_budget = 100
     n_cities = selected_centers_df.shape[0]
 
-    baseline_centers_df.columns = [us.states.lookup(x).name for x in baseline_centers_df.columns]
-    baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
+    # baseline_centers_df.columns = [us.states.lookup(x).name for x in baseline_centers_df.columns]
+    # baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
+
+    # This line shows what we want to do:
+    # baseline_centers = baseline_centers_df[:,'num_locations'].to_numpy()
+    # This line does it in an ugly way, but ensures order is correct no matter how stupid was the person that created the input
+    baseline_centers = np.array([baseline_centers_df[baseline_centers_df['state']==s]['num_locations'].item() for i,s in enumerate(states)])
 
     allocation_params = {
         'population': county_pop_mat,

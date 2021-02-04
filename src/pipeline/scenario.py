@@ -16,10 +16,14 @@ class Scenario:
 
     def __init__(
             self,
+            # Scenario parameters
             start_date: dt.datetime,
             end_date: dt.datetime,
             vaccine_effectiveness: float,
             daily_vaccine_budget: float,
+            # Whether to run baseline or optimization
+            baseline: str = "none",
+            # Optimization algorithm parameters
             min_allocation_factor: float = MIN_ALLOCATION_FACTOR,
             max_allocation_factor: float = MAX_ALLOCATION_FACTOR,
             max_increase_pct: float = MAX_INCREASE_PCT,
@@ -32,12 +36,14 @@ class Scenario:
             max_distr_pct_change: float = MAX_DISTR_PCT_CHANGE,
             population_equity_pct: float = POPULATION_EQUITY_PCT,
             balanced_distr_locations_pct: float = BALANCED_DISTR_LOCATIONS_PCT,
-            vaccination_enforcement_weight: float = VACCINATION_ENFORCEMENT_WEIGHT
+            vaccination_enforcement_weight: float = VACCINATION_ENFORCEMENT_WEIGHT,
+            initial_solution: str = "cities"
     ):
         self.start_date = start_date
         self.end_date = end_date
         self.vaccine_effectiveness = vaccine_effectiveness
         self.daily_vaccine_budget = daily_vaccine_budget
+        self.baseline = baseline
         self.max_total_capacity = max_total_capacity if max_total_capacity else daily_vaccine_budget
         self.max_allocation_factor = max_allocation_factor
         self.min_allocation_factor = min_allocation_factor
@@ -51,6 +57,7 @@ class Scenario:
         self.population_equity_pct = population_equity_pct
         self.vaccination_enforcement_weight = vaccination_enforcement_weight
         self.balanced_distr_locations_pct = balanced_distr_locations_pct
+        self.initial_solution = initial_solution
 
     def get_vaccine_params(
             self,
@@ -83,7 +90,19 @@ class Scenario:
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
         counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
-        baseline_centers_df = pd.read_csv(BASELINE_CENTERS_PATH, index_col=0)
+        if self.baseline == "cities":
+            baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CITIES_PATH)
+        elif self.baseline == "population":
+            baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_POPULATION_PATH)
+        elif self.baseline == "cases":
+            baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CASES_PATH)
+        else:
+            if self.initial_solution == "cities":
+                baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CITIES_PATH)
+            elif self.initial_solution == "population":
+                baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_POPULATION_PATH)
+            elif self.initial_solution == "cases":
+                baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CASES_PATH)
 
         # Get processed data for model
         initial_conditions = get_initial_conditions(
@@ -124,8 +143,7 @@ class Scenario:
             self,
             mortality_rate_path: str,
             model_path: Optional[str] = None,
-            baseline_solution_path: Optional[str] = None,
-            optimized_solution_path: Optional[str] = None,
+            solution_path: Optional[str] = None,
             reload_mortality_rate: bool = False
     ) -> Tuple[float, float]:
 
@@ -135,25 +153,24 @@ class Scenario:
             with open(mortality_rate_path, "wb") as fp:
                 np.save(fp, model.mortality_rate)
 
-        print("Running baseline...")
-        baseline_solution = model.simulate(prioritize_allocation=False, top_cities_allocation=True)
-        if baseline_solution_path:
-            with open(baseline_solution_path, "wb") as fp:
-                pickle.dump(baseline_solution, fp)
+        if self.baseline == "none":
+            print("Optimizing...")
+            solution = model.optimize(
+                exploration_tol=EXPLORATION_TOL,
+                termination_tol=TERMINATION_TOL,
+                max_iterations=MAX_ITERATIONS,
+                n_early_stopping_iterations=N_EARLY_STOPPING_ITERATIONS,
+                log=True
+            )
+        else:
+            print("Running baseline...")
+            solution = model.simulate(prioritize_allocation=False, initial_solution_allocation=True)
 
-        print("Optimizing...")
-        optimized_solution = model.optimize(
-            exploration_tol=EXPLORATION_TOL,
-            termination_tol=TERMINATION_TOL,
-            max_iterations=MAX_ITERATIONS,
-            n_early_stopping_iterations=N_EARLY_STOPPING_ITERATIONS,
-            log=True
-        )
-        if optimized_solution_path:
-            with open(optimized_solution_path, "wb") as fp:
-                pickle.dump(optimized_solution, fp)
+        if solution_path:
+            with open(solution_path, "wb") as fp:
+                pickle.dump(solution, fp)
         if model_path:
             with open(model_path, "wb") as fp:
                 pickle.dump(model, fp)
 
-        return baseline_solution.get_objective_value(), optimized_solution.get_objective_value()
+        return solution.get_objective_value()
