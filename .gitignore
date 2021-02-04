@@ -3,3 +3,4 @@
 .DS_Store
 *.pickle
 *.pyc
+/data/outputs/
