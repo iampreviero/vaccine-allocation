@@ -417,7 +417,7 @@ class PrescriptiveDELPHIModel:
             days_per_timestep=self.days_per_timestep,
         )
 
-    def _optimize_relaxation(
+    def optimize_relaxation(
             self,
             exploration_tol: float,
             estimated_infectious: np.ndarray,
@@ -778,7 +778,7 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution = None
         return vaccinated, locations, location_indicator, vaccine_distribution
 
-    def _smooth_vaccine_allocation(
+    def smooth_vaccine_allocation(
             self,
             solution: DELPHISolution,
             smoothing_window: int
@@ -802,7 +802,7 @@ class PrescriptiveDELPHIModel:
                 vaccinated[:, :, t] = 0
         return self.simulate(vaccinated=vaccinated, locations=solution.locations)
 
-    def _prioritize_vaccine_allocation(self, solution: DELPHISolution) -> DELPHISolution:
+    def prioritize_vaccine_allocation(self, solution: DELPHISolution) -> DELPHISolution:
         """
         Adjust vaccine allocation to ensure risk class prioritization is preserved.
 
@@ -836,7 +836,7 @@ class PrescriptiveDELPHIModel:
 
         return solution
 
-    def _round_vaccine_allocation(self, solution: DELPHISolution, rounding_tol: float):
+    def round_vaccine_allocation(self, solution: DELPHISolution, rounding_tol: float):
         """
         Apply a rounding cut-off to the vaccine allocation policy as a proxy for transforming the interior point
         solution into a basic feasible solution.
@@ -854,7 +854,7 @@ class PrescriptiveDELPHIModel:
                 vaccinated[:, :, t] = 0
         return self.simulate(vaccinated=vaccinated, locations=solution.locations)
 
-    def _post_process_solution(
+    def post_process_solution(
             self,
             solution: DELPHISolution,
             prioritize_allocation: bool,
