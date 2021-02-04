@@ -1,2 +1,52 @@
-,MD,IN,DC,AZ,IA,AK,NC,LA,NE,TN,MN,NJ,UT,MO,MI,AL,VA,MA,GA,OK,RI,NM,KY,KS,OR,TX,OH,HI,MS,PA,IL,CA,CO,SD,WI,CT,WA,NV,ID,AR,FL,NY,SC,NH,ND,MT,DE,ME,WY,WV,VT
-vals,1,2,1,4,1,1,2,2,2,2,1,2,1,2,2,2,3,2,1,1,1,1,2,1,1,6,2,1,1,2,1,13,2,1,2,1,3,4,1,1,6,3,1,1,1,1,1,1,1,1,1
+state,num_locations
+Alabama,2
+Alaska,1
+Arizona,4
+Arkansas,1
+California,13
+Colorado,2
+Connecticut,1
+Delaware,1
+District of Columbia,1
+Florida,6
+Georgia,1
+Hawaii,1
+Idaho,1
+Illinois,1
+Indiana,2
+Iowa,1
+Kansas,1
+Kentucky,2
+Louisiana,2
+Maine,1
+Maryland,1
+Massachusetts,2
+Michigan,2
+Minnesota,1
+Mississippi,1
+Missouri,2
+Montana,1
+Nebraska,2
+Nevada,4
+New Hampshire,1
+New Jersey,2
+New Mexico,1
+New York,3
+North Carolina,2
+North Dakota,1
+Ohio,2
+Oklahoma,1
+Oregon,1
+Pennsylvania,2
+Rhode Island,1
+South Carolina,1
+South Dakota,1
+Tennessee,2
+Texas,6
+Utah,1
+Vermont,1
+Virginia,3
+Washington,3
+West Virginia,1
+Wisconsin,2
+Wyoming,1
