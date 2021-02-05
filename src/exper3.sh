@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=Vaccine
-#SBATCH --output=out_%a.txt
-#SBATCH --error=err_%a.txt
+#SBATCH --job-name=exper3
+#SBATCH --output=exper3_out_%a.txt
+#SBATCH --error=exper3_err_%a.txt
 #SBATCH -p sched_mit_sloan_batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
