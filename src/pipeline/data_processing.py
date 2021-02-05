@@ -3,7 +3,7 @@ from copy import deepcopy
 from typing import List, Dict, Union, Optional
 from gurobipy import GurobiError
 import pandas as pd
-import us
+# import us
 
 from pipeline.constants import *
 from models.mortality_rate_estimator import MortalityRateEstimator
@@ -107,17 +107,17 @@ def get_mortality_rate_estimates(
 
     # Perform estimation for each state
     for j, state in enumerate(pop_df["state"].unique()):
-        cases = predictions_df[
+        cases = np.array(predictions_df[
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date)
             & (predictions_df["date"] <= end_date)
-            ]["total_detected_cases"].diff().dropna().to_numpy()
+            ]["total_detected_cases"].diff().dropna())
 
-        deaths = predictions_df[
+        deaths = np.array(predictions_df[
             (predictions_df["state"] == state)
             & (predictions_df["date"] >= start_date + lag[j])
             & (predictions_df["date"] <= end_date + lag[j])
-            ]["total_detected_deaths"].diff().dropna().to_numpy()
+            ]["total_detected_deaths"].diff().dropna())
 
         deaths = np.where(deaths / cases <= MAX_MORTALITY_RATE, deaths, MAX_MORTALITY_RATE * cases)
         mortality_rate_estimator = MortalityRateEstimator(
@@ -267,7 +267,7 @@ def get_delphi_params(
         iqr_transition_rate=detection_rate * DETECTION_PROBABILITY * (1 - hospitalization_rate) * (1 - mortality_rate),
         iud_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * mortality_rate,
         iur_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * (1 - mortality_rate),
-        death_rate = params_df["death_rate"].to_numpy(),
+        death_rate = np.array(params_df["death_rate"]),
         hospitalized_recovery_rate=hospitalized_recovery_rate,
         unhospitalized_recovery_rate=unhospitalized_recovery_rate,
         mortality_rate=mortality_rate,
@@ -280,8 +280,8 @@ def get_allocation_params(county_pop_df,
                           selected_centers_df,
                           baseline_centers_df):
 
-    county_pop_mat = county_pop_df.iloc[:, 2:].to_numpy()
-    counties_dists_mat = counties_dists_df.to_numpy()
+    county_pop_mat = np.array(county_pop_df.iloc[:, 2:])
+    counties_dists_mat = np.array(counties_dists_df)
 
     valid_pairs = np.argwhere(counties_dists_mat > -1)
 
