@@ -162,6 +162,9 @@ class Scenario:
                 termination_tol=TERMINATION_TOL,
                 max_iterations=MAX_ITERATIONS,
                 n_early_stopping_iterations=N_EARLY_STOPPING_ITERATIONS,
+                time_limit=TIME_LIMIT,
+                mip_gap=MIP_GAP,
+                feasibility_tol=FEASIBILITY_TOL,
                 log=True
             )
         else:

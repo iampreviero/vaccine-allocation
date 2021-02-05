@@ -749,7 +749,6 @@ class PrescriptiveDELPHIModel:
             model.params.TimeLimit = time_limit
 
         model.params.OutputFlag = True
-        model.params.TimeLimit = 600
         model.params.method = 2 ######## Barrier for root
         # model.params.nodeMethod = 2 ######## Barrier for subsequent nodes
 
@@ -912,9 +911,9 @@ class PrescriptiveDELPHIModel:
             self,
             exploration_tol: float,
             termination_tol: float = 1e-2,
-            mip_gap: Optional[float] = 1e-2,
-            feasibility_tol: Optional[float] = None,
-            time_limit: Optional[float] = None,
+            mip_gap: Optional[float] = 1e-3,
+            feasibility_tol: Optional[float] = 1e-5,
+            time_limit: Optional[float] = 900.,
             output_flag: bool = False,
             n_restarts: int = 1,
             max_iterations: int = 10,
