@@ -709,15 +709,15 @@ class PrescriptiveDELPHIModel:
 #             unallocated_vaccines[t] >= self.vaccine_budget[t] - vaccinated.sum("*", "*", t)
 #             for t in self.timesteps
 #         )
-        
+
         # Set conditions for counties being assigned to a city
-        
+
         # we can only assign counties to cities that are being chosen
         model.addConstrs(
             county_city_indicator[l,i] <= location_indicator[i]
             for l, i in self.county_city_to_distance.keys()
         )
-        
+
 #        all counties needs to be assigned to one city
         model.addConstrs(
             gp.quicksum(county_city_indicator[l,i] for i in self.state_to_cities[self.county_to_state[l]]) == 1
@@ -765,10 +765,10 @@ class PrescriptiveDELPHIModel:
             print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
             print(f"Balanced location distribution pct: {self.balanced_distr_locations_pct}")
             print(f"Distance Penalty Faftor: {self.distance_penalty}")
-            
+
             county_city_indicator_output = model.getAttr("x", county_city_indicator)
             county_city_indicator = {}
-            
+
             for l, i in self.county_city_to_distance.keys():
                 county_city_indicator[(l,i)] = county_city_indicator_output[l,i]
             distance_penalty = sum(county_city_indicator[(l,i)] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
