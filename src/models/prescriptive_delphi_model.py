@@ -26,6 +26,7 @@ class DELPHISolution:
             locations: np.ndarray,
             location_indicator: np.ndarray,
             vaccine_distribution: np.ndarray,
+            county_city_indicator: dict,
             days_per_timestep: float = 1.0,
     ):
         """
@@ -82,6 +83,7 @@ class DELPHISolution:
         self.days_per_timestep = days_per_timestep
         self.location_indicator = location_indicator
         self.vaccine_distribution = vaccine_distribution
+        self.county_city_indicator = county_city_indicator
 
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
@@ -211,6 +213,7 @@ class PrescriptiveDELPHIModel:
             locations: Optional[np.ndarray] = None,
             location_indicator: Optional[np.ndarray] = None,
             vaccine_distribution: Optional[np.ndarray] = None,
+            county_city_indicator: Optional = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
             initial_solution_allocation: bool = False
@@ -414,6 +417,7 @@ class PrescriptiveDELPHIModel:
             locations=locations,
             location_indicator=location_indicator,
             vaccine_distribution=vaccine_distribution,
+            county_city_indicator=county_city_indicator,
             days_per_timestep=self.days_per_timestep,
         )
 
@@ -468,7 +472,7 @@ class PrescriptiveDELPHIModel:
         location_indicator = model.addVars(self.n_cities, vtype=GRB.BINARY)
         # Vaccine distribution variables: C_{it}
         vaccine_distribution = model.addVars(self.n_cities, self.n_timesteps + 1, lb=0)
-        county_city_indicator =  model.addVars(self.n_counties, self.n_cities, lb=0, ub=1)
+        county_city_indicator =  model.addVars(list(self.county_city_to_distance.keys()), lb=0, ub=1)
 #        max_center_density = model.addVar(lb=0)
 #        min_center_density = model.addVar(lb=0)
 
@@ -711,12 +715,12 @@ class PrescriptiveDELPHIModel:
         # we can only assign counties to cities that are being chosen
         model.addConstrs(
             county_city_indicator[l,i] <= location_indicator[i]
-            for l in range(self.n_counties) for i in range(self.n_cities)
+            for l, i in self.county_city_to_distance.keys()
         )
         
-#        all counties needs to be assigned to one county
+#        all counties needs to be assigned to one city
         model.addConstrs(
-            gp.quicksum(county_city_indicator[l,i] for i in range(self.n_cities)) == 1
+            gp.quicksum(county_city_indicator[l,i] for i in self.state_to_cities[self.county_to_state[l]]) == 1
             for l in range(self.n_counties)
         )
 
@@ -729,7 +733,7 @@ class PrescriptiveDELPHIModel:
             # + undetected_dying.sum("*", "*", self.n_timesteps)
 #             + unallocated_vaccines.sum()
 #            + self.political_factor * (max_center_density - min_center_density)
-            + self.distance_penalty * gp.quicksum(county_city_indicator[l,i] * self.population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
+            + self.distance_penalty * gp.quicksum(county_city_indicator[l,i] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
             ,
             GRB.MINIMIZE
         )
@@ -760,7 +764,15 @@ class PrescriptiveDELPHIModel:
             print(f"Population equity pct: {self.population_equity_pct}")
             print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
             print(f"Balanced location distribution pct: {self.balanced_distr_locations_pct}")
-
+            print(f"Distance Penalty Faftor: {self.distance_penalty}")
+            
+            county_city_indicator_output = model.getAttr("x", county_city_indicator)
+            county_city_indicator = {}
+            
+            for l, i in self.county_city_to_distance.keys():
+                county_city_indicator[(l,i)] = county_city_indicator_output[l,i]
+            distance_penalty = sum(county_city_indicator[(l,i)] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
+            print(f"Distance Penalty is: {distance_penalty * self.distance_penalty}")
             # Return vaccine allocation
             vaccinated = model.getAttr("x", vaccinated)
             vaccinated = np.array([
@@ -791,7 +803,8 @@ class PrescriptiveDELPHIModel:
             locations = None
             location_indicator = None
             vaccine_distribution = None
-        return vaccinated, locations, location_indicator, vaccine_distribution
+            county_city_indicator = None
+        return vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator
 
     def smooth_vaccine_allocation(
             self,
@@ -973,7 +986,7 @@ class PrescriptiveDELPHIModel:
 
                 # Re-optimize vaccine allocation by solution linearized relaxation
                 try:
-                    vaccinated, locations, location_indicator, vaccine_distribution = self.optimize_relaxation(
+                    vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator = self.optimize_relaxation(
                         exploration_tol=exploration_tol,
                         estimated_infectious=incumbent_solution.infectious.sum(axis=1),
                         vaccinated_warm_start=incumbent_solution.vaccinated,
@@ -996,7 +1009,8 @@ class PrescriptiveDELPHIModel:
                 previous_solution, incumbent_solution = incumbent_solution, self.simulate(vaccinated=vaccinated,
                                                                                           locations=locations,
                                                                                           location_indicator=location_indicator,
-                                                                                          vaccine_distribution=vaccine_distribution)
+                                                                                          vaccine_distribution=vaccine_distribution,
+                                                                                          county_city_indicator=county_city_indicator)
                 previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_total_deaths()
                 trajectory.append(incumbent_obj_val)
                 if log:

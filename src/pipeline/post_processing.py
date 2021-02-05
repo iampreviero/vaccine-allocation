@@ -5,7 +5,7 @@ Created on Wed Feb  3 21:16:06 2021
 @author: Michael
 """
 
-with open("../data/outputs/optimized-solution-20210203-210119-0.pickle","rb") as f:
+with open("../data/outputs/optimized-solution--20210204-212326-0-0.pickle","rb") as f:
     solution = pickle.load(f)
 vac_dist_states = np.zeros(solution.vaccinated.shape[0])
 for j in range(vac_dist_states.shape[0]):

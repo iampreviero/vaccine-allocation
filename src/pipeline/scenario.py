@@ -37,6 +37,7 @@ class Scenario:
             population_equity_pct: float = POPULATION_EQUITY_PCT,
             balanced_distr_locations_pct: float = BALANCED_DISTR_LOCATIONS_PCT,
             vaccination_enforcement_weight: float = VACCINATION_ENFORCEMENT_WEIGHT,
+            distance_penalty: float = DISTANCE_PENALTY,
             initial_solution: str = "cities"
     ):
         self.start_date = start_date
@@ -58,6 +59,7 @@ class Scenario:
         self.vaccination_enforcement_weight = vaccination_enforcement_weight
         self.balanced_distr_locations_pct = balanced_distr_locations_pct
         self.initial_solution = initial_solution
+        self.distance_penalty = distance_penalty
 
     def get_vaccine_params(
             self,
@@ -130,7 +132,7 @@ class Scenario:
         allocation_params["population_equity_pct"] = self.population_equity_pct
         allocation_params["vaccination_enforcement_weight"] = self.vaccination_enforcement_weight
         allocation_params["balanced_distr_locations_pct"] = self. balanced_distr_locations_pct
-
+        allocation_params["distance_penalty"] = self.distance_penalty
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
             initial_conditions=initial_conditions,
