@@ -87,7 +87,7 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)
-        results.to_csv(f"{RESULTS_PATH}{int(sys.argv[2])}-{dt_string}-optimized-{int(sys.argv[1])}.csv")
+        results.to_csv(f"{RESULTS_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}.csv")
 
 
         # results["abs_improvement"] = results["baseline_obj_val"] - results["optimized_obj_val"]
