@@ -76,8 +76,8 @@ if __name__ == "__main__":
 
         params_dict = {**scenario_params, **algorithm_params}
         obj_val = Scenario(**params_dict).run(
-            model_path=f"{MODEL_PATH_PATH}{int(sys.argv[2])}-{dt_string}-optimized-{int(sys.argv[1])}-{i}.pickle",
-            solution_path=f"{OPTIMIZED_SOLUTION_PATH}{int(sys.argv[2])}-{dt_string}-{int(sys.argv[1])}-{i}.pickle",
+            model_path=f"{MODEL_PATH_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}-{i}.pickle",
+            solution_path=f"{OPTIMIZED_SOLUTION_PATH}{sys.argv[2]}-{dt_string}-{int(sys.argv[1])}-{i}.pickle",
             mortality_rate_path=mortality_rate_path,
             reload_mortality_rate=reload_mortality_rate
         )
