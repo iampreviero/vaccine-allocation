@@ -311,9 +311,9 @@ def get_allocation_params(county_pop_df,
 
     cities_budget = 100
     n_cities = selected_centers_df.shape[0]
-    fixed_locations_per_state = fixed_locations_per_state_df['num_locations'].to_numpy()
-    fixed_cities = fixed_cities_df['indicator'].to_numpy()
-   
+    fixed_locations_per_state = np.array(fixed_locations_per_state_df['num_locations']) #.to_numpy()
+    fixed_cities = np.array(fixed_cities_df['indicator']) #.to_numpy()
+
     # baseline_centers_df.columns = [us.states.lookup(x).name for x in baseline_centers_df.columns]
     # baseline_centers = baseline_centers_df[states].iloc[0, :].to_numpy()
 
