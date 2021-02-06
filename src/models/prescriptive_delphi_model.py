@@ -161,6 +161,7 @@ class PrescriptiveDELPHIModel:
         self.max_increase_pct = vaccine_params["max_increase_pct"]
         self.excluded_risk_classes = vaccine_params["excluded_risk_classes"]
         self.max_distr_pct_change = vaccine_params["max_distr_pct_change"]
+        self.vaccinated_infection = vaccine_params["vaccinated_infection"]
 
         # Set allocation parameters
         self.county_to_cities = allocation_params["county_to_cities"]
@@ -246,7 +247,11 @@ class PrescriptiveDELPHIModel:
         deceased = np.zeros(dims)
         recovered = np.zeros(dims)
         eligible = np.zeros(dims)
-
+        if self.vaccinated_infection:
+            susceptible_vaccinated = np.zeros(dims)
+            exposed_vaccinated = np.zeros(dims)
+            infectious_vaccinated = np.zeros(dims)
+            
         # Initialize control variable if none provided
         allocate_vaccines = vaccinated is None
         if allocate_vaccines:
@@ -329,22 +334,44 @@ class PrescriptiveDELPHIModel:
 
             # Apply Euler forward difference scheme with clipping of negative values
             for j in self.regions:
-                susceptible[j, :, t + 1] = susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t] - (
-                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
-                        * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
-                        * infectious[j, :, t].sum()
-                ) * self.days_per_timestep
-                eligible[j, :, t + 1] = eligible[j, :, t] - vaccinated[j, :, t] - (
-                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
-                        * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
-                        * infectious[j, :, t].sum()
-                ) * self.days_per_timestep
-                exposed[j, :, t + 1] = exposed[j, :, t] + (
-                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
-                        * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
-                        infectious[j, :, t].sum()
-                        - self.progression_rate * exposed[j, :, t]
-                ) * self.days_per_timestep
+                if self.vaccinated_infection:
+                    susceptible[j, :, t + 1] = susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t] - (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
+                            * infectious[j, :, t].sum()
+                    ) * self.days_per_timestep
+                    susceptible_infected
+                    eligible[j, :, t + 1] = eligible[j, :, t] - vaccinated[j, :, t] - (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
+                            * infectious[j, :, t].sum()
+                    ) * self.days_per_timestep
+                    exposed[j, :, t + 1] = exposed[j, :, t] + (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
+                            infectious[j, :, t].sum()
+                            - self.progression_rate * exposed[j, :, t]
+                    ) * self.days_per_timestep                    
+                    
+                    
+                    
+                else:
+                    susceptible[j, :, t + 1] = susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t] - (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
+                            * infectious[j, :, t].sum()
+                    ) * self.days_per_timestep
+                    eligible[j, :, t + 1] = eligible[j, :, t] - vaccinated[j, :, t] - (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t])
+                            * infectious[j, :, t].sum()
+                    ) * self.days_per_timestep
+                    exposed[j, :, t + 1] = exposed[j, :, t] + (
+                            self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                            * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
+                            infectious[j, :, t].sum()
+                            - self.progression_rate * exposed[j, :, t]
+                    ) * self.days_per_timestep
             susceptible[:, :, t + 1] = np.maximum(susceptible[:, :, t + 1], 0)
             exposed[:, :, t + 1] = np.maximum(exposed[:, :, t + 1], 0)
             eligible[:, :, t + 1] = np.maximum(eligible[:, :, t + 1], 0)
@@ -605,24 +632,46 @@ class PrescriptiveDELPHIModel:
         # )
 
         # Set DELPHI dynamics constraints
-        model.addConstrs(
-            susceptible[j, k, t + 1] - susceptible[j, k, t] + self.vaccine_effectiveness * vaccinated[j, k, t] >=
-            - self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
-            * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
-            * estimated_infectious[j, t] * self.days_per_timestep
-            for j in self.regions for k in self.risk_classes for t in self.timesteps
-        )
-
-        model.addConstrs(
-            exposed[j, k, t + 1] - exposed[j, k, t] >= (
-                    self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
-                    * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
-                    * estimated_infectious[j, t]
-                    - self.progression_rate * exposed[j, k, t]
-            ) * self.days_per_timestep
-            for j in self.regions for k in self.risk_classes for t in self.timesteps
-        )
-
+        
+        if self.vaccine_infections:
+            model.addConstrs(
+                susceptible[j, k, t + 1] - susceptible[j, k, t] + self.vaccine_effectiveness * vaccinated[j, k, t] >=
+                - self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
+                * estimated_infectious[j, t] * self.days_per_timestep
+                for j in self.regions for k in self.risk_classes for t in self.timesteps
+            )
+    
+            model.addConstrs(
+                exposed[j, k, t + 1] - exposed[j, k, t] >= (
+                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                        * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
+                        * estimated_infectious[j, t]
+                        - self.progression_rate * exposed[j, k, t]
+                ) * self.days_per_timestep
+                for j in self.regions for k in self.risk_classes for t in self.timesteps
+            )            
+            
+            
+        else:
+            model.addConstrs(
+                susceptible[j, k, t + 1] - susceptible[j, k, t] + self.vaccine_effectiveness * vaccinated[j, k, t] >=
+                - self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
+                * estimated_infectious[j, t] * self.days_per_timestep
+                for j in self.regions for k in self.risk_classes for t in self.timesteps
+            )
+    
+            model.addConstrs(
+                exposed[j, k, t + 1] - exposed[j, k, t] >= (
+                        self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
+                        * (susceptible[j, k, t] - self.vaccine_effectiveness * vaccinated[j, k, t])
+                        * estimated_infectious[j, t]
+                        - self.progression_rate * exposed[j, k, t]
+                ) * self.days_per_timestep
+                for j in self.regions for k in self.risk_classes for t in self.timesteps
+            )
+    
         model.addConstrs(
             infectious[j, k, t + 1] - infectious[j, k, t] >= (
                     self.progression_rate * exposed[j, k, t]
