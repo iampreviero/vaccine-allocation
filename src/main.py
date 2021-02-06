@@ -41,7 +41,8 @@ if __name__ == "__main__":
             population_equity_pct=population_equity_pct,
             balanced_distr_locations_pct=balanced_distr_locations_pct,
             initial_solution = initial_solution,
-            distance_penalty = distance_penalty
+            distance_penalty = distance_penalty,
+            locations_per_state_fixed = locations_per_state_fixed            
         )
         for min_allocation_factor in MIN_ALLOCATION_FACTOR_GRID
         for political_factor in POLITICAL_FACTOR_GRID
@@ -50,6 +51,7 @@ if __name__ == "__main__":
         for balanced_distr_locations_pct in BALANCED_DISTR_LOCATIONS_PCT_GRID
         for initial_solution in INITIAL_SOLUTION_GRID
         for distance_penalty in DISTANCE_PENALTY_GRID
+        for locations_per_state_fixed in LOCATIONS_PER_STATE_FIXED_GRID
     ]
 
     results_dict_baseline = list()
