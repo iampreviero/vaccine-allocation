@@ -38,6 +38,9 @@ class Scenario:
             balanced_distr_locations_pct: float = BALANCED_DISTR_LOCATIONS_PCT,
             vaccination_enforcement_weight: float = VACCINATION_ENFORCEMENT_WEIGHT,
             distance_penalty: float = DISTANCE_PENALTY,
+            vaccinated_infection: float = VACCINATED_INFECTION,
+            locations_per_state_fixed: bool = LOCATIONS_PER_STATE_FIXED,
+            cities_fixed: bool = CITIES_FIXED,
             initial_solution: str = "cities"
     ):
         self.start_date = start_date
@@ -60,6 +63,9 @@ class Scenario:
         self.balanced_distr_locations_pct = balanced_distr_locations_pct
         self.initial_solution = initial_solution
         self.distance_penalty = distance_penalty
+        self.vaccinated_infection = vaccinated_infection
+        self.locations_per_state_fixed = locations_per_state_fixed
+        self.cities_fixed = cities_fixed
 
     def get_vaccine_params(
             self,
@@ -76,7 +82,8 @@ class Scenario:
             max_increase_pct=self.max_decrease_pct,
             excluded_risk_classes=np.array(self.excluded_risk_classes) if self.excluded_risk_classes else np.array([]).astype(int),
             optimize_capacity=self.optimize_capacity,
-            max_distr_pct_change=self.max_distr_pct_change
+            max_distr_pct_change=self.max_distr_pct_change,
+            vaccinated_infection=self.vaccinated_infection
         )
 
     def load_model(
@@ -92,6 +99,9 @@ class Scenario:
         county_pop_df = pd.read_csv(COUNTY_POP_DATA_PATH)
         counties_dists_df = pd.read_csv(COUNTY_DISTS_PATH, index_col=0)
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
+        fixed_locations_per_state_df = pd.read_csv(FIXED_LOCATIONS_PER_STATE_PATH)
+        fixed_cities_df = pd.read_csv(FIXED_CITIES_PATH)
+       
         if self.baseline == "cities":
             baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CITIES_PATH)
         elif self.baseline == "population":
@@ -126,13 +136,18 @@ class Scenario:
         allocation_params = get_allocation_params(county_pop_df=county_pop_df,
                                                   counties_dists_df=counties_dists_df,
                                                   selected_centers_df=selected_centers_df,
-                                                  baseline_centers_df=baseline_centers_df)
+                                                  baseline_centers_df=baseline_centers_df,
+                                                  fixed_locations_per_state_df=fixed_locations_per_state_df,
+                                                  fixed_cities_df=fixed_cities_df)
         allocation_params["political_factor"] = self.political_factor
         allocation_params["balanced_location"] = self.balanced_location
         allocation_params["population_equity_pct"] = self.population_equity_pct
         allocation_params["vaccination_enforcement_weight"] = self.vaccination_enforcement_weight
         allocation_params["balanced_distr_locations_pct"] = self. balanced_distr_locations_pct
         allocation_params["distance_penalty"] = self.distance_penalty
+        allocation_params["locations_per_state_fixed"] = self.locations_per_state_fixed
+        allocation_params["cities_fixed"] = self.cities_fixed
+       
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
             initial_conditions=initial_conditions,

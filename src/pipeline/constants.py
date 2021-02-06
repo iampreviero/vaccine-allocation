@@ -12,6 +12,8 @@ SELECTED_CENTERS_PATH = "../data/inputs/selected_centers_500_fullname.csv"
 BASELINE_ALLOCATION_CITIES_PATH = "../data/inputs/baseline_allocation_cities.csv"
 BASELINE_ALLOCATION_POPULATION_PATH = "../data/inputs/baseline_allocation_population.csv"
 BASELINE_ALLOCATION_CASES_PATH = "../data/inputs/baseline_allocation_cases.csv"
+FIXED_LOCATIONS_PER_STATE_PATH = "../data/inputs/optimized_all_ok.csv"
+FIXED_CITIES_PATH = "../data/inputs/sample_cities.csv"
 MORTALITY_RATES_PATH = "../data/inputs/mortality-rates-"
 
 
@@ -81,5 +83,8 @@ VACCINATION_ENFORCEMENT_WEIGHT = 0.01
 POPULATION_EQUITY_PCT = 0.1
 BALANCED_DISTR_LOCATIONS_PCT = 0.1
 DISTANCE_PENALTY = 1e-4
+VACCINATED_INFECTION = True
+CITIES_FIXED = False
+LOCATIONS_PER_STATE_FIXED = True
 
 RUN_BASELINES = False

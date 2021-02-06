@@ -76,8 +76,8 @@ if __name__ == "__main__":
 
         params_dict = {**scenario_params, **algorithm_params}
         obj_val = Scenario(**params_dict).run(
-            model_path=f"{MODEL_PATH_PATH}optimized-{dt_string}-{i}-{int(sys.argv[1])}.pickle",
-            solution_path=f"{OPTIMIZED_SOLUTION_PATH}-{dt_string}-{i}-{int(sys.argv[1])}.pickle",
+            model_path=f"{MODEL_PATH_PATH}{int(sys.argv[2])}-{dt_string}-optimized-{int(sys.argv[1])}-{i}.pickle",
+            solution_path=f"{OPTIMIZED_SOLUTION_PATH}{int(sys.argv[2])}-{dt_string}-{int(sys.argv[1])}-{i}.pickle",
             mortality_rate_path=mortality_rate_path,
             reload_mortality_rate=reload_mortality_rate
         )
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)
-        results.to_csv(f"{RESULTS_PATH}{dt_string}-optimized-{int(sys.argv[1])}.csv")
+        results.to_csv(f"{RESULTS_PATH}{int(sys.argv[2])}-{dt_string}-optimized-{int(sys.argv[1])}.csv")
 
 
         # results["abs_improvement"] = results["baseline_obj_val"] - results["optimized_obj_val"]
