@@ -56,7 +56,7 @@ N_EARLY_STOPPING_ITERATIONS = 1
 INITIAL_SOLUTION = "cities" # currently supports: cities, population, cases
 
 # Gurobi parameters
-TIME_LIMIT = 1800.
+TIME_LIMIT = 3600.
 FEASIBILITY_TOL = 1e-5
 MIP_GAP = 1e-3
 # BARRIER_CONV_TOL = 1e-5 -- not connected to .optimize()
