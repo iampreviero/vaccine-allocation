@@ -101,7 +101,7 @@ class Scenario:
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
         fixed_locations_per_state_df = pd.read_csv(FIXED_LOCATIONS_PER_STATE_PATH)
         fixed_cities_df = pd.read_csv(FIXED_CITIES_PATH)
-       
+
         if self.baseline == "cities":
             baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CITIES_PATH)
         elif self.baseline == "population":
@@ -147,7 +147,7 @@ class Scenario:
         allocation_params["distance_penalty"] = self.distance_penalty
         allocation_params["locations_per_state_fixed"] = self.locations_per_state_fixed
         allocation_params["cities_fixed"] = self.cities_fixed
-       
+
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
             initial_conditions=initial_conditions,
@@ -193,4 +193,4 @@ class Scenario:
             with open(model_path, "wb") as fp:
                 pickle.dump(model, fp)
 
-        return solution.get_objective_value()
+        return solution.get_objective_value(), solution.distance_penalty, solution.locations_per_state_deviation, solution.vaccine_distribution_deviation

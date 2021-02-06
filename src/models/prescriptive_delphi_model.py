@@ -31,6 +31,8 @@ class DELPHISolution:
             infectious_vaccinated: np.ndarray,
             recovered_vaccinated: np.ndarray,
             distance_penalty: float,
+            locations_per_state_deviation: float,
+            vaccine_distribution_deviation: float,
             county_city_indicator: dict,
             days_per_timestep: float = 1.0,
     ):
@@ -94,6 +96,8 @@ class DELPHISolution:
         self.infectious_vaccinated = infectious_vaccinated
         self.recovered_vaccinated = recovered_vaccinated
         self.distance_penalty = distance_penalty
+        self.locations_per_state_deviation = locations_per_state_deviation
+        self.vaccine_distribution_deviation = vaccine_distribution_deviation
 
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
@@ -229,6 +233,8 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution: Optional[np.ndarray] = None,
             county_city_indicator: Optional = None,
             distance_penalty: Optional = None,
+            locations_per_state_deviation: Optional = None,
+            vaccine_distribution_deviation: Optional = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
             initial_solution_allocation: bool = False
@@ -266,7 +272,7 @@ class PrescriptiveDELPHIModel:
         exposed_vaccinated = np.zeros(dims_noriskclass)
         infectious_vaccinated = np.zeros(dims_noriskclass)
         recovered_vaccinated = np.zeros(dims_noriskclass)
-            
+
         # Initialize control variable if none provided
         allocate_vaccines = vaccinated is None
         if allocate_vaccines:
@@ -365,7 +371,7 @@ class PrescriptiveDELPHIModel:
                             * (susceptible[j, :, t] - self.vaccine_effectiveness * vaccinated[j, :, t]) *
                             infectious[j, :, t].sum()
                             - self.progression_rate * exposed[j, :, t]
-                    ) * self.days_per_timestep                    
+                    ) * self.days_per_timestep
                     susceptible_vaccinated[j, t + 1] = susceptible_vaccinated[j, t] + self.vaccine_effectiveness * vaccinated[j, :, t].sum() - (
                             self.infection_rate[j] * self.policy_response[j, t] / self.state_population[j, :].sum()
                             * (susceptible_vaccinated[j, t] + self.vaccine_effectiveness * vaccinated[j, :, t].sum())
@@ -408,9 +414,9 @@ class PrescriptiveDELPHIModel:
                 infectious_vaccinated[:, t + 1] = infectious_vaccinated[:, t] + (
                         self.progression_rate * exposed_vaccinated[:, t]
                         - self.detection_rate * infectious_vaccinated[:, t]
-                ) * self.days_per_timestep                
+                ) * self.days_per_timestep
                 infectious_vaccinated[:, t + 1] = np.maximum(infectious_vaccinated[:, t + 1], 0)
-            
+
 
             hospitalized_dying[:, :, t + 1] = hospitalized_dying[:, :, t] + (
                     self.ihd_transition_rate[:, :, t] * infectious[:, :, t]
@@ -459,7 +465,7 @@ class PrescriptiveDELPHIModel:
             if self.vaccinated_infection:
                 recovered_vaccinated[:, t + 1] = recovered_vaccinated[:, t] + (
                         self.detection_rate * infectious_vaccinated[:, t]
-                ) * self.days_per_timestep                   
+                ) * self.days_per_timestep
 
         return DELPHISolution(
             susceptible=susceptible,
@@ -484,6 +490,8 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution=vaccine_distribution,
             county_city_indicator=county_city_indicator,
             distance_penalty=distance_penalty,
+            locations_per_state_deviation = locations_per_state_deviation,
+            vaccine_distribution_deviation = vaccine_distribution_deviation,
             days_per_timestep=self.days_per_timestep,
         )
 
@@ -570,7 +578,7 @@ class PrescriptiveDELPHIModel:
             model.addConstrs(
                 location_indicator[i] == self.fixed_cities[i] # TODO: check state_to_cities
                 for i in range(self.n_cities)
-            )            
+            )
 
         # Set initial conditions for DELPHI model
         model.addConstrs(
@@ -701,7 +709,7 @@ class PrescriptiveDELPHIModel:
             ) * self.days_per_timestep
             for j in self.regions for k in self.risk_classes for t in self.timesteps
         )
-        
+
         if self.vaccinated_infection:
             model.addConstrs(
                     susceptible_vaccinated[j, t + 1] - susceptible_vaccinated[j, t] + self.vaccine_effectiveness * vaccinated.sum(j, "*", t) >= - (
@@ -718,9 +726,9 @@ class PrescriptiveDELPHIModel:
                             * estimated_infectious[j, t]
                             - self.progression_rate * exposed_vaccinated[j, t]
                     ) * self.days_per_timestep
-                    for j in self.regions for t in self.timesteps                      
+                    for j in self.regions for t in self.timesteps
             )
-    
+
         model.addConstrs(
             infectious[j, k, t + 1] - infectious[j, k, t] >= (
                     self.progression_rate * exposed[j, k, t]
@@ -736,7 +744,7 @@ class PrescriptiveDELPHIModel:
                 ) * self.days_per_timestep
                 for j in self.regions for t in self.timesteps
             )
-              
+
         model.addConstrs(
             hospitalized_dying[j, k, t + 1] - hospitalized_dying[j, k, t] >= (
                     self.ihd_transition_rate[j, k, t] * infectious[j, k, t]
@@ -860,7 +868,9 @@ class PrescriptiveDELPHIModel:
 
         # Solve model
         model.optimize()
-        if model.status == 2:
+
+        # Extract solution information
+        if model.status in [2,7,8,9,10]:
             print(f"\nPARAMS:")
     #        print(f"Ratio: {max_center_density.x/min_center_density.x}")
             print(f"Political Factor: {self.political_factor}")
@@ -873,14 +883,14 @@ class PrescriptiveDELPHIModel:
             print(f"Vaccinated can be infected?: {self.vaccinated_infection}")
             print(f"Fixed locations per state?: {self.locations_per_state_fixed}")
             print(f"Fixed cities?: {self.cities_fixed}")
-            
+
             county_city_indicator_output = model.getAttr("x", county_city_indicator)
             county_city_indicator = {}
 
             for l, i in self.county_city_to_distance.keys():
                 county_city_indicator[(l,i)] = county_city_indicator_output[l,i]
             distance_penalty = sum(county_city_indicator[(l,i)] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
-            
+
             print(f"Distance Penalty is: {distance_penalty * self.distance_penalty}")
             # Return vaccine allocation
             vaccinated = model.getAttr("x", vaccinated)
@@ -897,7 +907,8 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution = model.getAttr("x", vaccine_distribution)
             vaccine_distribution = np.array([[vaccine_distribution[i, t] for t in range(self.n_timesteps + 1)] for i in range(self.n_cities)])
 
-
+            locations_per_state_deviation = np.mean(np.array([np.abs(locations[j] - self.state_population[j,:].sum() / self.state_population.sum() * self.cities_budget) for j in self.regions]))
+            vaccine_distribution_deviation = np.mean(np.array([np.abs(vaccine_distribution[i, t] - self.vaccine_budget[t]/self.cities_budget) for i in range(self.n_cities) if location_indicator[i]==1 for t in range(self.n_timesteps)]))
 
             minimum_density_state = np.argmin(np.divide(locations,self.state_population.sum(axis=1)))
             maximum_density_state = np.argmax(np.divide(locations,self.state_population.sum(axis=1)))
@@ -913,7 +924,10 @@ class PrescriptiveDELPHIModel:
             location_indicator = None
             vaccine_distribution = None
             county_city_indicator = None
-        return vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty
+            distance_penalty = None
+            locations_per_state_deviation = None
+            vaccine_distribution_deviation = None
+        return vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation
 
     def smooth_vaccine_allocation(
             self,
@@ -1095,7 +1109,7 @@ class PrescriptiveDELPHIModel:
 
                 # Re-optimize vaccine allocation by solution linearized relaxation
                 try:
-                    vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty = self.optimize_relaxation(
+                    vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation = self.optimize_relaxation(
                         exploration_tol=exploration_tol,
                         estimated_infectious=incumbent_solution.infectious.sum(axis=1) + incumbent_solution.infectious_vaccinated,
                         vaccinated_warm_start=incumbent_solution.vaccinated,
@@ -1120,7 +1134,9 @@ class PrescriptiveDELPHIModel:
                                                                                           location_indicator=location_indicator,
                                                                                           vaccine_distribution=vaccine_distribution,
                                                                                           county_city_indicator=county_city_indicator,
-                                                                                          distance_penalty=distance_penalty)
+                                                                                          distance_penalty=distance_penalty,
+                                                                                          locations_per_state_deviation=locations_per_state_deviation,
+                                                                                          vaccine_distribution_deviation=vaccine_distribution_deviation)
                 previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_total_deaths()
                 trajectory.append(incumbent_obj_val)
                 if log:
