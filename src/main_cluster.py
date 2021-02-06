@@ -10,8 +10,17 @@ import sys
 
 if __name__ == "__main__":
 
+    if sys.argv[2] == "exper0":
+        from pipeline.grid.exper0 import *
+    elif sys.argv[2] == "exper1":
+        from pipeline.grid.exper1 import *
+    elif sys.argv[2] == "exper2":
+        from pipeline.grid.exper2 import *
+    elif sys.argv[2] == "exper3":
+        from pipeline.grid.exper3 import *
+
     now = datetime.now()
-    
+
     dt_string = now.strftime("%Y%m%d-%H%M%S")
 
     scenario_params_grid = [
@@ -50,7 +59,7 @@ if __name__ == "__main__":
         for initial_solution in INITIAL_SOLUTION_GRID
         for distance_penalty in DISTANCE_PENALTY_GRID
     ]
-    
+
     algorithm_params = algorithm_params_grid[int(sys.argv[1])]
 
     results_dict_baseline = list()
@@ -64,7 +73,7 @@ if __name__ == "__main__":
         end_date = scenario_params["start_date"]
         mortality_rate_path = f"{MORTALITY_RATES_PATH}2021-heur.npy"
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
-        
+
         params_dict = {**scenario_params, **algorithm_params}
         obj_val = Scenario(**params_dict).run(
             model_path=f"{MODEL_PATH_PATH}optimized-{dt_string}-{i}-{int(sys.argv[1])}.pickle",
@@ -74,7 +83,7 @@ if __name__ == "__main__":
         )
         results_dict_optimized.append(params_dict)
         results_dict_optimized[counter_optimized]["scenario"] = i
-        results_dict_optimized[counter_optimized]["optimized"] = int(sys.argv[1])           
+        results_dict_optimized[counter_optimized]["optimized"] = int(sys.argv[1])
         results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)

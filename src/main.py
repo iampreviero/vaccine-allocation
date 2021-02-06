@@ -5,13 +5,14 @@ from copy import deepcopy
 
 from pipeline.scenario import Scenario
 from pipeline.constants import *
+from pipeline.grid.exper0 import *
 from datetime import datetime
 
 
 if __name__ == "__main__":
 
     now = datetime.now()
-    
+
     dt_string = now.strftime("%Y%m%d-%H%M%S")
 
     scenario_params_grid = [
@@ -62,7 +63,7 @@ if __name__ == "__main__":
         end_date = scenario_params["start_date"]
         mortality_rate_path = f"{MORTALITY_RATES_PATH}2021-heur.npy"
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
-        
+
         if RUN_BASELINES:
 
             for j, baseline in enumerate(baselines_grid):
@@ -93,7 +94,7 @@ if __name__ == "__main__":
                 )
                 results_dict_optimized.append(params_dict)
                 results_dict_optimized[counter_optimized]["scenario"] = i
-                results_dict_optimized[counter_optimized]["optimized"] = j           
+                results_dict_optimized[counter_optimized]["optimized"] = j
                 results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
                 counter_optimized = counter_optimized + 1
                 results = pd.DataFrame(results_dict_optimized)

@@ -758,15 +758,15 @@ class PrescriptiveDELPHIModel:
 #             unallocated_vaccines[t] >= self.vaccine_budget[t] - vaccinated.sum("*", "*", t)
 #             for t in self.timesteps
 #         )
-        
+
         # Set conditions for counties being assigned to a city
-        
+
         # we can only assign counties to cities that are being chosen
         model.addConstrs(
             county_city_indicator[l,i] <= location_indicator[i]
             for l, i in self.county_city_to_distance.keys()
         )
-        
+
 #        all counties needs to be assigned to one city
         model.addConstrs(
             gp.quicksum(county_city_indicator[l,i] for i in self.state_to_cities[self.county_to_state[l]]) == 1
@@ -798,7 +798,6 @@ class PrescriptiveDELPHIModel:
             model.params.TimeLimit = time_limit
 
         model.params.OutputFlag = True
-        model.params.TimeLimit = 600
         model.params.method = 2 ######## Barrier for root
         # model.params.nodeMethod = 2 ######## Barrier for subsequent nodes
 
@@ -814,10 +813,10 @@ class PrescriptiveDELPHIModel:
             print(f"Vaccination enforcement weight: {self.vaccination_enforcement_weight}")
             print(f"Balanced location distribution pct: {self.balanced_distr_locations_pct}")
             print(f"Distance Penalty Faftor: {self.distance_penalty}")
-            
+
             county_city_indicator_output = model.getAttr("x", county_city_indicator)
             county_city_indicator = {}
-            
+
             for l, i in self.county_city_to_distance.keys():
                 county_city_indicator[(l,i)] = county_city_indicator_output[l,i]
             distance_penalty = sum(county_city_indicator[(l,i)] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
@@ -961,9 +960,9 @@ class PrescriptiveDELPHIModel:
             self,
             exploration_tol: float,
             termination_tol: float = 1e-2,
-            mip_gap: Optional[float] = 1e-2,
-            feasibility_tol: Optional[float] = None,
-            time_limit: Optional[float] = None,
+            mip_gap: Optional[float] = 1e-3,
+            feasibility_tol: Optional[float] = 1e-5,
+            time_limit: Optional[float] = 900.,
             output_flag: bool = False,
             n_restarts: int = 1,
             max_iterations: int = 10,
