@@ -1,4 +1,5 @@
 from typing import Tuple, Union, Optional, Dict
+import copy
 
 import gurobipy as gp
 import numpy as np
@@ -1084,6 +1085,7 @@ class PrescriptiveDELPHIModel:
 
         # Initialize algorithm
         np.random.seed(seed)
+        baseline_solution = None
         best_solution = None
         best_obj_val = np.inf
 
@@ -1095,6 +1097,7 @@ class PrescriptiveDELPHIModel:
                 prioritize_allocation=False,
                 initial_solution_allocation=True
             )
+            baseline_solution = copy.deepcopy(incumbent_solution)
             incumbent_obj_val = incumbent_solution.get_total_deaths()
             trajectory = [incumbent_obj_val]
             best_solution_for_restart = None
@@ -1196,4 +1199,4 @@ class PrescriptiveDELPHIModel:
         )
         if log:
             print(f"Objective value after post-processing: {'{0:.2f}'.format(best_solution.get_total_deaths())}")
-        return best_solution
+        return best_solution, baseline_solution

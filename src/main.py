@@ -69,7 +69,7 @@ if __name__ == "__main__":
             for j, baseline in enumerate(baselines_grid):
                 params_dict = {**scenario_params, **baseline}
                 baseline_name = baseline["baseline"]
-                obj_val, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation = Scenario(**params_dict).run(
+                metrics = Scenario(**params_dict).run(
                     model_path=f"{MODEL_PATH_PATH}{baseline_name}-{dt_string}-{i}-{j}.pickle",
                     solution_path=f"{BASELINE_SOLUTION_PATH}{baseline_name}-{dt_string}-{i}-{j}.pickle",
                     mortality_rate_path=mortality_rate_path,
@@ -78,10 +78,10 @@ if __name__ == "__main__":
                 results_dict_baseline.append(params_dict)
                 results_dict_baseline[counter_baseline]["scenario"] = i
                 results_dict_baseline[counter_baseline]["baseline"] = j
-                results_dict_baseline[counter_baseline]["baseline_obj_val"] = obj_val
-                results_dict_baseline[counter_baseline]["distance_penalty"] = distance_penalty
-                results_dict_baseline[counter_baseline]["locations_per_state_deviation"] = locations_per_state_deviation
-                results_dict_baseline[counter_baseline]["vaccine_distribution_deviation"] = vaccine_distribution_deviation
+                results_dict_baseline[counter_baseline]["baseline_obj_val"] = metrics['obj_val']
+                results_dict_baseline[counter_baseline]["baseline_distance_penalty"] = metrics['distance_penalty']
+                results_dict_baseline[counter_baseline]["baseline_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
+                results_dict_baseline[counter_baseline]["baseline_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
                 counter_baseline = counter_baseline + 1
                 results = pd.DataFrame(results_dict_baseline)
                 results.to_csv(f"{RESULTS_PATH}{dt_string}-baselines.csv")
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
             for j, algorithm_params in enumerate(algorithm_params_grid):
                 params_dict = {**scenario_params, **algorithm_params}
-                obj_val, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation = Scenario(**params_dict).run(
+                metrics = Scenario(**params_dict).run(
                     model_path=f"{MODEL_PATH_PATH}optimized-{dt_string}-{i}-{j}.pickle",
                     solution_path=f"{OPTIMIZED_SOLUTION_PATH}-{dt_string}-{i}-{j}.pickle",
                     mortality_rate_path=mortality_rate_path,
@@ -98,10 +98,14 @@ if __name__ == "__main__":
                 results_dict_optimized.append(params_dict)
                 results_dict_optimized[counter_optimized]["scenario"] = i
                 results_dict_optimized[counter_optimized]["optimized"] = j
-                results_dict_optimized[counter_optimized]["optimized_obj_val"] = obj_val
-                results_dict_optimized[counter_optimized]["distance_penalty"] = distance_penalty
-                results_dict_optimized[counter_optimized]["locations_per_state_deviation"] = locations_per_state_deviation
-                results_dict_optimized[counter_optimized]["vaccine_distribution_deviation"] = vaccine_distribution_deviation
+                results_dict_optimized[counter_optimized]["optimized_obj_val"] = metrics['obj_val']
+                results_dict_optimized[counter_optimized]["optimized_distance_penalty"] = metrics['distance_penalty']
+                results_dict_optimized[counter_optimized]["optimized_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
+                results_dict_optimized[counter_optimized]["optimized_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
+                results_dict_optimized[counter_optimized]["baseline_obj_val"] = metrics['baseline_obj_val']
+                results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
+                results_dict_optimized[counter_optimized]["baseline_locations_per_state_deviation"] = metrics['baseline_locations_per_state_deviation']
+                results_dict_optimized[counter_optimized]["baseline_vaccine_distribution_deviation"] = metrics['baseline_vaccine_distribution_deviation']
                 counter_optimized = counter_optimized + 1
                 results = pd.DataFrame(results_dict_optimized)
                 results.to_csv(f"{RESULTS_PATH}{dt_string}-optimized.csv")

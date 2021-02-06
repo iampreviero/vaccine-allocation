@@ -172,7 +172,7 @@ class Scenario:
 
         if not RUN_BASELINES:
             print("Optimizing...")
-            solution = model.optimize(
+            solution, baseline_solution = model.optimize(
                 exploration_tol=EXPLORATION_TOL,
                 termination_tol=TERMINATION_TOL,
                 max_iterations=MAX_ITERATIONS,
@@ -182,9 +182,21 @@ class Scenario:
                 feasibility_tol=FEASIBILITY_TOL,
                 log=True
             )
+            metrics = {'obj_val': solution.get_objective_value(),
+                        'distance_penalty': solution.distance_penalty,
+                        'locations_per_state_deviation': solution.locations_per_state_deviation,
+                        'vaccine_distribution_deviation': solution.vaccine_distribution_deviation,
+                        'baseline_obj_val': baseline_solution.get_objective_value(),
+                        'baseline_distance_penalty': baseline_solution.distance_penalty,
+                        'baseline_locations_per_state_deviation': baseline_solution.locations_per_state_deviation,
+                        'baseline_vaccine_distribution_deviation': baseline_solution.vaccine_distribution_deviation}
         else:
             print("Running baseline...")
             solution = model.simulate(prioritize_allocation=False, initial_solution_allocation=True)
+            metrics = {'obj_val': solution.get_objective_value(),
+                        'distance_penalty': solution.distance_penalty,
+                        'locations_per_state_deviation': solution.locations_per_state_deviation,
+                        'vaccine_distribution_deviation': solution.vaccine_distribution_deviation}
 
         if solution_path:
             with open(solution_path, "wb") as fp:
@@ -193,4 +205,4 @@ class Scenario:
             with open(model_path, "wb") as fp:
                 pickle.dump(model, fp)
 
-        return solution.get_objective_value(), solution.distance_penalty, solution.locations_per_state_deviation, solution.vaccine_distribution_deviation
+        return metrics
