@@ -22,7 +22,13 @@ if __name__ == "__main__":
         from pipeline.grid.exper2b import *
     elif sys.argv[2] == "exper3":
         from pipeline.grid.exper3 import *
-
+    elif sys.argv[2] == "exper4":
+        from pipeline.grid.exper4 import *
+    elif sys.argv[2] == "exper5":
+        from pipeline.grid.exper5 import *
+    elif sys.argv[2] == "exper6":
+        from pipeline.grid.exper6 import *
+        
     now = datetime.now()
 
     dt_string = now.strftime("%Y%m%d-%H%M%S")
