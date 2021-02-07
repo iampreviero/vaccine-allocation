@@ -7,10 +7,10 @@ DATES_GRID = [
     dict(start_date=dt.datetime(2021, 2, 1), end_date=dt.datetime(2021, 4, 30))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
-DAILY_VACCINE_BUDGET_GRID = [1e6]
+DAILY_VACCINE_BUDGET_GRID = [2e6]
 
 # Baselines
-BASELINES = ["cases","population"]
+BASELINES = ["cities"]
 
 # Algorithm parameters
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
