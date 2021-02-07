@@ -15,6 +15,7 @@ BASELINE_ALLOCATION_CASES_PATH = "../data/inputs/baseline_allocation_cases.csv"
 FIXED_LOCATIONS_PER_STATE_PATH = "../data/inputs/optimized_all_ok.csv"
 FIXED_CITIES_PATH = "../data/inputs/sample_cities.csv"
 MORTALITY_RATES_PATH = "../data/inputs/mortality-rates-"
+CDC_INFECTION_RATE_PATH = "../data/inputs/cdc-seroprevalence.csv"
 
 
 # Output paths
@@ -86,5 +87,7 @@ DISTANCE_PENALTY = 1e-4
 VACCINATED_INFECTION = True
 CITIES_FIXED = False
 LOCATIONS_PER_STATE_FIXED = False
+RANDOM_INFECTION_RATE = True
+CDC_INFECTION_RATE = True
 
 RUN_BASELINES = False

@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import List, Dict, Union, Optional
 from gurobipy import GurobiError
 import pandas as pd
+import numpy as np
 # import us
 
 from pipeline.constants import *
@@ -224,6 +225,8 @@ def get_delphi_params(
         start_date: dt.datetime,
         end_date: dt.datetime,
         mortality_rate_path: Optional[str],
+        cdc_seroprevalence_df: pd.DataFrame,
+        cdc_infection_rate: bool,
 ) -> Dict[str, Union[float, np.ndarray]]:
     # Get policy response by state and timestep
     policy_response = get_policy_response_by_state_and_timestep(
@@ -248,14 +251,19 @@ def get_delphi_params(
 
     # Get estimated hospitalization rates from CDC data
     hospitalization_rate = get_hospitalization_rate_by_risk_class(cdc_df=cdc_df)
+    n_risk_classes = hospitalization_rate.shape[0]
     hospitalization_rate = hospitalization_rate[None, :, None]
-
+    states = sorted(pop_df.state.unique())
     # Convert median times to rates
     progression_rate = np.log(2) / MEDIAN_PROGRESSION_TIME
     detection_rate = np.log(2) / MEDIAN_DETECTION_TIME
     hospitalized_recovery_rate = np.log(2) / MEDIAN_HOSPITALIZED_RECOVERY_TIME
     unhospitalized_recovery_rate = np.log(2) / MEDIAN_UNHOSPITALIZED_RECOVERY_TIME
-
+    if cdc_infection_rate:
+        cdc_seroprevalence=np.array(cdc_seroprevalence_df.loc[states].iloc[:,1:])
+    else:
+        cdc_seroprevalence=np.ones((len(states),n_risk_classes))
+    
     return dict(
         infection_rate=np.array(params_df["infection_rate"]),
         policy_response=policy_response,
@@ -271,7 +279,8 @@ def get_delphi_params(
         hospitalized_recovery_rate=hospitalized_recovery_rate,
         unhospitalized_recovery_rate=unhospitalized_recovery_rate,
         mortality_rate=mortality_rate,
-        days_per_timestep=DAYS_PER_TIMESTEP
+        days_per_timestep=DAYS_PER_TIMESTEP,
+        cdc_seroprevalence=cdc_seroprevalence
     )
 
 

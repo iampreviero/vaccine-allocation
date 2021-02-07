@@ -41,6 +41,8 @@ class Scenario:
             vaccinated_infection: float = VACCINATED_INFECTION,
             locations_per_state_fixed: bool = LOCATIONS_PER_STATE_FIXED,
             cities_fixed: bool = CITIES_FIXED,
+            random_infection_rate: bool = RANDOM_INFECTION_RATE,
+            cdc_infection_rate: bool = CDC_INFECTION_RATE,
             initial_solution: str = "cities"
     ):
         self.start_date = start_date
@@ -66,6 +68,8 @@ class Scenario:
         self.vaccinated_infection = vaccinated_infection
         self.locations_per_state_fixed = locations_per_state_fixed
         self.cities_fixed = cities_fixed
+        self.cdc_infection_rate = cdc_infection_rate
+        self.random_infection_rate = random_infection_rate
 
     def get_vaccine_params(
             self,
@@ -101,6 +105,7 @@ class Scenario:
         selected_centers_df = pd.read_csv(SELECTED_CENTERS_PATH)
         fixed_locations_per_state_df = pd.read_csv(FIXED_LOCATIONS_PER_STATE_PATH)
         fixed_cities_df = pd.read_csv(FIXED_CITIES_PATH)
+        cdc_seroprevalence_df = pd.read_csv(CDC_INFECTION_RATE_PATH,index_col = "state")
 
         if self.baseline == "cities":
             baseline_centers_df = pd.read_csv(BASELINE_ALLOCATION_CITIES_PATH)
@@ -129,8 +134,12 @@ class Scenario:
             predictions_df=predictions_df,
             start_date=self.start_date,
             end_date=self.end_date,
-            mortality_rate_path=mortality_rate_path
+            mortality_rate_path=mortality_rate_path,
+            cdc_seroprevalence_df=cdc_seroprevalence_df,
+            cdc_infection_rate=self.cdc_infection_rate
         )
+        delphi_params["random_infection_rate"] = self.random_infection_rate
+
         vaccine_params = self.get_vaccine_params(total_pop=initial_conditions["population"].sum())
 
         allocation_params = get_allocation_params(county_pop_df=county_pop_df,
