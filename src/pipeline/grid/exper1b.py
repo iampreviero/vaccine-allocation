@@ -11,7 +11,6 @@ DAILY_VACCINE_BUDGET_GRID = [0.5e6, 1e6, 1.5e6, 2e6]
 
 # Baselines
 BASELINES = ["cases","population"]
-RUN_BASELINES = False
 
 # Algorithm parameters
 MIN_ALLOCATION_FACTOR_GRID = [0.1]

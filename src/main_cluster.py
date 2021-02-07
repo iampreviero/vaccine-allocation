@@ -14,8 +14,12 @@ if __name__ == "__main__":
         from pipeline.grid.exper0 import *
     elif sys.argv[2] == "exper1":
         from pipeline.grid.exper1 import *
+    elif sys.argv[2] == "exper1b":
+        from pipeline.grid.exper1b import *
     elif sys.argv[2] == "exper2":
         from pipeline.grid.exper2 import *
+    elif sys.argv[2] == "exper2b":
+        from pipeline.grid.exper2b import *
     elif sys.argv[2] == "exper3":
         from pipeline.grid.exper3 import *
 
