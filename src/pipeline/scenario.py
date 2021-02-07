@@ -11,6 +11,7 @@ from pipeline.data_processing import (calculate_n_timesteps,
                                       get_allocation_params)
 from models.prescriptive_delphi_model import PrescriptiveDELPHIModel
 import numpy as np
+import copy
 
 class Scenario:
 
@@ -44,6 +45,7 @@ class Scenario:
             random_infection_rate: bool = RANDOM_INFECTION_RATE,
             random_mortality_rate: bool = RANDOM_MORTALITY_RATE,
             cdc_infection_rate: bool = CDC_INFECTION_RATE,
+            run_baselines: bool = RUN_BASELINES,
             initial_solution: str = "cities"
     ):
         self.start_date = start_date
@@ -72,6 +74,7 @@ class Scenario:
         self.cdc_infection_rate = cdc_infection_rate
         self.random_infection_rate = random_infection_rate
         self.random_mortality_rate = random_mortality_rate
+        self.run_baselines = run_baselines
 
     def get_vaccine_params(
             self,
@@ -139,9 +142,9 @@ class Scenario:
             mortality_rate_path=mortality_rate_path,
             cdc_seroprevalence_df=cdc_seroprevalence_df,
             cdc_infection_rate=self.cdc_infection_rate,
+            random_infection_rate=self.random_infection_rate,
             random_mortality_rate=self.random_mortality_rate
         )
-        delphi_params["random_infection_rate"] = self.random_infection_rate
 
         vaccine_params = self.get_vaccine_params(total_pop=initial_conditions["population"].sum())
 
@@ -159,14 +162,21 @@ class Scenario:
         allocation_params["distance_penalty"] = self.distance_penalty
         allocation_params["locations_per_state_fixed"] = self.locations_per_state_fixed
         allocation_params["cities_fixed"] = self.cities_fixed
-
+        vaccine_params_0 = copy.deepcopy(vaccine_params)
+        vaccine_params_0["vaccine_budget"] = np.zeros(calculate_n_timesteps(start_date=self.start_date, end_date=self.end_date))
         # Return prescriptive DELPHI model object
         return PrescriptiveDELPHIModel(
             initial_conditions=initial_conditions,
             delphi_params=delphi_params,
             vaccine_params=vaccine_params,
             allocation_params=allocation_params
+        ), PrescriptiveDELPHIModel(
+            initial_conditions=initial_conditions,
+            delphi_params=delphi_params,
+            vaccine_params=vaccine_params_0,
+            allocation_params=allocation_params
         )
+        
 
     def run(
             self,
@@ -177,12 +187,13 @@ class Scenario:
     ) -> Tuple[float, float]:
 
         print("Loading model...")
-        model = self.load_model(mortality_rate_path=mortality_rate_path if reload_mortality_rate else None)
+        model, model_0 = self.load_model(mortality_rate_path=mortality_rate_path if reload_mortality_rate else None)
         if not reload_mortality_rate:
             with open(mortality_rate_path, "wb") as fp:
                 np.save(fp, model.mortality_rate)
-
-        if not RUN_BASELINES:
+        print("Running no vaccine baseline...")                
+        solution_0 = model_0.simulate(prioritize_allocation=False, initial_solution_allocation=True)
+        if not self.run_baselines:
             print("Optimizing...")
             solution, baseline_solution = model.optimize(
                 exploration_tol=EXPLORATION_TOL,
@@ -209,6 +220,7 @@ class Scenario:
                         'distance_penalty': solution.distance_penalty,
                         'locations_per_state_deviation': solution.locations_per_state_deviation,
                         'vaccine_distribution_deviation': solution.vaccine_distribution_deviation}
+        metrics['no_vaccine_obj_val'] = solution_0.get_objective_value()
 
         if solution_path:
             with open(solution_path, "wb") as fp:

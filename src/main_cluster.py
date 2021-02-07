@@ -95,6 +95,7 @@ if __name__ == "__main__":
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
 
         params_dict = {**scenario_params, **algorithm_params}
+        
         metrics = Scenario(**params_dict).run(
             model_path=f"{MODEL_PATH_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}-{i}.pickle",
             solution_path=f"{OPTIMIZED_SOLUTION_PATH}{sys.argv[2]}-{dt_string}-{int(sys.argv[1])}-{i}.pickle",
@@ -112,6 +113,7 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
         results_dict_optimized[counter_optimized]["baseline_locations_per_state_deviation"] = metrics['baseline_locations_per_state_deviation']
         results_dict_optimized[counter_optimized]["baseline_vaccine_distribution_deviation"] = metrics['baseline_vaccine_distribution_deviation']
+        results_dict_optimized[counter_optimized]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)
         results.to_csv(f"{RESULTS_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}.csv")

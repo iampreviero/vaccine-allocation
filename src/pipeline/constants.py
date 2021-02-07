@@ -22,6 +22,7 @@ CDC_INFECTION_RATE_PATH = "../data/inputs/cdc-seroprevalence.csv"
 MODEL_PATH_PATH = "../data/outputs/model-"
 BASELINE_SOLUTION_PATH = "../data/outputs/baseline-solution-"
 OPTIMIZED_SOLUTION_PATH = "../data/outputs/optimized-solution-"
+NO_VACCINE_SOLUTION_PATH = "../data/outputs/no-vaccine-solution-"
 RESULTS_PATH = "../data/outputs/results-"
 
 # Population partition
@@ -92,4 +93,4 @@ CDC_INFECTION_RATE = False
 RANDOM_MORTALITY_RATE = False
 
 
-RUN_BASELINES = False
+RUN_BASELINES = True

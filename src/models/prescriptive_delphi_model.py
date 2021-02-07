@@ -170,14 +170,12 @@ class PrescriptiveDELPHIModel:
         self.hospitalized_recovery_rate = delphi_params["hospitalized_recovery_rate"]
         self.unhospitalized_recovery_rate = delphi_params["unhospitalized_recovery_rate"]
         self.mortality_rate = delphi_params["mortality_rate"]
+        self.random_mortality_rate = delphi_params["random_mortality_rate"]
         self.evaluate_mortality_rate = delphi_params["evaluate_mortality_rate"]
         self.days_per_timestep = delphi_params["days_per_timestep"]
         self.cdc_seroprevalence = delphi_params["cdc_seroprevalence"]
         self.random_infection_rate = delphi_params["random_infection_rate"]
-        if self.random_infection_rate:
-            self.evaluate_infection_rate = np.array([(np.random.uniform(low=-0.2,high=0.2) + 1) * x for x in self.infection_rate])
-        else:
-            self.evaluate_infection_rate = self.infection_rate
+        self.evaluate_infection_rate = delphi_params["evaluate_infection_rate"]
         # Set vaccine parameters
         self.vaccine_effectiveness = vaccine_params["vaccine_effectiveness"]
         self.vaccine_budget = vaccine_params["vaccine_budget"]
@@ -896,7 +894,8 @@ class PrescriptiveDELPHIModel:
             print(f"Vaccinated can be infected?: {self.vaccinated_infection}")
             print(f"Fixed locations per state?: {self.locations_per_state_fixed}")
             print(f"Fixed cities?: {self.cities_fixed}")
-
+            print(f"Random mortality rates?: {self.random_mortality_rate}")
+            print(f"Random infection rates?: {self.random_infection_rate}")
             county_city_indicator_output = model.getAttr("x", county_city_indicator)
             county_city_indicator = {}
 

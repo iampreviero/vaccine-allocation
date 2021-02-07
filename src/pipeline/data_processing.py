@@ -227,6 +227,7 @@ def get_delphi_params(
         mortality_rate_path: Optional[str],
         cdc_seroprevalence_df: pd.DataFrame,
         cdc_infection_rate: bool,
+        random_infection_rate: bool,
         random_mortality_rate: bool
 ) -> Dict[str, Union[float, np.ndarray]]:
     # Get policy response by state and timestep
@@ -253,6 +254,11 @@ def get_delphi_params(
         evaluate_mortality_rate = (np.random.uniform(low=-0.2,high=0.2, size=mortality_rate.shape[1]) + 1)[None,:,None] * mortality_rate
     else:
         evaluate_mortality_rate = mortality_rate
+    infection_rate = np.array(params_df["infection_rate"])
+    if random_infection_rate:
+        evaluate_infection_rate = np.array([(np.random.uniform(low=-0.2,high=0.2) + 1) * x for x in infection_rate])
+    else:
+        evaluate_infection_rate = infection_rate
     # Get estimated hospitalization rates from CDC data
     hospitalization_rate = get_hospitalization_rate_by_risk_class(cdc_df=cdc_df)
     n_risk_classes = hospitalization_rate.shape[0]
@@ -269,7 +275,7 @@ def get_delphi_params(
         cdc_seroprevalence=np.ones((len(states),n_risk_classes))
     
     return dict(
-        infection_rate=np.array(params_df["infection_rate"]),
+        infection_rate=infection_rate,
         policy_response=policy_response,
         progression_rate=progression_rate,
         detection_rate=detection_rate,
@@ -283,7 +289,8 @@ def get_delphi_params(
         hospitalized_recovery_rate=hospitalized_recovery_rate,
         unhospitalized_recovery_rate=unhospitalized_recovery_rate,
         mortality_rate=mortality_rate,
-        evaluate_mortality_rate=mortality_rate,
+        evaluate_mortality_rate=evaluate_mortality_rate,
+        evaluate_infection_rate=evaluate_infection_rate,
         evaluate_ihd_transition_rate=detection_rate * DETECTION_PROBABILITY * hospitalization_rate * evaluate_mortality_rate,
         evaluate_ihr_transition_rate=detection_rate * DETECTION_PROBABILITY * hospitalization_rate * (1 - evaluate_mortality_rate),
         evaluate_iqd_transition_rate=detection_rate * DETECTION_PROBABILITY * (1 - hospitalization_rate) * evaluate_mortality_rate,
@@ -291,7 +298,9 @@ def get_delphi_params(
         evaluate_iud_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * evaluate_mortality_rate,
         evaluate_iur_transition_rate=detection_rate * (1 - DETECTION_PROBABILITY) * (1 - evaluate_mortality_rate),        
         days_per_timestep=DAYS_PER_TIMESTEP,
-        cdc_seroprevalence=cdc_seroprevalence
+        cdc_seroprevalence=cdc_seroprevalence,
+        random_infection_rate=random_infection_rate,
+        random_mortality_rate=random_mortality_rate
     )
 
 

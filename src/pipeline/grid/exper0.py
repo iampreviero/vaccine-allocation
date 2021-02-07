@@ -12,7 +12,7 @@ CDC_INFECTION_RATE_GRID = [False]
 VACCINATED_INFECTION_GRID = [True]
 
 # Baselines
-BASELINES = ["cities"]
+BASELINES = ["cities","population","cases"]
 
 # Algorithm parameters
 MIN_ALLOCATION_FACTOR_GRID = [0.1]
