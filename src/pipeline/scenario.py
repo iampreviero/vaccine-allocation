@@ -42,6 +42,7 @@ class Scenario:
             locations_per_state_fixed: bool = LOCATIONS_PER_STATE_FIXED,
             cities_fixed: bool = CITIES_FIXED,
             random_infection_rate: bool = RANDOM_INFECTION_RATE,
+            random_mortality_rate: bool = RANDOM_MORTALITY_RATE,
             cdc_infection_rate: bool = CDC_INFECTION_RATE,
             initial_solution: str = "cities"
     ):
@@ -70,6 +71,7 @@ class Scenario:
         self.cities_fixed = cities_fixed
         self.cdc_infection_rate = cdc_infection_rate
         self.random_infection_rate = random_infection_rate
+        self.random_mortality_rate = random_mortality_rate
 
     def get_vaccine_params(
             self,
@@ -136,7 +138,8 @@ class Scenario:
             end_date=self.end_date,
             mortality_rate_path=mortality_rate_path,
             cdc_seroprevalence_df=cdc_seroprevalence_df,
-            cdc_infection_rate=self.cdc_infection_rate
+            cdc_infection_rate=self.cdc_infection_rate,
+            random_mortality_rate=self.random_mortality_rate
         )
         delphi_params["random_infection_rate"] = self.random_infection_rate
 

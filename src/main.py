@@ -47,7 +47,8 @@ if __name__ == "__main__":
             initial_solution = initial_solution,
             distance_penalty = distance_penalty,
             locations_per_state_fixed = locations_per_state_fixed,
-            random_infection_rate = random_infection_rate          
+            random_infection_rate = random_infection_rate,
+            random_mortality_rate = random_mortality_rate
         )
         for min_allocation_factor in MIN_ALLOCATION_FACTOR_GRID
         for political_factor in POLITICAL_FACTOR_GRID
@@ -58,6 +59,7 @@ if __name__ == "__main__":
         for distance_penalty in DISTANCE_PENALTY_GRID
         for locations_per_state_fixed in LOCATIONS_PER_STATE_FIXED_GRID
         for random_infection_rate in RANDOM_INFECTION_RATE_GRID
+        for random_mortality_rate in RANDOM_MORTALITY_RATE_GRID
     ]
 
     results_dict_baseline = list()

@@ -28,6 +28,8 @@ if __name__ == "__main__":
         from pipeline.grid.exper5 import *
     elif sys.argv[2] == "exper6":
         from pipeline.grid.exper6 import *
+    elif sys.argv[2] == "exper7":
+        from pipeline.grid.exper7 import *
         
     now = datetime.now()
 
@@ -62,7 +64,8 @@ if __name__ == "__main__":
             distance_penalty = distance_penalty,
             locations_per_state_fixed = locations_per_state_fixed,
             cdc_infection_rate = cdc_infection_rate,
-            random_infection_rate = random_infection_rate
+            random_infection_rate = random_infection_rate,
+            random_mortality_rate = random_mortality_rate
         )
         for min_allocation_factor in MIN_ALLOCATION_FACTOR_GRID
         for political_factor in POLITICAL_FACTOR_GRID
@@ -74,6 +77,7 @@ if __name__ == "__main__":
         for locations_per_state_fixed in LOCATIONS_PER_STATE_FIXED_GRID
         for cdc_infection_rate in CDC_INFECTION_RATE_GRID
         for random_infection_rate in RANDOM_INFECTION_RATE_GRID
+        for random_mortality_rate in RANDOM_MORTALITY_RATE_GRID
     ]
 
     algorithm_params = algorithm_params_grid[int(sys.argv[1])]

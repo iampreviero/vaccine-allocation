@@ -160,10 +160,17 @@ class PrescriptiveDELPHIModel:
         self.iqr_transition_rate = delphi_params["iqr_transition_rate"]
         self.iud_transition_rate = delphi_params["iud_transition_rate"]
         self.iur_transition_rate = delphi_params["iur_transition_rate"]
+        self.evaluate_ihd_transition_rate = delphi_params["evaluate_ihd_transition_rate"]
+        self.evaluate_ihr_transition_rate = delphi_params["evaluate_ihr_transition_rate"]
+        self.evaluate_iqd_transition_rate = delphi_params["evaluate_iqd_transition_rate"]
+        self.evaluate_iqr_transition_rate = delphi_params["evaluate_iqr_transition_rate"]
+        self.evaluate_iud_transition_rate = delphi_params["evaluate_iud_transition_rate"]
+        self.evaluate_iur_transition_rate = delphi_params["evaluate_iur_transition_rate"]
         self.death_rate = delphi_params["death_rate"]
         self.hospitalized_recovery_rate = delphi_params["hospitalized_recovery_rate"]
         self.unhospitalized_recovery_rate = delphi_params["unhospitalized_recovery_rate"]
         self.mortality_rate = delphi_params["mortality_rate"]
+        self.evaluate_mortality_rate = delphi_params["evaluate_mortality_rate"]
         self.days_per_timestep = delphi_params["days_per_timestep"]
         self.cdc_seroprevalence = delphi_params["cdc_seroprevalence"]
         self.random_infection_rate = delphi_params["random_infection_rate"]
@@ -425,37 +432,37 @@ class PrescriptiveDELPHIModel:
 
 
             hospitalized_dying[:, :, t + 1] = hospitalized_dying[:, :, t] + (
-                    self.ihd_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_ihd_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.death_rate[:, None] * hospitalized_dying[:, :, t]
             ) * self.days_per_timestep
             hospitalized_dying[:, :, t + 1] = np.maximum(hospitalized_dying[:, :, t + 1], 0)
 
             hospitalized_recovering[:, :, t + 1] = hospitalized_recovering[:, :, t] + (
-                    self.ihr_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_ihr_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.hospitalized_recovery_rate * hospitalized_recovering[:, :, t]
             ) * self.days_per_timestep
             hospitalized_recovering[:, :, t + 1] = np.maximum(hospitalized_recovering[:, :, t + 1], 0)
 
             quarantined_dying[:, :, t + 1] = quarantined_dying[:, :, t] + (
-                    self.iqd_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_iqd_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.death_rate[:, None] * quarantined_dying[:, :, t]
             ) * self.days_per_timestep
             quarantined_dying[:, :, t + 1] = np.maximum(quarantined_dying[:, :, t + 1], 0)
 
             quarantined_recovering[:, :, t + 1] = quarantined_recovering[:, :, t] + (
-                    self.iqr_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_iqr_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.unhospitalized_recovery_rate * quarantined_recovering[:, :, t]
             ) * self.days_per_timestep
             quarantined_recovering[:, :, t + 1] = np.maximum(quarantined_recovering[:, :, t + 1], 0)
 
             undetected_dying[:, :, t + 1] = undetected_dying[:, :, t] + (
-                    self.iud_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_iud_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.death_rate[:, None] * undetected_dying[:, :, t]
             ) * self.days_per_timestep
             undetected_dying[:, :, t + 1] = np.maximum(undetected_dying[:, :, t + 1], 0)
 
             undetected_recovering[:, :, t + 1] = undetected_recovering[:, :, t] + (
-                    self.iur_transition_rate[:, :, t] * infectious[:, :, t]
+                    self.evaluate_iur_transition_rate[:, :, t] * infectious[:, :, t]
                     - self.unhospitalized_recovery_rate * undetected_recovering[:, :, t]
             ) * self.days_per_timestep
             undetected_recovering[:, :, t + 1] = np.maximum(undetected_recovering[:, :, t + 1], 0)
