@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=exper6
-#SBATCH --output=exper6_out_%a.txt
-#SBATCH --error=exper6_err_%a.txt
+#SBATCH --job-name=exper7
+#SBATCH --output=exper7_out_%a.txt
+#SBATCH --error=exper7_err_%a.txt
 #SBATCH -p sched_mit_sloan_batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -14,4 +14,4 @@
 module load python/3.6.3
 module load sloan/python/modules/3.6
 module load sloan/python/modules/python-3.6/gurobipy/9.0.1
-xvfb-run -d python3.6 main_cluster.py ${SLURM_ARRAY_TASK_ID} exper6
+xvfb-run -d python3.6 main_cluster.py ${SLURM_ARRAY_TASK_ID} exper7

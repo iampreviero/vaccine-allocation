@@ -39,11 +39,15 @@ if __name__ == "__main__":
         dict(
             **dates,
             vaccine_effectiveness=vaccine_effectiveness,
-            daily_vaccine_budget=daily_vaccine_budget
+            daily_vaccine_budget=daily_vaccine_budget,
+            cdc_infection_rate = cdc_infection_rate,
+            vaccinated_infection = vaccinated_infection
         )
         for dates in DATES_GRID
         for vaccine_effectiveness in VACCINE_EFFECTIVENESS_GRID
         for daily_vaccine_budget in DAILY_VACCINE_BUDGET_GRID
+        for cdc_infection_rate in CDC_INFECTION_RATE_GRID
+        for vaccinated_infection in VACCINATED_INFECTION_GRID
     ]
 
     baselines_grid = [
@@ -63,7 +67,6 @@ if __name__ == "__main__":
             initial_solution = initial_solution,
             distance_penalty = distance_penalty,
             locations_per_state_fixed = locations_per_state_fixed,
-            cdc_infection_rate = cdc_infection_rate,
             random_infection_rate = random_infection_rate,
             random_mortality_rate = random_mortality_rate
         )
@@ -75,7 +78,6 @@ if __name__ == "__main__":
         for initial_solution in INITIAL_SOLUTION_GRID
         for distance_penalty in DISTANCE_PENALTY_GRID
         for locations_per_state_fixed in LOCATIONS_PER_STATE_FIXED_GRID
-        for cdc_infection_rate in CDC_INFECTION_RATE_GRID
         for random_infection_rate in RANDOM_INFECTION_RATE_GRID
         for random_mortality_rate in RANDOM_MORTALITY_RATE_GRID
     ]
