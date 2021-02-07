@@ -9,7 +9,7 @@
 #SBATCH --time=1-00:00:00
 #SBATCH --mem-per-cpu=8G
 
-#SBATCH --array=0-7
+#SBATCH --array=0-1
 
 module load python/3.6.3
 module load sloan/python/modules/3.6
