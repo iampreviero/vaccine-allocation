@@ -206,10 +206,12 @@ class Scenario:
                 log=True
             )
             metrics = {'obj_val': solution.get_objective_value(),
+                        'condemned_deaths' : solution.get_condemned_deaths(),
                         'distance_penalty': solution.distance_penalty,
                         'locations_per_state_deviation': solution.locations_per_state_deviation,
                         'vaccine_distribution_deviation': solution.vaccine_distribution_deviation,
                         'baseline_obj_val': baseline_solution.get_objective_value(),
+                        'baseline_condemned_deaths' : baseline_solution.get_condemned_deaths(),
                         'baseline_distance_penalty': baseline_solution.distance_penalty,
                         'baseline_locations_per_state_deviation': baseline_solution.locations_per_state_deviation,
                         'baseline_vaccine_distribution_deviation': baseline_solution.vaccine_distribution_deviation}
@@ -218,6 +220,7 @@ class Scenario:
             solution = model.simulate(prioritize_allocation=False, initial_solution_allocation=True)
             metrics = {'obj_val': solution.get_objective_value(),
                         'distance_penalty': solution.distance_penalty,
+                        'condemned_deaths' : solution.get_condemned_deaths(),
                         'locations_per_state_deviation': solution.locations_per_state_deviation,
                         'vaccine_distribution_deviation': solution.vaccine_distribution_deviation}
         metrics['no_vaccine_obj_val'] = solution_0.get_objective_value()

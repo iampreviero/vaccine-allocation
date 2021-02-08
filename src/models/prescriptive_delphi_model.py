@@ -35,6 +35,8 @@ class DELPHISolution:
             locations_per_state_deviation: float,
             vaccine_distribution_deviation: float,
             county_city_indicator: dict,
+            distance_penalty_coefficient: float,
+            vaccination_enforcement_weight: float,
             days_per_timestep: float = 1.0,
     ):
         """
@@ -99,15 +101,23 @@ class DELPHISolution:
         self.distance_penalty = distance_penalty
         self.locations_per_state_deviation = locations_per_state_deviation
         self.vaccine_distribution_deviation = vaccine_distribution_deviation
+        self.distance_penalty_coefficient = distance_penalty_coefficient
+        self.vaccination_enforcement_weight = vaccination_enforcement_weight
 
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
 
     def get_objective_value(self) -> float:
+
+        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -1].sum() + \
+        self.vaccination_enforcement_weight * (self.exposed + self.infectious)[:, :, -1].sum() + \
+        self.distance_penalty_coefficient * self.distance_penalty
+        return total
+    def get_condemned_deaths(self) -> float:
         # (self.deceased + self.hospitalized_dying + self.quarantined_dying + self.undetected_dying)[:, :,
         # -2].sum()
 
-        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -2].sum()
+        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -1].sum() 
         return total
 
     def get_total_cases(self) -> float:
@@ -248,7 +258,7 @@ class PrescriptiveDELPHIModel:
             vaccine_distribution_deviation: Optional = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
-            initial_solution_allocation: bool = False
+            initial_solution_allocation: bool = False,
     ) -> DELPHISolution:
         """
         Solve DELPHI IVP using a forward difference scheme.
@@ -315,12 +325,14 @@ class PrescriptiveDELPHIModel:
                 if initial_solution_allocation:
                     locations = self.baseline_centers
                     regional_budget = self.vaccine_budget[t]/self.cities_budget * self.baseline_centers
+                    distance_penalty = 1e11
                     for k in risk_class_priority_rankings:
                         if k in self.included_risk_classes:
                             vaccinated[:, k, t] = np.minimum(regional_budget, eligible[:, k, t])
                             regional_budget -= vaccinated[:, k, t]
                             if regional_budget.sum() == 0:
                                 break
+                            
 
                 else:
                     # If random allocation specified, generate feasible allocation
@@ -503,6 +515,8 @@ class PrescriptiveDELPHIModel:
             distance_penalty=distance_penalty,
             locations_per_state_deviation = locations_per_state_deviation,
             vaccine_distribution_deviation = vaccine_distribution_deviation,
+            distance_penalty_coefficient = self.distance_penalty,
+            vaccination_enforcement_weight = self.vaccination_enforcement_weight,
             days_per_timestep=self.days_per_timestep,
         )
 
@@ -554,7 +568,7 @@ class PrescriptiveDELPHIModel:
 
         vaccinated = model.addVars(self.n_regions, self.n_risk_classes, self.n_timesteps + 1, lb=0)
         eligible = model.addVars(self.n_regions, self.n_risk_classes, self.n_timesteps + 1, lb=0)
-#         infectious_error = model.addVars(self.n_regions, self.n_timesteps, lb=0) # DROP
+#        infectious_error = model.addVars(self.n_regions, self.n_timesteps, lb=0) # DROP
 #         unallocated_vaccines = model.addVars(self.n_timesteps, lb=0) # DROP
         locations_per_state = model.addVars(self.n_regions, vtype=GRB.INTEGER)
         location_indicator = model.addVars(self.n_cities, vtype=GRB.BINARY)
@@ -787,19 +801,19 @@ class PrescriptiveDELPHIModel:
             for j in self.regions for k in self.risk_classes for t in self.timesteps
         )
 
-        # Set bounding constraint on absolute error of estimated infectious
-        # model.addConstrs(
-        #     infectious_error[j, t] <= exploration_tol
-        #     for j in self.regions for t in self.timesteps
-        # )
-        # model.addConstrs(
-        #     infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
-        #     for j in self.regions for t in self.timesteps
-        # )
-        # model.addConstrs(
-        #     infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
-        #     for j in self.regions for t in self.timesteps
-        # )
+#         Set bounding constraint on absolute error of estimated infectious
+#        model.addConstrs(
+#             infectious_error[j, t] <= exploration_tol
+#             for j in self.regions for t in self.timesteps
+#        )
+#        model.addConstrs(
+#             infectious_error[j, t] >= estimated_infectious[j, t] - infectious.sum(j, "*", t)
+#             for j in self.regions for t in self.timesteps
+#        )
+#        model.addConstrs(
+#             infectious_error[j, t] >= infectious.sum(j, "*", t) - estimated_infectious[j, t]
+#             for j in self.regions for t in self.timesteps
+#        )
 
         # Set eligibility constraints
         model.addConstrs(
@@ -854,7 +868,7 @@ class PrescriptiveDELPHIModel:
             deceased.sum("*", "*", self.n_timesteps)
             + hospitalized_dying.sum("*", "*", self.n_timesteps)
             + quarantined_dying.sum("*", "*", self.n_timesteps)
-            - self.vaccination_enforcement_weight * vaccinated.sum("*", "*","*")
+            + self.vaccination_enforcement_weight * (exposed.sum("*", "*", self.n_timesteps) + infectious.sum("*", "*", self.n_timesteps))
             # + undetected_dying.sum("*", "*", self.n_timesteps)
 #             + unallocated_vaccines.sum()
 #            + self.political_factor * (max_center_density - min_center_density)
@@ -1046,7 +1060,7 @@ class PrescriptiveDELPHIModel:
     def optimize(
             self,
             exploration_tol: float,
-            termination_tol: float = 1e-2,
+            termination_tol: float = 1e-3,
             mip_gap: Optional[float] = 1e-3,
             feasibility_tol: Optional[float] = 1e-5,
             time_limit: Optional[float] = 900.,
@@ -1109,7 +1123,7 @@ class PrescriptiveDELPHIModel:
                 initial_solution_allocation=True
             )
             baseline_solution = copy.deepcopy(incumbent_solution)
-            incumbent_obj_val = incumbent_solution.get_total_deaths()
+            incumbent_obj_val = incumbent_solution.get_objective_value()
             trajectory = [incumbent_obj_val]
             best_solution_for_restart = None
             best_obj_val_for_restart = np.inf
@@ -1151,7 +1165,7 @@ class PrescriptiveDELPHIModel:
                                                                                           distance_penalty=distance_penalty,
                                                                                           locations_per_state_deviation=locations_per_state_deviation,
                                                                                           vaccine_distribution_deviation=vaccine_distribution_deviation)
-                previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_total_deaths()
+                previous_obj_val, incumbent_obj_val = incumbent_obj_val, incumbent_solution.get_objective_value()
                 trajectory.append(incumbent_obj_val)
                 if log:
                     print(
@@ -1180,11 +1194,12 @@ class PrescriptiveDELPHIModel:
                     break
 
                 # Terminate coordinate descent for restart if solution convergences
-                objective_change = abs(previous_obj_val - incumbent_obj_val)
-                estimated_infectious_change = np.abs(
-                    previous_solution.infectious.sum(axis=1) - incumbent_solution.infectious.sum(axis=1)
-                ).mean()
-                if max(objective_change, estimated_infectious_change) < termination_tol:
+                objective_change = abs(previous_obj_val - incumbent_obj_val) / previous_obj_val
+                print(f"Objective change: {'{0:.2f}'.format(objective_change)}")
+#                estimated_infectious_change = np.abs(
+#                    previous_solution.infectious.sum(axis=1) - incumbent_solution.infectious.sum(axis=1)
+#                ).mean()
+                if objective_change < termination_tol:
                     trajectory.append(incumbent_obj_val)
                     if log:
                         print("Solution has converged - terminating search for trial")
@@ -1209,5 +1224,5 @@ class PrescriptiveDELPHIModel:
             rounding_tol=rounding_tol
         )
         if log:
-            print(f"Objective value after post-processing: {'{0:.2f}'.format(best_solution.get_total_deaths())}")
+            print(f"Objective value after post-processing: {'{0:.2f}'.format(best_solution.get_objective_value())}")
         return best_solution, baseline_solution

@@ -108,6 +108,7 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["scenario"] = i
         results_dict_optimized[counter_optimized]["optimized"] = int(sys.argv[1])
         results_dict_optimized[counter_optimized]["optimized_obj_val"] = metrics['obj_val']
+        results_dict_optimized[counter_optimized]["optimized_condemned_deaths"] = metrics['condemned_deaths']
         results_dict_optimized[counter_optimized]["optimized_distance_penalty"] = metrics['distance_penalty']
         results_dict_optimized[counter_optimized]["optimized_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
         results_dict_optimized[counter_optimized]["optimized_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']

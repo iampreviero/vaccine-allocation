@@ -52,7 +52,7 @@ REGULARIZATION_PARAM = 0.1
 
 # Coordinate descent algorithm parameters
 EXPLORATION_TOL = 5e6
-TERMINATION_TOL = 5e2
+TERMINATION_TOL = 1e-3
 MAX_ITERATIONS = 10
 N_EARLY_STOPPING_ITERATIONS = 1
 INITIAL_SOLUTION = "cities" # currently supports: cities, population, cases
