@@ -89,7 +89,7 @@ if __name__ == "__main__":
                 results_dict_baseline[counter_baseline]["scenario"] = i
                 results_dict_baseline[counter_baseline]["baseline"] = j
                 results_dict_baseline[counter_baseline]["baseline_obj_val"] = metrics['obj_val']
-                results_dict_baseline[counter_baseline]["optimized_condemned_deaths"] = metrics['condemned_deaths']
+                results_dict_baseline[counter_baseline]["baseline_condemned_deaths"] = metrics['condemned_deaths']
                 results_dict_baseline[counter_baseline]["baseline_distance_penalty"] = metrics['distance_penalty']
                 results_dict_baseline[counter_baseline]["baseline_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
                 results_dict_baseline[counter_baseline]["baseline_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
