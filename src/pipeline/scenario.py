@@ -176,7 +176,7 @@ class Scenario:
             vaccine_params=vaccine_params_0,
             allocation_params=allocation_params
         )
-        
+
 
     def run(
             self,
@@ -191,7 +191,7 @@ class Scenario:
         if not reload_mortality_rate:
             with open(mortality_rate_path, "wb") as fp:
                 np.save(fp, model.mortality_rate)
-        print("Running no vaccine baseline...")                
+        print("Running no vaccine baseline...")
         solution_0 = model_0.simulate(prioritize_allocation=False, initial_solution_allocation=True)
         if not self.run_baselines:
             print("Optimizing...")
@@ -207,6 +207,7 @@ class Scenario:
             )
             metrics = {'obj_val': solution.get_objective_value(),
                         'condemned_deaths' : solution.get_condemned_deaths(),
+                        'mip_objective_value': solution.mip_objective_value,
                         'distance_penalty': solution.distance_penalty,
                         'locations_per_state_deviation': solution.locations_per_state_deviation,
                         'vaccine_distribution_deviation': solution.vaccine_distribution_deviation,
@@ -219,6 +220,7 @@ class Scenario:
             print("Running baseline...")
             solution = model.simulate(prioritize_allocation=False, initial_solution_allocation=True)
             metrics = {'obj_val': solution.get_objective_value(),
+                        'mip_objective_value': solution.mip_objective_value,
                         'distance_penalty': solution.distance_penalty,
                         'condemned_deaths' : solution.get_condemned_deaths(),
                         'locations_per_state_deviation': solution.locations_per_state_deviation,

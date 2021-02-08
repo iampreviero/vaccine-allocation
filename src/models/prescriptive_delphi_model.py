@@ -31,6 +31,7 @@ class DELPHISolution:
             exposed_vaccinated: np.ndarray,
             infectious_vaccinated: np.ndarray,
             recovered_vaccinated: np.ndarray,
+            mip_objective_value: float,
             distance_penalty: float,
             locations_per_state_deviation: float,
             vaccine_distribution_deviation: float,
@@ -103,6 +104,7 @@ class DELPHISolution:
         self.vaccine_distribution_deviation = vaccine_distribution_deviation
         self.distance_penalty_coefficient = distance_penalty_coefficient
         self.vaccination_enforcement_weight = vaccination_enforcement_weight
+        self.mip_objective_value = mip_objective_value
 
     def get_total_deaths(self) -> float:
         return self.deceased[:, :, -1].sum()
@@ -113,11 +115,11 @@ class DELPHISolution:
         self.vaccination_enforcement_weight * (self.exposed + self.infectious)[:, :, -1].sum() + \
         self.distance_penalty_coefficient * self.distance_penalty
         return total
+
     def get_condemned_deaths(self) -> float:
         # (self.deceased + self.hospitalized_dying + self.quarantined_dying + self.undetected_dying)[:, :,
         # -2].sum()
-
-        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -1].sum() 
+        total = (self.deceased + self.hospitalized_dying + self.quarantined_dying)[:, :, -1].sum()
         return total
 
     def get_total_cases(self) -> float:
@@ -253,13 +255,14 @@ class PrescriptiveDELPHIModel:
             location_indicator: Optional[np.ndarray] = None,
             vaccine_distribution: Optional[np.ndarray] = None,
             county_city_indicator: Optional = None,
+            mip_objective_value: Optional = None,
             distance_penalty: Optional = None,
             locations_per_state_deviation: Optional = None,
             vaccine_distribution_deviation: Optional = None,
             randomize_allocation: bool = False,
             prioritize_allocation: bool = False,
             initial_solution_allocation: bool = False,
-    ) -> DELPHISolution:
+    ):
         """
         Solve DELPHI IVP using a forward difference scheme.
 
@@ -325,14 +328,13 @@ class PrescriptiveDELPHIModel:
                 if initial_solution_allocation:
                     locations = self.baseline_centers
                     regional_budget = self.vaccine_budget[t]/self.cities_budget * self.baseline_centers
-                    distance_penalty = 1e11
                     for k in risk_class_priority_rankings:
                         if k in self.included_risk_classes:
                             vaccinated[:, k, t] = np.minimum(regional_budget, eligible[:, k, t])
                             regional_budget -= vaccinated[:, k, t]
                             if regional_budget.sum() == 0:
                                 break
-                            
+
 
                 else:
                     # If random allocation specified, generate feasible allocation
@@ -490,6 +492,9 @@ class PrescriptiveDELPHIModel:
                         self.detection_rate * infectious_vaccinated[:, t]
                 ) * self.days_per_timestep
 
+        if allocate_vaccines and initial_solution_allocation:
+            location_indicator, county_city_indicator, distance_penalty = self.optimize_distance(locations)
+
         return DELPHISolution(
             susceptible=susceptible,
             exposed=exposed,
@@ -512,6 +517,7 @@ class PrescriptiveDELPHIModel:
             location_indicator=location_indicator,
             vaccine_distribution=vaccine_distribution,
             county_city_indicator=county_city_indicator,
+            mip_objective_value=mip_objective_value,
             distance_penalty=distance_penalty,
             locations_per_state_deviation = locations_per_state_deviation,
             vaccine_distribution_deviation = vaccine_distribution_deviation,
@@ -519,6 +525,93 @@ class PrescriptiveDELPHIModel:
             vaccination_enforcement_weight = self.vaccination_enforcement_weight,
             days_per_timestep=self.days_per_timestep,
         )
+
+    def optimize_distance(
+            self,
+            locations_per_state: np.ndarray,
+            mip_gap: Optional[float] = 1e-3,
+            feasibility_tol: Optional[float] = 1e-5,
+            time_limit: Optional[float] = 300.,
+            output_flag: bool = False
+    ):
+
+        # Initialize model
+        model = gp.Model()
+
+        location_indicator = model.addVars(self.n_cities, vtype=GRB.BINARY)
+        county_city_indicator =  model.addVars(list(self.county_city_to_distance.keys()), lb=0, ub=1)
+
+        # Dummy constraint: consistency between locations_per_state and location_indicator
+        model.addConstrs(
+            sum(location_indicator[i] for i in self.state_to_cities[j]) == locations_per_state[j]
+            for j in self.regions
+        )
+
+        if self.cities_fixed:
+            model.addConstrs(
+                location_indicator[i] == self.fixed_cities[i] # TODO: check state_to_cities
+                for i in range(self.n_cities)
+            )
+
+        # Set conditions for counties being assigned to a city
+        # -- we can only assign counties to cities that are being chosen
+        model.addConstrs(
+            county_city_indicator[l,i] <= location_indicator[i]
+            for l, i in self.county_city_to_distance.keys()
+        )
+
+        # -- all counties need to be assigned to one city
+        model.addConstrs(
+            gp.quicksum(county_city_indicator[l,i] for i in self.state_to_cities[self.county_to_state[l]]) == 1
+            for l in range(self.n_counties)
+        )
+
+        # Objective
+        model.setObjective(
+            self.distance_penalty * gp.quicksum(county_city_indicator[l,i] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
+            ,
+            GRB.MINIMIZE
+        )
+
+        # Set solver params
+        if mip_gap:
+            model.params.MIPGap = mip_gap
+
+        if feasibility_tol:
+            model.params.FeasibilityTol = feasibility_tol
+
+        if time_limit:
+            model.params.TimeLimit = time_limit
+
+        model.params.OutputFlag = True
+
+        # Solve model
+        model.optimize()
+
+        # Extract solution information
+        if model.status in [2,7,8,9,10]:
+            print(f"\nPARAMS:")
+            print(f"Distance Penalty Factor: {self.distance_penalty}")
+            print(f"Fixed cities?: {self.cities_fixed}")
+
+            county_city_indicator_output = model.getAttr("x", county_city_indicator)
+            county_city_indicator = {}
+
+            for l, i in self.county_city_to_distance.keys():
+                county_city_indicator[(l,i)] = county_city_indicator_output[l,i]
+            distance_penalty = sum(county_city_indicator[(l,i)] * self.county_population[l,:].sum() * self.county_city_to_distance[(l,i)] for l, i in self.county_city_to_distance.keys())
+
+            print(f"Distance Penalty is: {distance_penalty * self.distance_penalty}")
+
+            location_indicator = model.getAttr("x", location_indicator)
+            location_indicator = np.array([location_indicator[i] for i in range(self.n_cities)])
+
+        else:
+            location_indicator = None
+            county_city_indicator = None
+            distance_penalty = None
+
+        return location_indicator, county_city_indicator, distance_penalty
 
     def optimize_relaxation(
             self,
@@ -530,7 +623,7 @@ class PrescriptiveDELPHIModel:
             feasibility_tol: Optional[float],
             time_limit: Optional[float],
             output_flag: bool,
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    ):
         """
         Solve a linear relaxation of the vaccine allocation problem, based on estimated infectious populations.
 
@@ -896,6 +989,10 @@ class PrescriptiveDELPHIModel:
 
         # Extract solution information
         if model.status in [2,7,8,9,10]:
+
+            obj = model.getObjective()
+            mip_objective_value = obj.getValue()
+
             print(f"\nPARAMS:")
     #        print(f"Ratio: {max_center_density.x/min_center_density.x}")
             print(f"Political Factor: {self.political_factor}")
@@ -953,7 +1050,9 @@ class PrescriptiveDELPHIModel:
             distance_penalty = None
             locations_per_state_deviation = None
             vaccine_distribution_deviation = None
-        return vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation
+            mip_objective_value = None
+
+        return vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation, mip_objective_value
 
     def smooth_vaccine_allocation(
             self,
@@ -1076,7 +1175,7 @@ class PrescriptiveDELPHIModel:
             log: bool = False,
             seed: int = 0,
             fixed_cities: bool = False
-    ) -> DELPHISolution:
+    ):
         """
         Solve the prescriptive DELPHI model for vaccine allocation using a coordinate descent heuristic.
 
@@ -1137,7 +1236,7 @@ class PrescriptiveDELPHIModel:
 
                 # Re-optimize vaccine allocation by solution linearized relaxation
                 try:
-                    vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation = self.optimize_relaxation(
+                    vaccinated, locations, location_indicator, vaccine_distribution, county_city_indicator, distance_penalty, locations_per_state_deviation, vaccine_distribution_deviation, mip_objective_value = self.optimize_relaxation(
                         exploration_tol=exploration_tol,
                         estimated_infectious=incumbent_solution.infectious.sum(axis=1) + incumbent_solution.infectious_vaccinated,
                         vaccinated_warm_start=incumbent_solution.vaccinated,
@@ -1162,6 +1261,7 @@ class PrescriptiveDELPHIModel:
                                                                                           location_indicator=location_indicator,
                                                                                           vaccine_distribution=vaccine_distribution,
                                                                                           county_city_indicator=county_city_indicator,
+                                                                                          mip_objective_value=mip_objective_value,
                                                                                           distance_penalty=distance_penalty,
                                                                                           locations_per_state_deviation=locations_per_state_deviation,
                                                                                           vaccine_distribution_deviation=vaccine_distribution_deviation)

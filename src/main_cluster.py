@@ -30,7 +30,7 @@ if __name__ == "__main__":
         from pipeline.grid.exper6 import *
     elif sys.argv[2] == "exper7":
         from pipeline.grid.exper7 import *
-        
+
     now = datetime.now()
 
     dt_string = now.strftime("%Y%m%d-%H%M%S")
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         reload_mortality_rate = os.path.isfile(mortality_rate_path)
 
         params_dict = {**scenario_params, **algorithm_params}
-        
+
         metrics = Scenario(**params_dict).run(
             model_path=f"{MODEL_PATH_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}-{i}.pickle",
             solution_path=f"{OPTIMIZED_SOLUTION_PATH}{sys.argv[2]}-{dt_string}-{int(sys.argv[1])}-{i}.pickle",
@@ -109,13 +109,12 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["optimized"] = int(sys.argv[1])
         results_dict_optimized[counter_optimized]["optimized_obj_val"] = metrics['obj_val']
         results_dict_optimized[counter_optimized]["optimized_condemned_deaths"] = metrics['condemned_deaths']
+        results_dict_optimized[counter_optimized]["optimized_mip_objective_value"] = metrics['mip_objective_value']
         results_dict_optimized[counter_optimized]["optimized_distance_penalty"] = metrics['distance_penalty']
         results_dict_optimized[counter_optimized]["optimized_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
         results_dict_optimized[counter_optimized]["optimized_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
         results_dict_optimized[counter_optimized]["baseline_obj_val"] = metrics['baseline_obj_val']
         results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
-        results_dict_optimized[counter_optimized]["baseline_locations_per_state_deviation"] = metrics['baseline_locations_per_state_deviation']
-        results_dict_optimized[counter_optimized]["baseline_vaccine_distribution_deviation"] = metrics['baseline_vaccine_distribution_deviation']
         results_dict_optimized[counter_optimized]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)

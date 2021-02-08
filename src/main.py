@@ -90,6 +90,7 @@ if __name__ == "__main__":
                 results_dict_baseline[counter_baseline]["baseline"] = j
                 results_dict_baseline[counter_baseline]["baseline_obj_val"] = metrics['obj_val']
                 results_dict_baseline[counter_baseline]["baseline_condemned_deaths"] = metrics['condemned_deaths']
+                results_dict_baseline[counter_baseline]["baseline_mip_objective_value"] = metrics['mip_objective_value']
                 results_dict_baseline[counter_baseline]["baseline_distance_penalty"] = metrics['distance_penalty']
                 results_dict_baseline[counter_baseline]["baseline_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
                 results_dict_baseline[counter_baseline]["baseline_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
@@ -112,14 +113,13 @@ if __name__ == "__main__":
                 results_dict_optimized[counter_optimized]["optimized"] = j
                 results_dict_optimized[counter_optimized]["optimized_obj_val"] = metrics['obj_val']
                 results_dict_optimized[counter_optimized]["optimized_condemned_deaths"] = metrics['condemned_deaths']
+                results_dict_optimized[counter_optimized]["optimized_mip_objective_value"] = metrics['mip_objective_value']
                 results_dict_optimized[counter_optimized]["optimized_distance_penalty"] = metrics['distance_penalty']
                 results_dict_optimized[counter_optimized]["optimized_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
                 results_dict_optimized[counter_optimized]["optimized_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
                 results_dict_optimized[counter_optimized]["baseline_obj_val"] = metrics['baseline_obj_val']
                 results_dict_optimized[counter_optimized]["baseline_condemned_deaths"] = metrics['baseline_condemned_deaths']
                 results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
-                results_dict_optimized[counter_optimized]["baseline_locations_per_state_deviation"] = metrics['baseline_locations_per_state_deviation']
-                results_dict_optimized[counter_optimized]["baseline_vaccine_distribution_deviation"] = metrics['baseline_vaccine_distribution_deviation']
                 results_dict_optimized[counter_optimized]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
                 counter_optimized = counter_optimized + 1
                 results = pd.DataFrame(results_dict_optimized)
