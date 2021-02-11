@@ -7,7 +7,7 @@ DATES_GRID = [
     dict(start_date=dt.datetime(2021, 2, 1), end_date=dt.datetime(2021, 4, 30))
 ]
 VACCINE_EFFECTIVENESS_GRID = [0.9]
-DAILY_VACCINE_BUDGET_GRID = [1e6]
+DAILY_VACCINE_BUDGET_GRID = [0.5e6,1e6,1.5e6,2e6]
 CDC_INFECTION_RATE_GRID = [False]
 VACCINATED_INFECTION_GRID = [True]
 

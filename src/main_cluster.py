@@ -117,6 +117,8 @@ if __name__ == "__main__":
         results_dict_optimized[counter_optimized]["baseline_condemned_deaths"] = metrics['baseline_condemned_deaths']
         results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
         results_dict_optimized[counter_optimized]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
+        results_dict_optimized[counter_optimized]["no_vaccine_condemned_deaths"] = metrics['no_vaccine_condemned_deaths']
+        
         counter_optimized = counter_optimized + 1
         results = pd.DataFrame(results_dict_optimized)
         results.to_csv(f"{RESULTS_PATH}{sys.argv[2]}-{dt_string}-optimized-{int(sys.argv[1])}.csv")

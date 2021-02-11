@@ -226,6 +226,7 @@ class Scenario:
                         'locations_per_state_deviation': solution.locations_per_state_deviation,
                         'vaccine_distribution_deviation': solution.vaccine_distribution_deviation}
         metrics['no_vaccine_obj_val'] = solution_0.get_objective_value()
+        metrics['no_vaccine_condemned_deaths'] = solution_0.get_condemned_deaths()
 
         if solution_path:
             with open(solution_path, "wb") as fp:

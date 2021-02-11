@@ -95,6 +95,8 @@ if __name__ == "__main__":
                 results_dict_baseline[counter_baseline]["baseline_locations_per_state_deviation"] = metrics['locations_per_state_deviation']
                 results_dict_baseline[counter_baseline]["baseline_vaccine_distribution_deviation"] = metrics['vaccine_distribution_deviation']
                 results_dict_baseline[counter_baseline]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
+                results_dict_baseline[counter_baseline]["no_vaccine_condemned_deaths"] = metrics['no_vaccine_condemned_deaths']
+
                 counter_baseline = counter_baseline + 1
                 results = pd.DataFrame(results_dict_baseline)
                 results.to_csv(f"{RESULTS_PATH}{dt_string}-baselines.csv")
@@ -121,6 +123,7 @@ if __name__ == "__main__":
                 results_dict_optimized[counter_optimized]["baseline_condemned_deaths"] = metrics['baseline_condemned_deaths']
                 results_dict_optimized[counter_optimized]["baseline_distance_penalty"] = metrics['baseline_distance_penalty']
                 results_dict_optimized[counter_optimized]["no_vaccine_obj_val"] = metrics['no_vaccine_obj_val']
+                results_dict_optimized[counter_optimized]["no_vaccine_condemned_deaths"] = metrics['no_vaccine_condemned_deaths']
                 counter_optimized = counter_optimized + 1
                 results = pd.DataFrame(results_dict_optimized)
                 results.to_csv(f"{RESULTS_PATH}{dt_string}-optimized.csv")
